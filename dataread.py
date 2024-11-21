@@ -20,6 +20,7 @@ with open(file_path_dream, 'r') as file:
 # 输出第一个项
 if data1:
     first_item = data1[0]
+    print(first_item)
     print("问题:", first_item.get('question'))
     print("干扰项1:", first_item.get('distractor1'))
     print("干扰项2:", first_item.get('distractor2'))
@@ -35,5 +36,7 @@ if data2:
 else:
     print("文件为空或没有数据")
 
-print(data.count())
-data.head()
+# 获取第一条数据
+first_item = data.iloc[0]["article"]
+
+print(first_item)

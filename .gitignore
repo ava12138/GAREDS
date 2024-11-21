@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+api.yaml
 # C extensions
 *.so
 
