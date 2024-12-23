@@ -1,10 +1,11 @@
-from calendar import c
 import os
 import json
+from pandas import qcut
 import yaml
-from tqdm import tqdm
 from openai import OpenAI
-import threading
+import re
+from PromptFramwork import PromptFramework as pf
+from utils import format_question_output, format_rationale_output
 
 with open('./config/api.yaml', 'r') as file:
     config = yaml.safe_load(file)
@@ -17,60 +18,50 @@ client = OpenAI(
 
 file_path_sciq = os.path.expanduser('/data/lzx/sciq/train.json')
 with open(file_path_sciq, 'r') as file:
-    data1 = json.load(file)
+    data = json.load(file)
 
-first_item = data1[0]
-# 提取各个字段
-question = first_item.get('question')
-distractor1 = first_item.get('distractor1')
-distractor2 = first_item.get('distractor2')
-distractor3 = first_item.get('distractor3')
-correct_answer = first_item.get('correct_answer')
-support = first_item.get('support')
+question_examples = [data[0], data[1]]
 
-# 构建格式化的字符串
-formatted_item = f"""
-question: {question}
-choices:
-A. {distractor1}
-B. {distractor2}
-C. {distractor3}
-D. {correct_answer}(correct)
-support: {support}
-"""
-prompt = "You are a helpful education assistant. You need to geneate multiple choice question based on the following example: \n" + formatted_item
-
-
-messages = [
-    {"role": "system", "content": prompt},
-    {"role": "user", "content": "PLease generate a multiple choice question based on history."},
+distractor_principle = [
+    'confusing concepts',
+    'irrelevant answers',
+    'vague memories'
 ]
-temperature = 0.75
+
+qg_prompt = pf.producePrompt("qg", examples=question_examples)
+
+# 设置参数
+temperature = 1
 top_p = 1
 presence_penalty = 0.0
 
-# 定义一个函数来获取响应
-def get_response():
-    global response
+# 定义函数来获取响应
+def get_response(prompt):
     response = client.chat.completions.create(
-                model='qwen-max',
-                messages=messages,
-                temperature=temperature,
-                top_p=top_p,
-                presence_penalty=presence_penalty,
-            )
+        model='qwen-max',
+         messages=[
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ],
+        temperature=temperature,
+        top_p=top_p,
+        presence_penalty=presence_penalty,
+    )
+    return response.choices[0].message.content
 
-# 创建一个线程来运行 get_response 函数
-response_thread = threading.Thread(target=get_response)
-response_thread.start()
 
-# 显示进度条
-for _ in tqdm(range(100), desc="Waiting for API response"):
-    if not response_thread.is_alive():
-        break
-    response_thread.join(timeout=0.1)
+q = get_response(qg_prompt)
+print("出的题", q)
+questiondata = format_question_output(q)
 
-# 确保线程已经完成
-response_thread.join()
+rg_prompt = pf.producePrompt("rg", questiondata, distractor_principle)
+# print(dg_prompt)
+r = get_response(rg_prompt)
+print("错误推理", r)
 
-print(response.choices[0].message.content)
+example = format_rationale_output(r)
+dg_prompt = pf.producePrompt("dg", questiondata, example)
+d = get_response(dg_prompt)
+print("干扰项", d)
