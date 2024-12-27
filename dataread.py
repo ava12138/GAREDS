@@ -1,42 +1,32 @@
-import json
 import os
 # 使用 read_parquet 加载parquet文件
 import pandas as pd
+import csv
 from pandas import read_parquet
+from utils import str_to_dict_eedi_df
+
+
+def read_json_to_df(filepath: str) -> pd.DataFrame:
+    df = pd.read_json(filepath)
+    df = str_to_dict_eedi_df(df)
+    return df
 
 
 # 构建文件路径
-file_path_sciq = os.path.expanduser('/data/lzx/sciq/train.json')
-file_path_dream = os.path.expanduser('/data/lzx/dream/train.json')
-data = read_parquet("/data/lzx/race/all/train-00000-of-00001.parquet")
+file_path = os.path.expanduser('/data/lzx/sciq/train.json')
 
-# 读取JSON文件
-with open(file_path_sciq, 'r') as file:
-    data1 = json.load(file)
+df = read_json_to_df(file_path)
+# 将 DataFrame 保存到 CSV 文件
+output_file = os.path.expanduser('./evaluation/train_output.csv')
+df.to_csv(output_file, index=False, encoding='utf-8', quoting=csv.QUOTE_ALL)
 
-with open(file_path_dream, 'r') as file:
-    data2 = json.load(file)
+print(f"DataFrame 已保存到 {output_file}")
 
-# 输出第一个项
-if data1:
-    first_item = data1[0]
-    print(first_item)
-    print("问题:", first_item.get('question'))
-    print("干扰项1:", first_item.get('distractor1'))
-    print("干扰项2:", first_item.get('distractor2'))
-    print("干扰项3:", first_item.get('distractor3'))
-    print("正确答案:", first_item.get('correct_answer'))
-else:
-    print("文件为空或没有数据")
+# 构建文件路径
+file = os.path.expanduser('./evaluation/train_output.csv')
 
-# 输出第二个项
-if data2:
-    first_item = data2[0]
-    print(first_item)
-else:
-    print("文件为空或没有数据")
+# 读取 CSV 文件，确保使用 UTF-8 编码
+df1 = pd.read_csv(output_file, encoding='utf-8')
 
-# 获取第一条数据
-first_item = data.iloc[0]["article"]
-
-print(first_item)
+# 将 DataFrame 转换为字符串并打印
+print(df1.head())
