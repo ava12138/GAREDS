@@ -23,10 +23,14 @@ with open(file_path_sciq, 'r') as file:
 question_examples = [data[0], data[1]]
 
 distractor_principle = [
-    'confusing concepts',
-    'irrelevant answers',
-    'vague memories'
+    'Confusing similar concepts: This principle leverages the use of seemingly related but actually incorrect information to test the examinee\'s ability to carefully analyze details and distinguish between similar concepts, ensuring their memory and comprehension are accurate.',
+    'Answering irrelevant questions: This principle introduces distractors containing information that is irrelevant to the question stem but appears plausible on the surface, aiming to test the examinee\'s ability to stay focused on the real problem and avoid being misled.',
+    'Vague memories: This principle leverages the examinee\'s incomplete or imprecise recollection of learned concepts, facts, or processes to design distractors. The goal is to test the examinee\'s ability to discern between accurate information and distorted or partially correct recollections.',
+    'Concept substitution: This principle involves replacing the core concepts in the question stem with similar but incorrect concepts to test the examinee\'s deep understanding of the topic and their ability to recognize subtle differences.',
+    'Reversing the primary and secondary relationships: This principle modifies the logical structure of the question by reversing primary and secondary relationships, such as cause and effect, to test the examinee\'s judgment and understanding of the connections between concepts.',
+    'Over-detailing or generalization: This principle provides distractors with excessive detail or oversimplified generalizations, aiming to challenge the examinee\'s ability to identify the core idea and avoid being overwhelmed by irrelevant information.'
 ]
+
 
 qg_prompt = pf.producePrompt("qg", examples=question_examples)
 
@@ -53,15 +57,15 @@ def get_response(prompt):
 
 
 q = get_response(qg_prompt)
-print("出的题", q)
+print("出的题:\n", q)
 questiondata = format_question_output(q)
 
 rg_prompt = pf.producePrompt("rg", questiondata, distractor_principle)
 # print(dg_prompt)
 r = get_response(rg_prompt)
-print("错误推理", r)
+print("错误推理:\n", r)
 
 example = format_rationale_output(r)
 dg_prompt = pf.producePrompt("dg", questiondata, example)
 d = get_response(dg_prompt)
-print("干扰项", d)
+print("干扰项:\n", d)
