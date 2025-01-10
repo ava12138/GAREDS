@@ -3,6 +3,7 @@ import csv
 import re
 import pandas as pd
 import ast
+import json
 import numpy as np
 import torch
 import random
@@ -15,13 +16,47 @@ def format_question_output(response):
     return {'question': question, 'correct_answer': answer}
 
 def format_rationale_output(response):
-    explanation_match = re.search(r'Explanation:\s*(.*?)\n', response, re.DOTALL)
+    # 去除所有的 **
+    cleaned_response = response.replace('**', '')
+    
+    # 匹配解释部分
+    explanation_match = re.search(r'Explanation:\s*(.*?)\n', cleaned_response, re.DOTALL)
     explanation = explanation_match.group(1).strip() if explanation_match else ''
     
-    incorrect_inferences = re.findall(r'Incorrect Inference \d+ \((.*?)\): (.*?)(?=\nIncorrect Inference \d+|$)', response, re.DOTALL)
-    incorrect_inferences_dict = {f'incorrect_inference_{i+1}': {'principle': principle, 'inference': inference.strip()} for i, (principle, inference) in enumerate(incorrect_inferences)}
+    # 匹配所有不正确推断
+    incorrect_inferences = re.findall(r'Incorrect Inference \d+ \((.*?)\):\s*(.*?)(?=\nIncorrect Inference \d+ \(|$|\n\n)', cleaned_response, re.DOTALL)
+    incorrect_inferences_combined = ' '.join([f'Incorrect Inference {i+1} ({principle.strip()}): {inference.strip()}' for i, (principle, inference) in enumerate(incorrect_inferences)])
     
-    return {'explanation': explanation, **incorrect_inferences_dict}
+    return {'explanation': explanation, 'incorrect_inferences': incorrect_inferences_combined}
+
+def format_distractor_output(text: str) -> dict:
+    output = {}
+    # 去除所有的 **
+    cleaned_text = text.replace('**', '')
+    
+    # 匹配干扰项
+    distractor_pattern = re.compile(r'Distractor\d:\s*(.*?)\s*(?=\n|$)')
+    matches = distractor_pattern.findall(cleaned_text)
+    
+    for i, match in enumerate(matches, 1):
+        output[f'distractor{i}'] = match.strip()
+    
+    return output
+
+def read_test_data(test_file):
+    with open(test_file, 'r') as f:
+        test_data = json.load(f)
+    
+    question_data_list = []
+    for item in test_data:
+        question_data = {
+            "Question": item["question"],
+            "Answer": item["correct_answer"],
+            "Support": item["support"]
+        }
+        question_data_list.append(question_data)
+    
+    return question_data_list
 
 def str_to_dict_eedi_df(df: pd.DataFrame):
     cols = ["correct_option", "gt_distractors", "generated_distractors", "distractors", "construct_info"]

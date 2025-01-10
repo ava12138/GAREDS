@@ -2,6 +2,7 @@ from rouge_score import rouge_scorer
 from nltk.translate.bleu_score import sentence_bleu
 import pandas as pd
 import re
+import json
 from utils import initialize_seeds, str_to_dict_eedi_df
 
 def calculate_rouge_l(reference, hypothesis):
@@ -15,51 +16,49 @@ def calculate_bleu(reference, hypothesis):
     score = sentence_bleu([reference_tokens], hypothesis_tokens)
     return score
 
-def evaluate_distractors(filename, num_distractors=3):
-    initialize_seeds(40)
-    gt_distractors = []
-    generated_distractors = []
-    distractor_nl_pattern = re.compile(r"(?i)(distractor ?(?:\d+):\**)\n")
-    distractor_pattern = re.compile(r"(?i)\**distractor ?(?:\d+):\** (.+)")
-
-    data = pd.read_csv(filename)
-    data = str_to_dict_eedi_df(data)
-    for idx, row in data.iterrows():
-        distractors_per_question = []
-        response = str(row['raw_response'])
-        response = distractor_nl_pattern.sub(r"\g<1> ", response)
-        lines = response.split('\n')
-        for line in lines:
-            line = line.strip()
-            if distractor_pattern.match(line):
-                distractor = distractor_pattern.match(line).group(1)
-                distractors_per_question.append(distractor)
-        generated_distractors.append(distractors_per_question)
-        gt_distractors.append(row['gt_distractors'].split(','))  # 假设真实干扰项在这一列
-
+def evaluate_distractors(test_file, output_file):
+    with open(test_file, 'r') as f:
+        test_data = json.load(f)
+    
+    with open(output_file, 'r') as f:
+        output_data = json.load(f)
+    
     results = []
-    for i, (gt, generated) in enumerate(zip(gt_distractors, generated_distractors)):
-        question_results = []
-        for j, (gt_distractor, gen_distractor) in enumerate(zip(gt, generated)):
-            rouge_l_score = calculate_rouge_l(gt_distractor, gen_distractor)
-            bleu_score = calculate_bleu(gt_distractor, gen_distractor)
-            question_results.append({
-                'distractor': j+1,
-                'rouge_l_score': rouge_l_score,
-                'bleu_score': bleu_score
-            })
-        results.append({
-            'question': i+1,
-            'results': question_results
-        })
+    
+    for test_item in test_data:
+        question = test_item['question']
+        test_distractors = [test_item['distractor1'], test_item['distractor2'], test_item['distractor3']]
+        
+        for output_item in output_data:
+            if output_item['question'] == question:
+                output_distractors = [output_item['distractor1'], output_item['distractor2'], output_item['distractor3']]
+                distractor_results = []
+                
+                for test_distractor, output_distractor in zip(test_distractors, output_distractors):
+                    rouge_l_score = calculate_rouge_l(test_distractor, output_distractor)
+                    bleu_score = calculate_bleu(test_distractor, output_distractor)
+                    
+                    distractor_results.append({
+                        'distractor': output_distractor,
+                        'rouge_l_score': rouge_l_score,
+                        'bleu_score': bleu_score
+                    })
+                
+                results.append({
+                    'question': question,
+                    'results': distractor_results
+                })
+    
     return results
 
+
 # 示例用法
-filename = "path/to/your/csvfile.csv"
-results = evaluate_distractors(filename)
+test_filename = "./evaluation/test.json"
+output_filename = "./evaluation/output_dg.json"
+results = evaluate_distractors(test_filename, output_filename)
 for result in results:
-    print(f"Question {result['question']}:")
+    print(f"Question:\n {result['question']}:")
     for distractor_result in result['results']:
-        print(f"  Distractor {distractor_result['distractor']}:")
+        print(f"  Distractor: \"{distractor_result['distractor']}\":")
         print(f"    ROUGE-L Score: {distractor_result['rouge_l_score']}")
         print(f"    BLEU Score: {distractor_result['bleu_score']}")

@@ -42,6 +42,7 @@ class PromptFramework():
             === PROMPT ===
             Question: XXX\n
             Answer: XXX\n
+            Support: XXX\n
             Principle1: XXX\n
             Principle2: XXX\n
             Principle3: XXX\n
@@ -52,18 +53,23 @@ class PromptFramework():
             instructions="You are given the following question along with the correct answer, and six principles for Faulty Reasoning. Please use the following template to give one correct explanation and six incorrect inferences based on the given six principles. These six faulty inferences are used to help generate distractors for multiple-choice questions. \n\
             [Template]\n \
             Explanation: XXX\n \
-            Incorrect Infernece1 \n\
-            Incorrect Infernece2 \n\
-            Incorrect Infernece3 \n\
-            Incorrect Infernece4 \n\
-            Incorrect Infernece5 \n\
-            Incorrect Infernece6 \n"
+            Incorrect Infernece1: XXX \n\
+            Incorrect Infernece2: XXX \n\
+            Incorrect Infernece3: XXX \n\
+            Incorrect Infernece4: XXX \n\
+            Incorrect Infernece5: XXX \n\
+            Incorrect Infernece6: XXX \n"
             examples_text = ""
             for idx, example in enumerate(examples):
-                examples_text += f"Guideline{idx+1}: {example}\n"
-            prompt = f"{instructions}\nQuestion: {questionData['question'].strip()}\nAnswer: {questionData['correct_answer'].strip()}\n{examples_text}"
-            prompt = prompt[:-1]
-            return prompt
+                examples_text += f"Principle{idx+1}: {example}\n"
+            prompt = (
+                f"{instructions}\n"
+                f"Question: {questionData['question'].strip()}\n"
+                f"Answer: {questionData['correct_answer'].strip()}\n"
+                f"Support: {questionData['support'].strip()}\n"
+                f"{examples_text}"
+            )
+            return prompt.strip()
     
     @classmethod
     def rule_based_dg_prompt(cls, questionData, examples):
@@ -83,15 +89,22 @@ class PromptFramework():
             """
             instructions="You are given the following question along with the correct answer, explanation, and six faulty inferences. Please use the following template to give **Three** alternative incorrect answers to be used as multiple-choice options in a multiple-choice exam based on the given faulty inferences. \n Prior to the incorrect answer, provide feedback to be displayed to the student as an explanation of why that is not the correct answer.\n\
             [Template]\n \
-            Distractor1: \
-            Distractor2: \
-            Distractor3:"
+            Distractor1: **XXX**\n\
+            Feedback1: XXX\n\
+            Distractor2: **XXX**\n\
+            Feedback2: XXX \n\
+            Distractor3: **XXX**\n\
+            Feedback3: XXX\n"
             examples_text = f"Explanation: {examples['explanation'].strip()}\n"
-            for idx in range(1, 4):
-                if f'incorrect_inference_{idx}' in examples:
-                     examples_text += f"Incorrect Inference{idx} ({examples[f'incorrect_inference_{idx}']['principle']}): {examples[f'incorrect_inference_{idx}']['inference']}\n"
-            prompt = f"{instructions}\nQuestion: {questionData['question'].strip()}\nAnswer: {questionData['correct_answer'].strip()}\n{examples_text}"
-            prompt = prompt[:-1]
-            return prompt
+            incorrect_inferences = examples['incorrect_inferences'].split('\n\n')
+            for idx, inference in enumerate(incorrect_inferences, 1):
+                examples_text += f"{inference.strip()}\n"
+            prompt = (
+                f"{instructions}\n"
+                f"Question: {questionData['question'].strip()}\n"
+                f"Answer: {questionData['correct_answer'].strip()}\n"
+                f"{examples_text}"
+            )
+            return prompt.strip()
     
 # Prior to the incorrect answer, provide feedback to be displayed to the student as an explanation of why that is not the correct answer.\n
