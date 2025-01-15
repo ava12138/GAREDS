@@ -1,9 +1,12 @@
-from rouge_score import rouge_scorer
-from nltk.translate.bleu_score import sentence_bleu
-from sentence_transformers import SentenceTransformer, util
 import numpy as np
 import torch
 import json
+import yaml
+import argparse
+from tqdm import tqdm
+from rouge_score import rouge_scorer
+from nltk.translate.bleu_score import sentence_bleu
+from sentence_transformers import SentenceTransformer, util
 
 
 def calculate_rouge_l(reference, hypothesis, context):
@@ -91,12 +94,12 @@ def evaluate_distractors(test_file, output_file, training_file=None):
     metrics = {
         'bleu_scores': [],
         'rouge_scores': [],
-        'novelty_scores': [],
+        # 'novelty_scores': [],
         'diversity_scores': [],
         'relevance_scores': []
     }
     
-    for test_item in test_data:
+    for test_item in tqdm(test_data, desc="Evaluating"):
         for output_item in output_data:
             if output_item['question'] == test_item['question']:
                 # 获取生成的干扰项
@@ -152,9 +155,17 @@ def evaluate_distractors(test_file, output_file, training_file=None):
     return final_scores
 
 def main():
-    test_file = './evaluation/test.json'
-    output_file = './evaluation/output_dg.json'
-    training_file = './evaluation/train.json'
+    parser = argparse.ArgumentParser(description="Evaluate distractors")
+    parser.add_argument('-t', '--type', choices=['lan', 'nat', 'soc'], required=True, help="Type of test file to evaluate")
+    args = parser.parse_args()
+    
+    with open('./config/config.yaml', 'r') as file:
+        config = yaml.safe_load(file)
+    
+    file_config = config['files'][args.type]
+    test_file = file_config['test_file']
+    output_file = file_config['output_file']
+    results_file = file_config['results_file']
     
     results = evaluate_distractors(test_file, output_file)
     
@@ -164,9 +175,11 @@ def main():
     # print(f"Novelty Score: {results['novelty_scores']:.4f}")
     print(f"Diversity Score: {results['diversity_scores']:.4f}")
     print(f"Relevance Score: {results['relevance_scores']:.4f}")
-    print(f"Relaxed Score: {results['relaxed_score']:.4f}")
-    print(f"Hard Score: {results['hard_score']:.4f}")
-    print(f"Proportional Score: {results['proportional_score']:.4f}")
+
+    # 将结果保存为 JSON 文件
+    with open(results_file, 'w') as f:
+        json.dump(results, f, indent=4)
+        print(f"\nResults saved to {results_file}")
 
 if __name__ == "__main__":
     main()

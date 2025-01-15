@@ -30,7 +30,7 @@ def process_sciqa_data(input_file):
     
     # 保存分类后的数据
     for category, items in categorized_data.items():
-        output_file = f'./evaluation/sciqa-test-{category}.json'
+        output_file = f'./data_divided/sciqa-test-{category}.json'
         with open(output_file, 'w', encoding='utf-8') as f:
             json.dump(items, f, indent=2, ensure_ascii=False)
         print(f"{category}: {len(items)} items")

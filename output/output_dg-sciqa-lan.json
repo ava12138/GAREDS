@@ -1,0 +1,310 @@
+[
+    {
+        "question": "Which type of sentence is this?\nMia is a competitive horseback rider, and she will be competing in the next World Equestrian Games, which are held every four years.",
+        "correct_answer": "compound-complex",
+        "distractor1": "The sentence is a simple sentence because it describes Mia's activities in a straightforward manner.",
+        "distractor2": "The sentence is a complex sentence because it mentions the World Equestrian Games.",
+        "distractor3": "The sentence is a compound sentence because it talks about Mia and the World Equestrian Games."
+    },
+    {
+        "question": "Select the action that doesn't belong.",
+        "correct_answer": "chop",
+        "distractor1": "The action \"chop\" belongs because it is similar to other actions like \"cut\" or \"slice,\" which are also part of food preparation.",
+        "distractor2": "The action \"chop\" doesn't belong because it is not related to the process of serving food, which is what the other actions are focused on.",
+        "distractor3": "The action \"chop\" belongs because it is a type of cooking process, similar to \"fry\" or \"bake,\" which are also ways to prepare food."
+    },
+    {
+        "question": "Which type of sentence is this?\nAfter a parrotfish eats algae-covered coral, the coral travels through the fish's digestive system, and then it is deposited in the reef as white coral sand.",
+        "correct_answer": "compound-complex",
+        "distractor1": "The sentence is a simple sentence because it describes a straightforward process involving a parrotfish.",
+        "distractor2": "The sentence is a compound sentence because it mentions two different actions: eating and depositing.",
+        "distractor3": "The sentence is a complex sentence because it contains a dependent clause about the parrotfish eating algae-covered coral."
+    },
+    {
+        "question": "Which type of sentence is this?\nDuring last night's thunderstorm, a flurry of tiny hailstones danced across the roof of our house.",
+        "correct_answer": "simple",
+        "distractor1": "The sentence is a compound sentence because it contains a coordinating conjunction like \"and\" or \"but.\"",
+        "distractor2": "The sentence is a complex sentence because it has a phrase at the beginning, which must mean it has a dependent clause.",
+        "distractor3": "The sentence is a compound-complex sentence because it contains multiple clauses that describe the hailstones and the thunderstorm."
+    },
+    {
+        "question": "Which type of sentence is this?\nAs Bert sat down on the rickety old chair, it abruptly collapsed beneath him.",
+        "correct_answer": "complex",
+        "distractor1": "Compound",
+        "distractor2": "Simple",
+        "distractor3": "Compound-Complex"
+    },
+    {
+        "question": "Which type of sentence is this?\nQuinn is a competitive horseback rider, and she will be competing in the next World Equestrian Games, which are held every four years.",
+        "correct_answer": "compound-complex",
+        "distractor1": "The sentence is a simple sentence because it describes a single subject, Quinn, and her activities.",
+        "distractor2": "The sentence is a complex sentence because it mentions a specific event, the World Equestrian Games, which is held every four years.",
+        "distractor3": "The sentence is a compound sentence because it contains two independent clauses, but it does not have any dependent clauses."
+    },
+    {
+        "question": "Which type of sentence is this?\nAnn is a competitive horseback rider, and she will be competing in the next World Equestrian Games, which are held every four years.",
+        "correct_answer": "compound-complex",
+        "distractor1": "Simple sentence",
+        "distractor2": "Compound sentence",
+        "distractor3": "Complex sentence"
+    },
+    {
+        "question": "Which word is not like the others?",
+        "correct_answer": "time",
+        "distractor1": "The word \"time\" is not like the others because it is not a noun, while the other words are nouns.",
+        "distractor2": "The word \"time\" is not like the others because it refers to a specific time of day, while the other words are general categories.",
+        "distractor3": "The word \"time\" is not like the others because it is a verb, while the other words are nouns."
+    },
+    {
+        "question": "Which type of sentence is this?\nRuth is a competitive horseback rider, and she will be competing in the next World Equestrian Games, which are held every four years.",
+        "correct_answer": "compound-complex",
+        "distractor1": "The sentence is complex because it contains one independent clause and one dependent clause.",
+        "distractor2": "The sentence is simple because it describes Ruth's activity.",
+        "distractor3": "The sentence is compound because it contains two independent clauses."
+    },
+    {
+        "question": "Which word is not like the others?",
+        "correct_answer": "teacher",
+        "distractor1": "The word \"teacher\" is not like the others because it is a noun, while the other words are adjectives.",
+        "distractor2": "The word \"teacher\" is not like the others because it is a person, while the other words are not people.",
+        "distractor3": "The word \"teacher\" is not like the others because it is a complex role that involves education, while the other words are simple descriptors of people or objects."
+    },
+    {
+        "question": "Select the action that doesn't belong.",
+        "correct_answer": "chew",
+        "distractor1": "Chew doesn't belong because it involves the use of teeth, while the other actions involve the use of legs or vocal cords.",
+        "distractor2": "Chew doesn't belong because it is a less common action compared to \"walk\" or \"run.\"",
+        "distractor3": "Chew doesn't belong because it is a repetitive action, while the others are not."
+    },
+    {
+        "question": "Which type of sentence is this?\nSince 1923, the United States Flag Code has provided advisory rules for displaying and handling the U.S. flag.",
+        "correct_answer": "simple",
+        "distractor1": "Compound",
+        "distractor2": "Complex",
+        "distractor3": "Compound-Complex"
+    },
+    {
+        "question": "Which type of sentence is this?\nBrenna is a competitive horseback rider, and she will be competing in the next World Equestrian Games, which are held every four years.",
+        "correct_answer": "compound-complex",
+        "distractor1": "Simple sentence",
+        "distractor2": "Compound sentence",
+        "distractor3": "Complex sentence"
+    },
+    {
+        "question": "Which type of sentence is this?\nPreston took several incredible panoramic photographs of the sweeping view from the top of Table Mountain.",
+        "correct_answer": "simple",
+        "distractor1": "The sentence is a compound sentence because it contains multiple subjects and predicates that could be separated into two independent clauses.",
+        "distractor2": "The sentence is a complex sentence because it describes a detailed action and location, making it seem more complicated than it is.",
+        "distractor3": "The sentence is a compound-complex sentence because it includes detailed information about the photographs and the location, making it appear more complex than it is."
+    },
+    {
+        "question": "Select the description that doesn't belong.",
+        "correct_answer": "new",
+        "distractor1": "The word \"new\" belongs with words like \"novel\" and \"fresh,\" which are similar but not exactly the same in meaning. Therefore, it fits well with descriptive categories.",
+        "distractor2": "The word \"new\" is relevant in a discussion about technological advancements, so it should fit within the context of describing various states of being.",
+        "distractor3": "The word \"new\" can be substituted with \"innovative,\" which also describes something that is recent and different, making it seem like it fits with other descriptive categories."
+    },
+    {
+        "question": "Which type of sentence is this?\nManny took several incredible panoramic photographs of the sweeping view from the top of Table Mountain.",
+        "correct_answer": "simple",
+        "distractor1": "The sentence is a compound sentence because it contains multiple subjects (Manny and photographs) and verbs (took and sweeping).",
+        "distractor2": "The sentence is a complex sentence because it describes a detailed event involving photography.",
+        "distractor3": "The sentence is a compound-complex sentence because it seems to have multiple clauses even though it actually only has one."
+    },
+    {
+        "question": "Select the action that doesn't belong.",
+        "correct_answer": "write",
+        "distractor1": "read",
+        "distractor2": "listen",
+        "distractor3": "walk"
+    },
+    {
+        "question": "Which type of sentence is this?\nAn avid reader, Philip attends weekly book club meetings, and he finishes several novels every month.",
+        "correct_answer": "compound",
+        "distractor1": "Complex",
+        "distractor2": "Simple",
+        "distractor3": "Compound-Complex"
+    },
+    {
+        "question": "Select the description that doesn't belong.",
+        "correct_answer": "done",
+        "distractor1": "The word \"done\" belongs because it is similar to other action-oriented terms that might be used in a list of descriptions, such as \"finished\" or \"completed.\"",
+        "distractor2": "The word \"done\" belongs because it is a common term used in everyday language, regardless of whether it fits the context of the list of descriptions.",
+        "distractor3": "The word \"done\" belongs because it provides a general idea of completion, which might be seen as a valid descriptor in a list that includes both specific and general terms."
+    },
+    {
+        "question": "Which type of sentence is this?\nBrody always approaches difficult tasks enthusiastically, and he frequently motivates others with his energy and fervor.",
+        "correct_answer": "compound",
+        "distractor1": "The sentence is a complex sentence because it contains two clauses, one of which is dependent.",
+        "distractor2": "The sentence is a simple sentence because it talks about Brody's enthusiasm.",
+        "distractor3": "The sentence is a compound-complex sentence because it contains multiple clauses."
+    },
+    {
+        "question": "Based on clues in the text, why would farmers have appreciated cats eight thousand years ago?",
+        "correct_answer": "The cats helped keep the farmers' grain free of mice.",
+        "distractor1": "The cats helped keep the farmers' crops free of insects.",
+        "distractor2": "The cats were used by farmers to guard their livestock.",
+        "distractor3": "The cats helped keep the farmers' homes warm."
+    },
+    {
+        "question": "Which type of sentence is this?\nBecause most wild orchids naturally affix themselves to trees and branches, planting an orchid in soil will likely kill it.",
+        "correct_answer": "complex",
+        "distractor1": "The sentence is a compound sentence because it contains two clauses joined by the conjunction \"because.\"",
+        "distractor2": "The sentence is a simple sentence because it talks about orchids and their natural habitat.",
+        "distractor3": "The sentence is a compound-complex sentence because it contains detailed information about orchids and their natural habitat, along with a cause-and-effect relationship."
+    },
+    {
+        "question": "Which type of sentence is this?\nAs Juan sat down on the rickety old chair, it abruptly collapsed beneath him.",
+        "correct_answer": "complex",
+        "distractor1": "The sentence is a compound sentence because it contains two clauses connected by a conjunction.",
+        "distractor2": "The sentence is simple because it describes a single event happening to Juan.",
+        "distractor3": "The sentence is a compound-complex sentence because it has multiple clauses, even though only one is dependent."
+    },
+    {
+        "question": "Which type of sentence is this?\nAn avid reader, Darnell attends weekly book club meetings, and he finishes several novels every month.",
+        "correct_answer": "compound",
+        "distractor1": "Complex",
+        "distractor2": "Simple",
+        "distractor3": "Compound-Complex"
+    },
+    {
+        "question": "Which word is not like the others?",
+        "correct_answer": "leg",
+        "distractor1": "Red, blue, and green are also body parts because they can describe parts of the body (e.g., red hair, blue eyes, green skin).",
+        "distractor2": "Leg is not like the others because it is not a word that describes a mood or feeling, while red, blue, and green are often used to describe emotions (e.g., feeling blue).",
+        "distractor3": "Leg is not like the others because it is not a primary color, but red, blue, and green are primary colors."
+    },
+    {
+        "question": "Which type of sentence is this?\nThe maple leaf, which i Canada's national emblem, has been associated with the country since the 1700s.",
+        "correct_answer": "complex",
+        "distractor1": "The sentence is a compound sentence because it contains multiple clauses.",
+        "distractor2": "The sentence is simple because it talks about the maple leaf, which is a straightforward topic.",
+        "distractor3": "The sentence is a compound-complex sentence because it seems to have multiple parts."
+    },
+    {
+        "question": "Which type of sentence is this?\nAntonio took several incredible panoramic photographs of the sweeping view from the top of Table Mountain.",
+        "correct_answer": "simple",
+        "distractor1": "Compound",
+        "distractor2": "Complex",
+        "distractor3": "Compound-Complex"
+    },
+    {
+        "question": "Which word is not like the others?",
+        "correct_answer": "grass",
+        "distractor1": "The word \"grass\" is not like the others because it is not a living thing, while the other words represent living entities (people and colors).",
+        "distractor2": "The word \"grass\" is not like the others because it is a type of plant, whereas the other words are all related to human activities or emotions.",
+        "distractor3": "The word \"grass\" is not like the others because it is an abstract concept, while the other words are concrete objects or people."
+    },
+    {
+        "question": "Which type of sentence is this?\nAs Scott sat down on the rickety old chair, it abruptly collapsed beneath him.",
+        "correct_answer": "complex",
+        "distractor1": "The sentence is a compound sentence because it contains two clauses connected by a conjunction.",
+        "distractor2": "The sentence is a simple sentence because it describes a single action.",
+        "distractor3": "The sentence is a compound-complex sentence because it contains both independent and dependent clauses."
+    },
+    {
+        "question": "Which type of sentence is this?\nRaymond took several incredible panoramic photographs of the sweeping view from the top of Table Mountain.",
+        "correct_answer": "simple",
+        "distractor1": "The sentence is a compound sentence because it contains multiple subjects and predicates, even though they are not joined by a coordinating conjunction.",
+        "distractor2": "The sentence is a complex sentence because it describes a detailed action, which implies that there must be a dependent clause providing additional information.",
+        "distractor3": "The sentence is a compound-complex sentence because it seems to have multiple parts, even though the parts are not clearly defined as independent or dependent clauses."
+    },
+    {
+        "question": "Which type of sentence is this?\nAn avid reader, Caden attends weekly book club meetings, and he finishes several novels every month.",
+        "correct_answer": "compound",
+        "distractor1": "The sentence is a complex sentence because it contains an introductory phrase \"An avid reader\" and a coordinating conjunction \"and.\"",
+        "distractor2": "The sentence is a simple sentence because it describes Caden's reading habits in one continuous thought.",
+        "distractor3": "The sentence is a compound-complex sentence because it has multiple clauses and uses the conjunction \"and.\""
+    },
+    {
+        "question": "Which type of sentence is this?\nAs Charlie sat down on the rickety old chair, it abruptly collapsed beneath him.",
+        "correct_answer": "complex",
+        "distractor1": "The sentence is a compound sentence because it contains two clauses connected by a conjunction.",
+        "distractor2": "The sentence is a simple sentence because it describes a single event.",
+        "distractor3": "The sentence is a compound-complex sentence because it contains both independent and dependent clauses."
+    },
+    {
+        "question": "Which type of sentence is this?\nAs Pablo sat down on the rickety old chair, it abruptly collapsed beneath him.",
+        "correct_answer": "complex",
+        "distractor1": "Simple",
+        "distractor2": "Compound",
+        "distractor3": "Compound-Complex"
+    },
+    {
+        "question": "Which type of sentence is this?\nSusan is a competitive horseback rider, and she will be competing in the next World Equestrian Games, which are held every four years.",
+        "correct_answer": "compound-complex",
+        "distractor1": "The sentence is a simple sentence because it describes Susan's activity and the World Equestrian Games in one continuous thought.",
+        "distractor2": "The sentence is a complex sentence because it mentions the World Equestrian Games, which are held every four years.",
+        "distractor3": "The sentence is a compound sentence because it contains two clauses connected by the word \"and.\""
+    },
+    {
+        "question": "Which word is not like the others?",
+        "correct_answer": "window",
+        "distractor1": "window is not a living thing",
+        "distractor2": "window is not a primary color",
+        "distractor3": "window is not a part of the human body"
+    },
+    {
+        "question": "Which type of sentence is this?\nAs Will sat down on the rickety old chair, it abruptly collapsed beneath him.",
+        "correct_answer": "complex",
+        "distractor1": "The sentence is a compound sentence because it contains two clauses connected by a conjunction.",
+        "distractor2": "The sentence is a simple sentence because it describes a single event.",
+        "distractor3": "The sentence is a compound-complex sentence because it contains multiple clauses."
+    },
+    {
+        "question": "Which type of sentence is this?\nThe right hemisphere of the human brain typically controls muscle movement on the left side of the body.",
+        "correct_answer": "simple",
+        "distractor1": "Compound",
+        "distractor2": "Complex",
+        "distractor3": "Compound-Complex"
+    },
+    {
+        "question": "Which type of sentence is this?\nSally is a competitive horseback rider, and she will be competing in the next World Equestrian Games, which are held every four years.",
+        "correct_answer": "compound-complex",
+        "distractor1": "The sentence is a simple sentence because it describes a single subject, Sally, and her activities.",
+        "distractor2": "The sentence is a compound sentence because it mentions two events: Sally being a competitive horseback rider and the World Equestrian Games being held every four years.",
+        "distractor3": "The sentence is a complex sentence because it includes a dependent clause about the World Equestrian Games being held every four years."
+    },
+    {
+        "question": "Which type of sentence is this?\nAs Matthew sat down on the rickety old chair, it abruptly collapsed beneath him.",
+        "correct_answer": "complex",
+        "distractor1": "The sentence is a compound sentence because it contains two clauses connected by a conjunction.",
+        "distractor2": "The sentence is simple because it describes a single event happening to Matthew.",
+        "distractor3": "The sentence is a compound-complex sentence because it contains multiple clauses."
+    },
+    {
+        "question": "Which type of sentence is this?\nThe platypus has venom-producing glands, which are rare among mammals, but its venom is not generally lethal to humans.",
+        "correct_answer": "compound-complex",
+        "distractor1": "Simple sentence",
+        "distractor2": "Complex sentence",
+        "distractor3": "Compound sentence"
+    },
+    {
+        "question": "Which word is not like the others?",
+        "correct_answer": "room",
+        "distractor1": "room is not a type of fruit",
+        "distractor2": "room is not something you can see",
+        "distractor3": "room is not a primary color"
+    },
+    {
+        "question": "Which type of sentence is this?\nAs Herman sat down on the rickety old chair, it abruptly collapsed beneath him.",
+        "correct_answer": "complex",
+        "distractor1": "The sentence is a compound sentence because it contains two independent clauses joined by a coordinating conjunction.",
+        "distractor2": "The sentence is simple because it describes a single action: Herman sitting down and the chair collapsing.",
+        "distractor3": "The sentence is a compound-complex sentence because it contains multiple clauses and conjunctions."
+    },
+    {
+        "question": "Which type of sentence is this?\nAs Dale sat down on the rickety old chair, it abruptly collapsed beneath him.",
+        "correct_answer": "complex",
+        "distractor1": "The sentence is a simple sentence because it contains only one subject and one predicate.",
+        "distractor2": "The sentence is a compound sentence because it describes two events happening simultaneously: Dale sitting down and the chair collapsing.",
+        "distractor3": "The sentence is a compound-complex sentence because it contains multiple clauses and conjunctions."
+    },
+    {
+        "question": "Which type of sentence is this?\nJoel took several incredible panoramic photographs of the sweeping view from the top of Table Mountain.",
+        "correct_answer": "simple",
+        "distractor1": "The sentence is a compound sentence because it contains multiple subjects and predicates, which can be mistaken for multiple independent clauses.",
+        "distractor2": "The sentence is a complex sentence because it describes a detailed action, which might seem complex due to the descriptive elements.",
+        "distractor3": "The sentence is a compound-complex sentence because it seems to have multiple parts, which might be confused with multiple clauses."
+    }
+]

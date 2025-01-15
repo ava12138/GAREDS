@@ -1,0 +1,9 @@
+[
+    {
+        "question": "What do these two changes have in common?\ncompost rotting\na piece of apple turning brown",
+        "correct_answer": "Both are chemical changes.",
+        "distractor1": "Both compost rotting and a piece of apple turning brown are examples of physical changes because they involve the breakdown of matter without changing the type of matter.",
+        "distractor2": "Both compost rotting and a piece of apple turning brown are examples of changes that conserve mass, which is the primary characteristic of physical changes.",
+        "distractor3": "Both compost rotting and a piece of apple turning brown are examples of changes that involve heating or cooling, which causes the changes to happen."
+    }
+]
