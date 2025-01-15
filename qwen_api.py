@@ -1,3 +1,4 @@
+import dis
 import os
 import json
 from pandas import qcut
@@ -8,37 +9,30 @@ from PromptFramwork import PromptFramework as pf
 from utils import format_question_output, format_rationale_output, format_distractor_output
 
 with open('./config/api.yaml', 'r') as file:
-    config = yaml.safe_load(file)
+    api_config = yaml.safe_load(file)
+    api_key = api_config['api_key']
+    api_model = api_config['model']
 
-api_key = config['api_key']
-api_model = config['model']
+with open('./config/config.yaml', 'r') as file:
+    config = yaml.safe_load(file)
+    temperature = config['temperature']
+    top_p = config['top_p']
+    presence_penalty = config['presence_penalty']
+
+with open('./config/principle.json', 'r') as file:
+    principles_config = json.load(file)
+    distractor_principle = principles_config['distractor_principle']
+
 client = OpenAI(
         api_key=api_key, 
         base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
     )
 
-file_path_sciq = os.path.expanduser('/data/lzx/sciq/train.json')
-with open(file_path_sciq, 'r') as file:
-    data = json.load(file)
+# file_path_sciq = os.path.expanduser('/data/lzx/sciq/train.json')
+# with open(file_path_sciq, 'r') as file:
+#     data = json.load(file)
 
-question_examples = [data[0], data[1]]
-
-distractor_principle = [
-    'Confusing similar concepts: This principle leverages the use of seemingly related but actually incorrect information to test the examinee\'s ability to carefully analyze details and distinguish between similar concepts, ensuring their memory and comprehension are accurate.',
-    'Answering irrelevant questions: This principle introduces distractors containing information that is irrelevant to the question stem but appears plausible on the surface, aiming to test the examinee\'s ability to stay focused on the real problem and avoid being misled.',
-    'Vague memories: This principle leverages the examinee\'s incomplete or imprecise recollection of learned concepts, facts, or processes to design distractors. The goal is to test the examinee\'s ability to discern between accurate information and distorted or partially correct recollections.',
-    'Concept substitution: This principle involves replacing the core concepts in the question stem with similar but incorrect concepts to test the examinee\'s deep understanding of the topic and their ability to recognize subtle differences.',
-    'Reversing the primary and secondary relationships: This principle modifies the logical structure of the question by reversing primary and secondary relationships, such as cause and effect, to test the examinee\'s judgment and understanding of the connections between concepts.',
-    'Over-detailing or generalization: This principle provides distractors with excessive detail or oversimplified generalizations, aiming to challenge the examinee\'s ability to identify the core idea and avoid being overwhelmed by irrelevant information.'
-]
-
-
-
-
-# 设置参数
-temperature = 1
-top_p = 1
-presence_penalty = 0.0
+# question_examples = [data[0], data[1]]
 
 # 定义函数来获取响应
 def get_response(prompt):
@@ -102,8 +96,8 @@ def append_to_output_file(output_file, data):
         with open(output_file, 'w') as f:
             json.dump([data], f, indent=4)
 # 示例用法
-test_filename = "./evaluation/test.json"
-output_filename = "./evaluation/output_dg.json"
+test_filename = "./data_divided/sciqa-test-language_science.json"
+output_filename = "./output/output_dg-sciqa-ls.json"
 
 # 逐条读取和处理测试集
 for question_data in read_test_data_iter(test_filename):
@@ -114,16 +108,14 @@ for question_data in read_test_data_iter(test_filename):
     # print("题目信息:", questiondata)
     
     rg_prompt = pf.producePrompt("rg", question_data, distractor_principle)
-    print("观察rg的prompt:\n", rg_prompt)
     r = get_response(rg_prompt)
     print("错误推理:\n", r)
-    
+
     example = format_rationale_output(r)
-    print("观察dg的example:\n", example)
     dg_prompt = pf.producePrompt("dg", question_data, example)
     print("观察dg的prompt:\n", dg_prompt)
     d = get_response(dg_prompt)
-    print("干扰项:\n", d)
+
     extracted_distractors = format_distractor_output(d)
     print("提取的干扰项:", extracted_distractors)
     # 将结果打包为一个JSON对象

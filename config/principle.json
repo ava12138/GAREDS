@@ -1,0 +1,10 @@
+{
+    "distractor_principle": [
+        "Confusing similar concepts: This principle leverages the use of seemingly related but actually incorrect information to test the examinee's ability to carefully analyze details and distinguish between similar concepts, ensuring their memory and comprehension are accurate.",
+        "Answering irrelevant questions: This principle introduces distractors containing information that is irrelevant to the question stem but appears plausible on the surface, aiming to test the examinee's ability to stay focused on the real problem and avoid being misled.",
+        "Vague memories: This principle leverages the examinee's incomplete or imprecise recollection of learned concepts, facts, or processes to design distractors. The goal is to test the examinee's ability to discern between accurate information and distorted or partially correct recollections.",
+        "Concept substitution: This principle involves replacing the core concepts in the question stem with similar but incorrect concepts to test the examinee's deep understanding of the topic and their ability to recognize subtle differences.",
+        "Reversing the primary and secondary relationships: This principle modifies the logical structure of the question by reversing primary and secondary relationships, such as cause and effect, to test the examinee's judgment and understanding of the connections between concepts.",
+        "Over-detailing or generalization: This principle provides distractors with excessive detail or oversimplified generalizations, aiming to challenge the examinee's ability to identify the core idea and avoid being overwhelmed by irrelevant information."
+    ]
+}

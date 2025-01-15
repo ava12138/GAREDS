@@ -1,0 +1,16 @@
+[
+    {
+        "question": "Compounds that are capable of accepting electrons, such as o 2 or f2, are called what?",
+        "correct_answer": "oxidants",
+        "distractor1": "Reductants",
+        "distractor2": "Catalysts",
+        "distractor3": "Ions"
+    },
+    {
+        "question": "What term in biotechnology means a genetically exact copy of an organism?",
+        "correct_answer": "clone",
+        "distractor1": "Transgenic animal",
+        "distractor2": "Somatic cell",
+        "distractor3": "Chimera"
+    }
+]

@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+data_divided
 evaluation
 api.yaml
 # C extensions
