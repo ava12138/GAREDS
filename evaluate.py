@@ -4,34 +4,55 @@ import json
 import yaml
 import argparse
 from tqdm import tqdm
+from pro.utils.tokenizer import EnhancedTokenizer
 from rouge_score import rouge_scorer
-from nltk.translate.bleu_score import sentence_bleu
+from nltk.translate.bleu_score import sentence_bleu, SmoothingFunction
 from sentence_transformers import SentenceTransformer, util
 
+type_mapping = {
+    'lan': 'Language Science',
+    'nat': 'Natural Science',
+    'soc': 'Social Science'
+}
 
-def calculate_rouge_l(reference, hypothesis, context):
+def calculate_rouge_l(groundtruth, output , context):
     """改进的ROUGE-L计算，考虑上下文并返回百分比分数"""
-    context_reference = f"{context} {reference}"
-    context_hypothesis = f"{context} {hypothesis}"
+    text_groundtruth = f"{context} {groundtruth}"
+    text_output = f"{context} {output}"
     
-    scorer = rouge_scorer.RougeScorer(['rougeL'], use_stemmer=True)
-    score = scorer.score(context_reference, context_hypothesis)
-    
+    # 使用增强的分词器
+    tokenizer = EnhancedTokenizer()
+    scorer = rouge_scorer.RougeScorer(['rougeL'], use_stemmer=True, tokenizer=tokenizer)
+    score = scorer.score(text_output, text_groundtruth)
+
+ 
     # 转换为百分比形式
     return score['rougeL'].fmeasure * 100
 
-def calculate_context_bleu(reference, hypothesis, context):
-    """改进的BLEU计算，考虑上下文并返回百分比分数"""
-    weights = (0.25, 0.25, 0.25, 0.25)
-    reference_tokens = reference.split()
-    hypothesis_tokens = hypothesis.split()
+def calculate_context_bleu(groundtruth, output, context):
+    """改进的BLEU计算，使用平滑函数和预处理"""
+    # 使用增强的分词器预处理
+    tokenizer = EnhancedTokenizer()
     
-    context_tokens = context.split()
-    reference_with_context = context_tokens + reference_tokens
-    hypothesis_with_context = context_tokens + hypothesis_tokens
+    # 预处理并分词
+    groundtruth_tokens = tokenizer.tokenize(groundtruth)
+    output_tokens = tokenizer.tokenize(output)
+    context_tokens = tokenizer.tokenize(context)
     
-    # 转换为百分比形式
-    return sentence_bleu([reference_with_context], hypothesis_with_context, weights=weights) * 100
+    # 组合上下文
+    groundtruth_with_context = context_tokens + groundtruth_tokens
+    output_with_context = context_tokens + output_tokens
+    
+    # 使用平滑函数
+    weights = (0.4, 0.3, 0.2, 0.1)  # 调整n-gram权重
+    smoothing = SmoothingFunction().method1
+    
+    return sentence_bleu(
+        [groundtruth_with_context], 
+        output_with_context, 
+        weights=weights,
+        smoothing_function=smoothing
+    ) * 100
 
 def calculate_semantic_similarity(text1, text2, model):
     """计算两个文本的语义相似度"""
@@ -158,6 +179,7 @@ def main():
     parser = argparse.ArgumentParser(description="Evaluate distractors")
     parser.add_argument('-t', '--type', choices=['lan', 'nat', 'soc'], required=True, help="Type of test file to evaluate")
     args = parser.parse_args()
+    type_description = type_mapping.get(args.type, 'Unknown Type')  # 如果未找到类型，默认显示 'Unknown Type'
     
     with open('./config/config.yaml', 'r') as file:
         config = yaml.safe_load(file)
@@ -169,7 +191,7 @@ def main():
     
     results = evaluate_distractors(test_file, output_file)
     
-    print("\n=== Evaluation Results ===")
+    print(f"\n=== Evaluation Results Of {type_description}===")
     print(f"BLEU Score: {results['bleu_scores']:.4f}")
     print(f"ROUGE-L Score: {results['rouge_scores']:.4f}")
     # print(f"Novelty Score: {results['novelty_scores']:.4f}")

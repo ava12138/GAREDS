@@ -5,5 +5,1447 @@
         "distractor1": "Both compost rotting and a piece of apple turning brown are examples of physical changes because they involve the breakdown of matter without changing the type of matter.",
         "distractor2": "Both compost rotting and a piece of apple turning brown are examples of changes that conserve mass, which is the primary characteristic of physical changes.",
         "distractor3": "Both compost rotting and a piece of apple turning brown are examples of changes that involve heating or cooling, which causes the changes to happen."
+    },
+    {
+        "question": "What do these two changes have in common?\ncompost rotting\na piece of apple turning brown",
+        "correct_answer": "Both are chemical changes.",
+        "distractor1": "Both compost rotting and a piece of apple turning brown are examples of physical changes because they involve changes in appearance but not in the type of matter.",
+        "distractor2": "Both compost rotting and a piece of apple turning brown are examples of biological changes, where microorganisms break down the organic matter.",
+        "distractor3": "Both compost rotting and a piece of apple turning brown are examples of changes that involve heating or cooling, which are common causes of chemical changes."
+    },
+    {
+        "question": "What do these two changes have in common?\nbutter melting on a hot day\nmixing sand and water",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both butter melting on a hot day and mixing sand and water are chemical changes because they involve substances interacting with each other.",
+        "distractor2": "Both butter melting on a hot day and mixing sand and water result in a change of state, such as from solid to liquid.",
+        "distractor3": "Both butter melting on a hot day and mixing sand and water involve a change in temperature, which is a chemical change."
+    },
+    {
+        "question": "Select the reptile.",
+        "correct_answer": "Chinese alligator",
+        "distractor1": "The Komodo dragon",
+        "distractor2": "The blue whale",
+        "distractor3": "The crocodile"
+    },
+    {
+        "question": "How long is a hiking trail?",
+        "correct_answer": "4 kilometers",
+        "distractor1": "The hiking trail is 4 meters long.",
+        "distractor2": "The hiking trail is as long as the Sydney Harbour Bridge.",
+        "distractor3": "The hiking trail is about 16 centimeters long."
+    },
+    {
+        "question": "What do these two changes have in common?\ndry ice sublimating and becoming a gas\nburning a marshmallow over a campfire",
+        "correct_answer": "Both are caused by heating.",
+        "distractor1": "Both changes involve a phase transition from solid to gas and are physical changes.",
+        "distractor2": "Both changes involve the transformation of organic matter into gases.",
+        "distractor3": "Both changes result in the formation of new molecules."
+    },
+    {
+        "question": "Select the vertebrate.",
+        "correct_answer": "chinchilla",
+        "distractor1": "A chinchilla is an invertebrate because it has a soft body, which is a characteristic of some invertebrates.",
+        "distractor2": "A chinchilla is a vertebrate because it can jump very high, which is unrelated to the presence of a backbone.",
+        "distractor3": "A chinchilla is an invertebrate because it has a complex system of muscles and tendons that allow it to move without needing a backbone."
+    },
+    {
+        "question": "What do these two changes have in common?\na slice of banana turning brown\nchicken cooking in an oven",
+        "correct_answer": "Both are chemical changes.",
+        "distractor1": "Both a slice of banana turning brown and chicken cooking in an oven are examples of physical changes because they involve changes in appearance without altering the chemical structure of the molecules.",
+        "distractor2": "Both a slice of banana turning brown and chicken cooking in an oven involve changes in state, such as from solid to liquid, which are examples of physical changes.",
+        "distractor3": "Both a slice of banana turning brown and chicken cooking in an oven are examples of biological changes, where enzymes and microorganisms play a role in the transformation."
+    },
+    {
+        "question": "Select the plant.",
+        "correct_answer": "Ivy has star-shaped leaves.",
+        "distractor1": "Ivy has heart-shaped leaves.",
+        "distractor2": "Ivy can move around like animals.",
+        "distractor3": "Ivy has needle-like leaves."
+    },
+    {
+        "question": "Select the vertebrate.",
+        "correct_answer": "wombat",
+        "distractor1": "A wombat is an invertebrate because it has a soft body covered by fur, which is similar to some invertebrates like mollusks.",
+        "distractor2": "A wombat is a vertebrate because it lives in Australia, which is a unique habitat for many vertebrates.",
+        "distractor3": "A wombat is a vertebrate because it has a strong exoskeleton, which helps protect its body."
+    },
+    {
+        "question": "What do these two changes have in common?\na piece of pizza rotting in a trashcan\nburning a candle",
+        "correct_answer": "Both are chemical changes.",
+        "distractor1": "Both a piece of pizza rotting in a trashcan and burning a candle are examples of physical changes because they involve changes in state, such as solid wax turning into liquid wax.",
+        "distractor2": "Both a piece of pizza rotting in a trashcan and burning a candle involve heating, which is why they are both considered physical changes.",
+        "distractor3": "Both a piece of pizza rotting in a trashcan and burning a candle involve complex biochemical reactions that result in the formation of new substances, but because they both involve heating, they are considered physical changes."
+    },
+    {
+        "question": "Select the reptile.",
+        "correct_answer": "American alligator",
+        "distractor1": "The American alligator is a mammal because it has scaly skin and lives on land, similar to some mammals like armadillos.",
+        "distractor2": "The American alligator is a fish because it lives in water and has scales, even though fish scales are different from reptile scales.",
+        "distractor3": "The American alligator is a reptile because it can swim in water, which is not directly related to its classification as a reptile."
+    },
+    {
+        "question": "Which organ takes in oxygen from the air?",
+        "correct_answer": "lungs",
+        "distractor1": "The trachea takes in oxygen from the air.",
+        "distractor2": "The heart takes in oxygen from the air.",
+        "distractor3": "The diaphragm takes in oxygen from the air."
+    },
+    {
+        "question": "What do these two changes have in common?\nbaking cookies\nwater evaporating from a puddle",
+        "correct_answer": "Both are caused by heating.",
+        "distractor1": "Both baking cookies and water evaporating from a puddle are examples of chemical changes because they both involve heating.",
+        "distractor2": "Both baking cookies and water evaporating from a puddle are examples of changes that conserve mass, which is why they both occur.",
+        "distractor3": "Both baking cookies and water evaporating from a puddle are caused by cooling, as both processes involve a decrease in temperature."
+    },
+    {
+        "question": "What do these two changes have in common?\nerosion caused by wind\nice melting in a cup",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both erosion caused by wind and ice melting in a cup involve changes in the state of matter, but they are chemical changes because they involve interactions with other substances (air and heat, respectively).",
+        "distractor2": "Both erosion caused by wind and ice melting in a cup result in the formation of new substances, such as sedimentary rock and liquid water, which are different from the original materials.",
+        "distractor3": "Both erosion caused by wind and ice melting in a cup are examples of changes that involve breaking chemical bonds, but the bonds reform in different ways, resulting in new substances."
+    },
+    {
+        "question": "Select the fish below.",
+        "correct_answer": "great white shark",
+        "distractor1": "Penguin",
+        "distractor2": "Dog",
+        "distractor3": "Dolphin"
+    },
+    {
+        "question": "What do these two changes have in common?\na piece of pear turning brown\nacid rain weathering a marble statue",
+        "correct_answer": "Both are chemical changes.",
+        "distractor1": "Both changes involve the transformation of matter, but one is a chemical change while the other is a physical change.",
+        "distractor2": "Both changes are examples of natural processes that occur in the environment, but the correct answer is that both are physical changes because they involve environmental interactions.",
+        "distractor3": "Both changes involve the interaction of substances with the environment, but only one is a chemical change. The pear turning brown is a chemical change, but acid rain weathering a marble statue is more like a physical change because the marble dissolves rather than reacts."
+    },
+    {
+        "question": "Which of the following organisms is the omnivore in this food web?",
+        "correct_answer": "black bear",
+        "distractor1": "The wolf is the omnivore in this food web.",
+        "distractor2": "The oak tree is the omnivore in this food web.",
+        "distractor3": "The deer is the omnivore in this food web."
+    },
+    {
+        "question": "What do these two changes have in common?\nplants making food from sunlight, air, and water\na penny tarnishing",
+        "correct_answer": "Both are chemical changes.",
+        "distractor1": "Both processes are physical changes because they involve changes in the state of matter, such as from solid to liquid or gas.",
+        "distractor2": "Both processes involve the use of sunlight, as sunlight is necessary for both photosynthesis and the tarnishing of a penny.",
+        "distractor3": "Both processes involve the breakdown of matter into simpler substances, like how plants break down sunlight into energy and how a penny breaks down into rust."
+    },
+    {
+        "question": "How long is a human front tooth?",
+        "correct_answer": "14 millimeters",
+        "distractor1": "14 centimeters",
+        "distractor2": "1 meter",
+        "distractor3": "10 millimeters"
+    },
+    {
+        "question": "How long is a sofa?",
+        "correct_answer": "3 meters",
+        "distractor1": "The length of the sofa is 3 kilometers.",
+        "distractor2": "The length of the Sydney Harbour Bridge is 3 meters.",
+        "distractor3": "The length of the sofa is 3 centimeters."
+    },
+    {
+        "question": "How long is a drinking straw?",
+        "correct_answer": "10 inches",
+        "distractor1": "10 feet",
+        "distractor2": "100 yards",
+        "distractor3": "10 meters"
+    },
+    {
+        "question": "How long is a rowboat?",
+        "correct_answer": "4 yards",
+        "distractor1": "4 feet",
+        "distractor2": "100 yards",
+        "distractor3": "4 miles"
+    },
+    {
+        "question": "What do these two changes have in common?\nrust forming on a bike frame\na penny tarnishing",
+        "correct_answer": "Both are chemical changes.",
+        "distractor1": "Both rust forming on a bike frame and a penny tarnishing are examples of physical changes because they involve changes in appearance without altering the chemical composition of the materials.",
+        "distractor2": "Both rust forming on a bike frame and a penny tarnishing are examples of changes that can be reversed by cleaning or polishing the surfaces.",
+        "distractor3": "Both rust forming on a bike frame and a penny tarnishing are examples of changes that involve heating or cooling to occur."
+    },
+    {
+        "question": "How long is a long-distance running race?",
+        "correct_answer": "42 kilometers",
+        "distractor1": "42 meters",
+        "distractor2": "26 miles",
+        "distractor3": "42 centimeters"
+    },
+    {
+        "question": "What do these two changes have in common?\nmaking paper from wood\nroasting a marshmallow over a campfire",
+        "correct_answer": "Both are chemical changes.",
+        "distractor1": "Both making paper from wood and roasting a marshmallow over a campfire are physical changes because they involve heating materials without altering their molecular structure.",
+        "distractor2": "Both making paper from wood and roasting a marshmallow over a campfire involve the use of heat, but the primary focus is on the change in state from solid to liquid.",
+        "distractor3": "Both making paper from wood and roasting a marshmallow over a campfire are physical changes because they involve the rearrangement of atoms without breaking chemical bonds."
+    },
+    {
+        "question": "What do these two changes have in common?\nmilk going sour\nbaking a loaf of bread",
+        "correct_answer": "Both are chemical changes.",
+        "distractor1": "Both milk going sour and baking a loaf of bread are examples of physical changes because they involve changes in the state of matter (liquid to solid for milk, dough to bread).",
+        "distractor2": "Both milk going sour and baking a loaf of bread involve the use of yeast, which causes the changes in both processes.",
+        "distractor3": "Both milk going sour and baking a loaf of bread are examples of phase changes, where the substance changes from one form to another but remains the same type of matter."
+    },
+    {
+        "question": "What do these two changes have in common?\nice melting in a cup\ndew appearing on grass in the morning",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both ice melting and dew formation involve chemical reactions that change the type of molecules present.",
+        "distractor2": "Both ice melting and dew formation are caused by heating.",
+        "distractor3": "Both ice melting and dew formation involve changes in the amount of mass present."
+    },
+    {
+        "question": "Which of the following organisms is the decomposer in this food web?",
+        "correct_answer": "bat star",
+        "distractor1": "The bat star is a primary consumer because it eats producers like algae.",
+        "distractor2": "The bat star is the top predator in the food web because it has no predators of its own.",
+        "distractor3": "The bat star is a producer because it can photosynthesize like plants."
+    },
+    {
+        "question": "Select the bird.",
+        "correct_answer": "emu",
+        "distractor1": "The ostrich",
+        "distractor2": "The penguin",
+        "distractor3": "The bat"
+    },
+    {
+        "question": "What do these two changes have in common?\nwater evaporating from a puddle\ndust settling out of the air",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both changes involve the transformation of the substance into a different type of matter, indicating a chemical change.",
+        "distractor2": "Both changes result in the formation of new molecules, which is a sign of a chemical reaction.",
+        "distractor3": "Water evaporating from a puddle is a chemical change because it involves the transformation of liquid water into water vapor, while dust settling out of the air is a physical change because the dust particles remain unchanged."
+    },
+    {
+        "question": "What do these two changes have in common?\nwater evaporating from a lake\nstretching a rubber band",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both water evaporating from a lake and stretching a rubber band are chemical changes because they involve changes in the state of matter.",
+        "distractor2": "Both water evaporating from a lake and stretching a rubber band result in a change in color.",
+        "distractor3": "Both water evaporating from a lake and stretching a rubber band involve a change in the mass of the matter."
+    },
+    {
+        "question": "How long is the Red Sea?",
+        "correct_answer": "2,240 kilometers",
+        "distractor1": "The Red Sea is 2,240 meters long.",
+        "distractor2": "The Red Sea is 1,000 meters wide at its widest point.",
+        "distractor3": "The Red Sea is about 2,240 feet long."
+    },
+    {
+        "question": "How long is an adult great white shark?",
+        "correct_answer": "5 meters",
+        "distractor1": "An adult great white shark is 5 kilometers long.",
+        "distractor2": "An adult great white shark weighs 5 tons.",
+        "distractor3": "An adult great white shark is 5 feet long."
+    },
+    {
+        "question": "How long is a tennis racket?",
+        "correct_answer": "55 centimeters",
+        "distractor1": "55 millimeters",
+        "distractor2": "1 meter",
+        "distractor3": "55 inches"
+    },
+    {
+        "question": "Select the mammal below.",
+        "correct_answer": "red kangaroo",
+        "distractor1": "The red kangaroo is a bird because it has strong hind legs and can jump long distances, similar to some birds like the emu.",
+        "distractor2": "The red kangaroo is classified as a reptile because it lives in hot, dry environments, which are commonly associated with reptiles.",
+        "distractor3": "The red kangaroo is a fish because it swims through the air when it jumps, which is somewhat similar to how fish swim in water."
+    },
+    {
+        "question": "Select the vertebrate.",
+        "correct_answer": "fire salamander",
+        "distractor1": "The fire salamander is an invertebrate because it has an exoskeleton, which is a common feature among invertebrates like insects and crustaceans.",
+        "distractor2": "The fire salamander is an invertebrate because it has soft, flexible bodies like other invertebrates such as jellyfish.",
+        "distractor3": "The fire salamander is an invertebrate because it has a segmented body, which is a feature found in some invertebrates like earthworms."
+    },
+    {
+        "question": "How long is a long-distance running race?",
+        "correct_answer": "15 miles",
+        "distractor1": "15 feet",
+        "distractor2": "100 yards",
+        "distractor3": "5 kilometers"
+    },
+    {
+        "question": "What do these two changes have in common?\na penny tarnishing\nan old sandwich rotting in a trashcan",
+        "correct_answer": "Both are chemical changes.",
+        "distractor1": "Both a penny tarnishing and an old sandwich rotting are examples of physical changes because they involve changes in appearance without altering the fundamental type of matter.",
+        "distractor2": "Both a penny tarnishing and an old sandwich rotting are examples of changes that can be easily reversed by cleaning or refrigeration.",
+        "distractor3": "Both a penny tarnishing and an old sandwich rotting are examples of phase changes, where the matter transitions between solid, liquid, and gas states without altering its chemical composition."
+    },
+    {
+        "question": "Select the liquid.",
+        "correct_answer": "water from a faucet",
+        "distractor1": "Water from a faucet is a solid because it can freeze into ice when the temperature is low enough.",
+        "distractor2": "Water from a faucet is a gas because it evaporates quickly when left in the open air.",
+        "distractor3": "Water from a faucet is a solid because it can be contained in a bottle."
+    },
+    {
+        "question": "Select the mammal.",
+        "correct_answer": "elephant seal",
+        "distractor1": "The penguin is a mammal because it has feathers and feeds its young.",
+        "distractor2": "The elephant seal is a mammal because it has scales and lays eggs.",
+        "distractor3": "The elephant seal is a mammal because it has gills and breathes underwater."
+    },
+    {
+        "question": "Select the invertebrate.",
+        "correct_answer": "luna moth",
+        "distractor1": "The luna moth is a vertebrate because it has wings, which are often associated with vertebrates like birds.",
+        "distractor2": "The luna moth is a mammal because it is a nocturnal animal, and many mammals are nocturnal.",
+        "distractor3": "The luna moth is a vertebrate because it has an exoskeleton, which is a feature of some invertebrates but mistakenly attributed to vertebrates here."
+    },
+    {
+        "question": "Select the animal.",
+        "correct_answer": "Orcas swim in the ocean.",
+        "distractor1": "Orcas are plants because they live in the ocean, and some plants also grow in water environments.",
+        "distractor2": "Orcas are fish because they swim in the ocean, and fish are often associated with swimming.",
+        "distractor3": "Orcas are a type of plant-like organism because they live in the ocean and plants also grow in water."
+    },
+    {
+        "question": "What do these two changes have in common?\nmixing chocolate syrup into milk\nstapling an envelope shut",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both actions involve the creation of new molecules through chemical reactions.",
+        "distractor2": "Both actions result in a permanent change that cannot be undone.",
+        "distractor3": "Both actions involve heating or cooling to achieve the change."
+    },
+    {
+        "question": "Select the living thing.",
+        "correct_answer": "rabbit",
+        "distractor1": "A tree",
+        "distractor2": "A rock",
+        "distractor3": "A cloud"
+    },
+    {
+        "question": "Which of the following organisms is the primary consumer in this food web?",
+        "correct_answer": "sea urchin",
+        "distractor1": "The sea urchin is a decomposer because it breaks down dead organic matter in the ecosystem.",
+        "distractor2": "The sea urchin is a top predator in the food web because it has no natural predators.",
+        "distractor3": "The sea urchin is a producer because it can create its own food through photosynthesis."
+    },
+    {
+        "question": "Select the mammal below.",
+        "correct_answer": "black howler",
+        "distractor1": "The black howler is a type of bird.",
+        "distractor2": "The black howler is a fish.",
+        "distractor3": "The black howler is a reptile."
+    },
+    {
+        "question": "What do these two changes have in common?\nbaking an apple pie\nplants making food from sunlight, air, and water",
+        "correct_answer": "Both are chemical changes.",
+        "distractor1": "Both baking an apple pie and plants making food from sunlight, air, and water are examples of physical changes because they involve heating and cooling processes.",
+        "distractor2": "Both baking an apple pie and plants making food from sunlight, air, and water involve the use of water, so they must be the same type of change.",
+        "distractor3": "Both baking an apple pie and plants making food from sunlight, air, and water are examples of nuclear changes because they involve energy transformations."
+    },
+    {
+        "question": "How long is a pen?",
+        "correct_answer": "18 centimeters",
+        "distractor1": "18 meters",
+        "distractor2": "1 kilometer",
+        "distractor3": "18 inches"
+    },
+    {
+        "question": "Select the liquid.",
+        "correct_answer": "water in a waterfall",
+        "distractor1": "Ice in a glacier is a liquid.",
+        "distractor2": "A rock in a river is a liquid.",
+        "distractor3": "Air in a balloon is a liquid."
+    },
+    {
+        "question": "How long is a bench?",
+        "correct_answer": "11 feet",
+        "distractor1": "The bench is 11 yards long.",
+        "distractor2": "The bench is 11 inches long.",
+        "distractor3": "The bench is about 10 feet long."
+    },
+    {
+        "question": "What can seeds look like?",
+        "correct_answer": "Seeds can be many shapes, colors, and sizes.",
+        "distractor1": "Seeds are always small and round.",
+        "distractor2": "Seeds are always found inside fruits.",
+        "distractor3": "Seeds are always green and leafy."
+    },
+    {
+        "question": "What do these two changes have in common?\ntearing a piece of paper\nstapling an envelope shut",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both tearing a piece of paper and stapling an envelope shut are chemical changes because they involve altering the structure of the paper and envelope.",
+        "distractor2": "Both tearing a piece of paper and stapling an envelope shut are examples of changes that can be reversed by applying heat.",
+        "distractor3": "Both tearing a piece of paper and stapling an envelope shut involve a change in the state of matter, similar to how water changes from liquid to ice."
+    },
+    {
+        "question": "How long is an ice skate?",
+        "correct_answer": "12 inches",
+        "distractor1": "The length of an ice skate is 12 feet.",
+        "distractor2": "The length of an ice skate is the same as the length of a football field.",
+        "distractor3": "The length of an ice skate is 12 yards."
+    },
+    {
+        "question": "Select the mammal below.",
+        "correct_answer": "wombat",
+        "distractor1": "The wombat is a reptile because it has a scaly skin texture and lays eggs, which are traits commonly associated with reptiles.",
+        "distractor2": "The wombat is a fish because it lives in burrows near water sources, which might suggest an aquatic lifestyle.",
+        "distractor3": "The wombat is an amphibian because it can live both on land and in water, even though this is not true for wombats."
+    },
+    {
+        "question": "Select the living thing.",
+        "correct_answer": "hedge maze",
+        "distractor1": "A hedge maze is a living thing because it is made up of plants, which are living organisms.",
+        "distractor2": "A hedge maze is a living thing because it can grow taller over time.",
+        "distractor3": "A hedge maze is a living thing because it needs water to survive."
+    },
+    {
+        "question": "What do these two changes have in common?\nbleaching clothes\na piece of apple turning brown",
+        "correct_answer": "Both are chemical changes.",
+        "distractor1": "Both bleaching clothes and a piece of apple turning brown are physical changes because they involve changes in appearance without altering the chemical composition of the substances.",
+        "distractor2": "Both bleaching clothes and a piece of apple turning brown are examples of changes that can be reversed by cooling the substances involved.",
+        "distractor3": "Both bleaching clothes and a piece of apple turning brown involve complex biochemical reactions that include the release of gases, the absorption of light, and changes in the molecular structure, making them chemical changes."
+    },
+    {
+        "question": "What do these two changes have in common?\na piece of pizza rotting in a trashcan\ncooking an egg",
+        "correct_answer": "Both are chemical changes.",
+        "distractor1": "Both a piece of pizza rotting in a trashcan and cooking an egg are examples of physical changes because they involve changes in the state of matter (solid to liquid or vice versa).",
+        "distractor2": "Both a piece of pizza rotting in a trashcan and cooking an egg involve heating, which is the primary reason for the changes occurring.",
+        "distractor3": "Both a piece of pizza rotting in a trashcan and cooking an egg are examples of biological changes, as they involve organic matter and living processes."
+    },
+    {
+        "question": "Select the chemical formula for this molecule.",
+        "correct_answer": "H2O2",
+        "distractor1": "BCl\u2082",
+        "distractor2": "4 atoms",
+        "distractor3": "BCl"
+    },
+    {
+        "question": "Select the living thing.",
+        "correct_answer": "cabbage in a field",
+        "distractor1": "A plastic plant in a field",
+        "distractor2": "A tractor in a field",
+        "distractor3": "A rock in a field"
+    },
+    {
+        "question": "Which of the following organisms is the secondary consumer in this food web?",
+        "correct_answer": "kelp bass",
+        "distractor1": "Kelp",
+        "distractor2": "Sea Urchin",
+        "distractor3": "Small Fish that Eat Kelp"
+    },
+    {
+        "question": "Select the vertebrate.",
+        "correct_answer": "chameleon",
+        "distractor1": "A chameleon is an invertebrate because it has a soft body, similar to other invertebrates like jellyfish.",
+        "distractor2": "A chameleon is not a vertebrate because it can change its color, which is a characteristic of some invertebrates like octopuses.",
+        "distractor3": "A chameleon is an invertebrate because it has an exoskeleton, which is a common feature among invertebrates."
+    },
+    {
+        "question": "What do these two changes have in common?\nbaking cookies\na piece of avocado turning brown",
+        "correct_answer": "Both are chemical changes.",
+        "distractor1": "Both baking cookies and a piece of avocado turning brown are examples of physical changes because the substances involved remain the same before and after the changes.",
+        "distractor2": "Both baking cookies and a piece of avocado turning brown involve changes in temperature, which is the primary reason for the changes observed.",
+        "distractor3": "Both baking cookies and a piece of avocado turning brown are examples of biological changes, as they involve living organisms or their products."
+    },
+    {
+        "question": "Select the fish below.",
+        "correct_answer": "piranha",
+        "distractor1": "salmon",
+        "distractor2": "shark",
+        "distractor3": "goldfish"
+    },
+    {
+        "question": "Which of the following organisms is the producer in this food web?",
+        "correct_answer": "silver maple",
+        "distractor1": "The silver maple is the primary consumer because it eats other organisms to obtain energy.",
+        "distractor2": "The silver maple is a decomposer because it breaks down dead organic matter.",
+        "distractor3": "The silver maple is a secondary consumer because it eats primary consumers like insects."
+    },
+    {
+        "question": "What do these two changes have in common?\nan antacid tablet reacting with water\nburning food on a stove",
+        "correct_answer": "Both are chemical changes.",
+        "distractor1": "Both an antacid tablet reacting with water and burning food on a stove are examples of physical changes because the matter involved remains the same before and after the changes.",
+        "distractor2": "Both an antacid tablet reacting with water and burning food on a stove involve heating as the primary cause of the changes.",
+        "distractor3": "Both an antacid tablet reacting with water and burning food on a stove result in a change of state, such as from solid to liquid or gas."
+    },
+    {
+        "question": "What do these two changes have in common?\ncarving a piece of wood\nsewing an apron",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both carving a piece of wood and sewing an apron are chemical changes because they involve altering the material's appearance.",
+        "distractor2": "Both carving a piece of wood and sewing an apron are activities that require the use of tools, so they must be chemical changes.",
+        "distractor3": "Both carving a piece of wood and sewing an apron involve some kind of change, but since we can't remember exactly what type, they must be chemical changes."
+    },
+    {
+        "question": "Select the fish below.",
+        "correct_answer": "tiger shark",
+        "distractor1": "dolphin",
+        "distractor2": "eagle",
+        "distractor3": "crocodile"
+    },
+    {
+        "question": "Select the chemical formula for this molecule.",
+        "correct_answer": "BF3",
+        "distractor1": "BO3",
+        "distractor2": "B3Cl",
+        "distractor3": "BH3"
+    },
+    {
+        "question": "Select the invertebrate.",
+        "correct_answer": "leaf-curling spider",
+        "distractor1": "The leaf-curling spider is a vertebrate because it has a hard outer covering, which is similar to a backbone.",
+        "distractor2": "The leaf-curling spider is a mammal because it has fur and produces milk for its young.",
+        "distractor3": "The leaf-curling spider is a vertebrate because it has an exoskeleton, which is a type of backbone."
+    },
+    {
+        "question": "How long is a basketball court?",
+        "correct_answer": "23 meters",
+        "distractor1": "23 kilometers",
+        "distractor2": "23 centimeters",
+        "distractor3": "23 feet"
+    },
+    {
+        "question": "How long is an ice skate?",
+        "correct_answer": "11 inches",
+        "distractor1": "The length of an ice skate is 11 feet.",
+        "distractor2": "The length of a football field is 100 yards.",
+        "distractor3": "The length of an ice skate is 11 yards."
+    },
+    {
+        "question": "How long is a pen?",
+        "correct_answer": "15 centimeters",
+        "distractor1": "15 meters",
+        "distractor2": "15 inches",
+        "distractor3": "15 millimeters"
+    },
+    {
+        "question": "What do these two changes have in common?\nrust forming on a metal gate\nsaliva breaking down a piece of bread",
+        "correct_answer": "Both are chemical changes.",
+        "distractor1": "Both rust forming on a metal gate and saliva breaking down a piece of bread are examples of physical changes because they involve changes in the appearance of the substances.",
+        "distractor2": "Both rust forming on a metal gate and saliva breaking down a piece of bread are examples of changes that conserve mass, but this does not necessarily mean they are chemical changes.",
+        "distractor3": "Both rust forming on a metal gate and saliva breaking down a piece of bread involve water, so they must be chemical changes because water is involved in both processes."
+    },
+    {
+        "question": "How long is the Great Wall of China?",
+        "correct_answer": "21,000 kilometers",
+        "distractor1": "The Great Wall of China is 21,000 meters long.",
+        "distractor2": "The Great Wall of China is 21,000 feet long.",
+        "distractor3": "The Great Wall of China is 2,100 kilometers long."
+    },
+    {
+        "question": "What do these two changes have in common?\nbutter melting on a hot day\ncooking an egg",
+        "correct_answer": "Both are caused by heating.",
+        "distractor1": "Both changes are examples of chemical changes because they involve heating.",
+        "distractor2": "Both changes involve the transformation of matter from one phase to another, such as solid to gas.",
+        "distractor3": "Both changes are caused by cooling, which results in a change of state or composition."
+    },
+    {
+        "question": "How long is a ladybug?",
+        "correct_answer": "8 millimeters",
+        "distractor1": "8 centimeters",
+        "distractor2": "About the same as the length of a red fox",
+        "distractor3": "1 millimeter"
+    },
+    {
+        "question": "How long is a grain of rice?",
+        "correct_answer": "3 millimeters",
+        "distractor1": "3 centimeters",
+        "distractor2": "3 meters",
+        "distractor3": "3 inches"
+    },
+    {
+        "question": "What do these two changes have in common?\nbeating an egg\nmixing lettuce and salad dressing",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both beating an egg and mixing lettuce and salad dressing are chemical changes because they involve combining different substances to form new molecules.",
+        "distractor2": "Both beating an egg and mixing lettuce and salad dressing result in changes of state, such as from liquid to solid.",
+        "distractor3": "Both beating an egg and mixing lettuce and salad dressing involve heating or cooling, which causes chemical changes."
+    },
+    {
+        "question": "What do these two changes have in common?\na copper statue turning green\nfiring a clay pot in a hot kiln",
+        "correct_answer": "Both are chemical changes.",
+        "distractor1": "Both changes are physical changes because the appearance of the objects changes but their basic molecular structure remains the same.",
+        "distractor2": "Both changes involve heating, but the copper statue turning green is due to exposure to sunlight, and the clay pot is fired in a kiln to harden it.",
+        "distractor3": "Both changes involve a change in state, such as melting or vaporizing, where the substance transitions from one phase to another without altering its chemical composition."
+    },
+    {
+        "question": "Select the living thing.",
+        "correct_answer": "yak",
+        "distractor1": "A mountain is a living thing.",
+        "distractor2": "A car is a living thing.",
+        "distractor3": "A cloud is a living thing."
+    },
+    {
+        "question": "What do these two changes have in common?\nsediment settling to the bottom of a muddy puddle\ndry ice sublimating and becoming a gas",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both changes involve the breaking of chemical bonds, but they do not form new molecules.",
+        "distractor2": "Both changes result in the formation of new substances that were not present before the change.",
+        "distractor3": "Both changes involve heating or cooling to occur."
+    },
+    {
+        "question": "Select the living thing.",
+        "correct_answer": "fig tree",
+        "distractor1": "A plastic plant",
+        "distractor2": "A rock",
+        "distractor3": "A computer"
+    },
+    {
+        "question": "What do these two changes have in common?\nbaking an apple pie\nusing polish to remove tarnish from a silver spoon",
+        "correct_answer": "Both are chemical changes.",
+        "distractor1": "Both baking an apple pie and using polish to remove tarnish from a silver spoon are examples of physical changes because they involve changes in state, such as melting or dissolving.",
+        "distractor2": "Both baking an apple pie and using polish to remove tarnish from a silver spoon involve heating as a necessary step to achieve the desired outcome.",
+        "distractor3": "Both baking an apple pie and using polish to remove tarnish from a silver spoon are examples of biological changes because they involve living organisms or organic materials."
+    },
+    {
+        "question": "What do these two changes have in common?\nsediment settling to the bottom of a muddy puddle\nan iceberg melting slowly",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both changes involve chemical reactions because the molecules undergo rearrangement during the settling and melting processes.",
+        "distractor2": "Both changes involve the breaking of chemical bonds because the sediment settling and the melting ice require energy to rearrange the molecules.",
+        "distractor3": "Both changes are caused by heating because the sediment settles due to temperature differences and the iceberg melts due to heat."
+    },
+    {
+        "question": "Select the bird below.",
+        "correct_answer": "albatross",
+        "distractor1": "penguin",
+        "distractor2": "mammal",
+        "distractor3": "avian species"
+    },
+    {
+        "question": "How long is a soccer field?",
+        "correct_answer": "370 feet",
+        "distractor1": "100 yards",
+        "distractor2": "100 meters",
+        "distractor3": "300 feet"
+    },
+    {
+        "question": "What do these two changes have in common?\na puddle freezing into ice on a cold night\nmixing sand and water",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both changes involve a chemical reaction because they result in new substances.",
+        "distractor2": "Both changes involve heating or cooling.",
+        "distractor3": "Both changes involve complex molecular interactions that alter the chemical properties of the substances involved."
+    },
+    {
+        "question": "How long is a raisin?",
+        "correct_answer": "11 millimeters",
+        "distractor1": "11 centimeters",
+        "distractor2": "About the same as the length of a pencil",
+        "distractor3": "1 millimeter"
+    },
+    {
+        "question": "What do these two changes have in common?\nmixing sand and water\ncarving a piece of wood",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both mixing sand and water and carving a piece of wood are examples of chemical changes because they involve interactions between different materials.",
+        "distractor2": "Both mixing sand and water and carving a piece of wood result in changes in the mass of the materials involved.",
+        "distractor3": "Both mixing sand and water and carving a piece of wood involve heating or cooling to achieve the change."
+    },
+    {
+        "question": "Select the solid.",
+        "correct_answer": "screwdriver",
+        "distractor1": "A screwdriver is a liquid because it can be used to stir liquids, which might confuse its function with its state of matter.",
+        "distractor2": "A screwdriver is a gas because it is often used in environments where gases are present, such as in workshops with air compressors.",
+        "distractor3": "A screwdriver is a liquid because it can be bent or broken, which might incorrectly suggest it can change shape like a liquid."
+    },
+    {
+        "question": "How long is a sunflower seed?",
+        "correct_answer": "12 millimeters",
+        "distractor1": "12 centimeters",
+        "distractor2": "The length of the pencil is 12 millimeters",
+        "distractor3": "1 meter"
+    },
+    {
+        "question": "How long is a caterpillar?",
+        "correct_answer": "21 millimeters",
+        "distractor1": "21 centimeters",
+        "distractor2": "About the same as the length of a pencil",
+        "distractor3": "21 inches"
+    },
+    {
+        "question": "What do these two changes have in common?\nbaking a loaf of bread\nmelting glass",
+        "correct_answer": "Both are caused by heating.",
+        "distractor1": "Both baking a loaf of bread and melting glass involve changes in the chemical composition of the substances.",
+        "distractor2": "Both baking a loaf of bread and melting glass involve a change in state from liquid to solid.",
+        "distractor3": "Both baking a loaf of bread and melting glass are caused by cooling."
+    },
+    {
+        "question": "How long is an eyelash?",
+        "correct_answer": "8 millimeters",
+        "distractor1": "8 centimeters",
+        "distractor2": "8 inches",
+        "distractor3": "8 meters"
+    },
+    {
+        "question": "Select the living thing.",
+        "correct_answer": "raspberry bush",
+        "distractor1": "A plastic plant",
+        "distractor2": "A car",
+        "distractor3": "A rock"
+    },
+    {
+        "question": "How long is a human front tooth?",
+        "correct_answer": "11 millimeters",
+        "distractor1": "11 centimeters",
+        "distractor2": "1 millimeter",
+        "distractor3": "11 meters"
+    },
+    {
+        "question": "What do these two changes have in common?\nsnails growing shells\nphotosynthesis",
+        "correct_answer": "Both are chemical changes.",
+        "distractor1": "Both snails growing shells and photosynthesis involve physical changes because they result in visible changes in the organisms.",
+        "distractor2": "Both snails growing shells and photosynthesis are examples of changes that occur in aquatic environments.",
+        "distractor3": "Both snails growing shells and photosynthesis involve the release of carbon dioxide as a byproduct."
+    },
+    {
+        "question": "Select the reptile.",
+        "correct_answer": "Nile crocodile",
+        "distractor1": "The Nile crocodile is a mammal because it lives near water and can swim well.",
+        "distractor2": "The Nile crocodile is an amphibian because many amphibians are found in Africa.",
+        "distractor3": "The Nile crocodile is a bird because it lays eggs and can be found near rivers."
+    },
+    {
+        "question": "What do these two changes have in common?\nmixing sand and gravel\ncrushing a mineral into powder",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both are chemical changes because they involve breaking down materials into smaller pieces, which is similar to how chemical bonds are broken in chemical reactions.",
+        "distractor2": "Both result in a change of state, such as from solid to liquid, because both processes involve the transformation of materials.",
+        "distractor3": "Both are examples of nuclear changes because they involve the alteration of the internal structure of the materials."
+    },
+    {
+        "question": "What do these two changes have in common?\na puddle freezing into ice on a cold night\nbeating an egg",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both a puddle freezing into ice and beating an egg are chemical changes because they involve temperature changes and molecular rearrangements.",
+        "distractor2": "Both a puddle freezing into ice and beating an egg result in the formation of new substances with different chemical properties.",
+        "distractor3": "Both a puddle freezing into ice and beating an egg involve complex molecular interactions, so they are both examples of chemical changes that alter the substance's fundamental properties."
+    },
+    {
+        "question": "Select the mammal below.",
+        "correct_answer": "human",
+        "distractor1": "Birds",
+        "distractor2": "Fish",
+        "distractor3": "Reptiles"
+    },
+    {
+        "question": "In this food web, which organism contains matter that eventually moves to the earthworm?",
+        "correct_answer": "bear sedge",
+        "distractor1": "The bear sedge is a type of animal that competes with the earthworm for food resources.",
+        "distractor2": "The earthworm is a primary consumer that feeds directly on the bear sedge.",
+        "distractor3": "The bear sedge is a type of fungi that decomposes dead organisms, and its matter moves to the earthworm."
+    },
+    {
+        "question": "Select the invertebrate.",
+        "correct_answer": "mosquito",
+        "distractor1": "A mosquito is a vertebrate because it has an exoskeleton, which is similar to the backbone in vertebrates.",
+        "distractor2": "A mosquito is a vertebrate because it can fly, and flying animals are always vertebrates.",
+        "distractor3": "A mosquito is a vertebrate because it has a complex body structure with many specialized organs, and all animals with complex body structures are vertebrates."
+    },
+    {
+        "question": "Select the part whose main job is to help a plant cell make proteins.",
+        "correct_answer": "endoplasmic reticulum",
+        "distractor1": "The Golgi apparatus",
+        "distractor2": "The vacuole",
+        "distractor3": "The chloroplasts"
+    },
+    {
+        "question": "Select the part that contains the information that a plant cell uses for growth and activities.",
+        "correct_answer": "chromosomes",
+        "distractor1": "Chloroplasts",
+        "distractor2": "Golgi apparatus",
+        "distractor3": "Cytoplasm"
+    },
+    {
+        "question": "What do these two changes have in common?\nusing polish to remove tarnish from a silver spoon\na piece of avocado turning brown",
+        "correct_answer": "Both are chemical changes.",
+        "distractor1": "Both using polish to remove tarnish from a silver spoon and a piece of avocado turning brown are physical changes because they involve changes in appearance without altering the chemical composition of the substances.",
+        "distractor2": "Both using polish to remove tarnish from a silver spoon and a piece of avocado turning brown involve heating or cooling processes, which cause the changes observed.",
+        "distractor3": "Both using polish to remove tarnish from a silver spoon and a piece of avocado turning brown are due to changes in state, such as solid to liquid or liquid to gas, which are types of physical changes."
+    },
+    {
+        "question": "Select the vertebrate.",
+        "correct_answer": "rainbow boa",
+        "distractor1": "A rainbow boa is an invertebrate because it is a type of snake, and some snakes do not have backbones.",
+        "distractor2": "A rainbow boa is a type of fish because it lives in water and has scales.",
+        "distractor3": "A rainbow boa is an invertebrate because it has an exoskeleton like other invertebrates."
+    },
+    {
+        "question": "How long is a potato?",
+        "correct_answer": "16 centimeters",
+        "distractor1": "The length of a potato is 16 millimeters.",
+        "distractor2": "The length of a potato is about 1 meter.",
+        "distractor3": "The length of a potato is about 16 grams."
+    },
+    {
+        "question": "Select the bird.",
+        "correct_answer": "Steller's sea eagle",
+        "distractor1": "Bald Eagle",
+        "distractor2": "Penguin",
+        "distractor3": "Ostrich"
+    },
+    {
+        "question": "What do these two changes have in common?\nsewing an apron\nmixing lettuce and salad dressing",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both sewing an apron and mixing lettuce and salad dressing are chemical changes because they involve combining different materials to create something new.",
+        "distractor2": "Both sewing an apron and mixing lettuce and salad dressing involve heating or cooling processes, which are essential for chemical changes.",
+        "distractor3": "Both sewing an apron and mixing lettuce and salad dressing involve breaking chemical bonds, which is why they are considered chemical changes."
+    },
+    {
+        "question": "How long is a soccer field?",
+        "correct_answer": "390 feet",
+        "distractor1": "100 yards",
+        "distractor2": "390 yards",
+        "distractor3": "100 feet"
+    },
+    {
+        "question": "Select the vertebrate.",
+        "correct_answer": "snowy owl",
+        "distractor1": "The snowy owl is an invertebrate because it has feathers, which are similar to the exoskeletons found in some invertebrates.",
+        "distractor2": "The snowy owl is a vertebrate because it can fly, which is a characteristic of all flying animals, including both vertebrates and invertebrates.",
+        "distractor3": "The snowy owl is an invertebrate because it has a soft body, which is a feature commonly associated with invertebrates, but not all invertebrates have soft bodies."
+    },
+    {
+        "question": "Select the plant.",
+        "correct_answer": "Banana trees have large leaves.",
+        "distractor1": "Banana trees are animals because they grow large leaves, which some animals also have.",
+        "distractor2": "Banana trees are a type of animal because they can grow in the ground, just like some animals that live underground.",
+        "distractor3": "Banana trees are plants because they can move around like animals, which is a characteristic of living things."
+    },
+    {
+        "question": "Select the liquid.",
+        "correct_answer": "rain",
+        "distractor1": "Rain is a solid because it can freeze and become hail or snow, which are forms of solid water.",
+        "distractor2": "Rain is a gas because air, which is a gas, is often present during rainfall.",
+        "distractor3": "Rain is a gas because it evaporates from the ground and rises into the atmosphere, which is a characteristic of gases."
+    },
+    {
+        "question": "Select the liquid.",
+        "correct_answer": "vinegar",
+        "distractor1": "Water",
+        "distractor2": "Piece of Paper",
+        "distractor3": "Honey"
+    },
+    {
+        "question": "Select the bird below.",
+        "correct_answer": "penguin",
+        "distractor1": "Penguins are mammals",
+        "distractor2": "Penguins are reptiles",
+        "distractor3": "Penguins are fish"
+    },
+    {
+        "question": "What do these two changes have in common?\nwater evaporating from a puddle\nrain forming in a cloud",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both water evaporating from a puddle and rain forming in a cloud involve chemical reactions that change the molecular structure of water.",
+        "distractor2": "Both water evaporating from a puddle and rain forming in a cloud result in an increase in the total mass of water.",
+        "distractor3": "Both water evaporating from a puddle and rain forming in a cloud are examples of nuclear changes, where the atoms themselves are transformed."
+    },
+    {
+        "question": "What do these two changes have in common?\ncutting a piece of rope\npeeling a banana",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both cutting a piece of rope and peeling a banana are chemical changes because they result in smaller pieces of the original material.",
+        "distractor2": "Both cutting a piece of rope and peeling a banana involve changes in the state of matter from solid to liquid.",
+        "distractor3": "Both cutting a piece of rope and peeling a banana are examples of chemical changes because they involve heating the material."
+    },
+    {
+        "question": "Select the fish.",
+        "correct_answer": "bull shark",
+        "distractor1": "Dolphin",
+        "distractor2": "Penguin",
+        "distractor3": "Whale"
+    },
+    {
+        "question": "Select the mammal below.",
+        "correct_answer": "water buffalo",
+        "distractor1": "The water buffalo is a type of fish because it lives in water and can swim.",
+        "distractor2": "The water buffalo is a reptile because it has scaly skin.",
+        "distractor3": "The water buffalo is a bird because it is large and can be found in similar habitats as some birds."
+    },
+    {
+        "question": "What do these two changes have in common?\ncooking an egg\na penny tarnishing",
+        "correct_answer": "Both are chemical changes.",
+        "distractor1": "Both cooking an egg and a penny tarnishing are physical changes because they both involve changes in appearance without altering the fundamental type of matter.",
+        "distractor2": "Both cooking an egg and a penny tarnishing involve changes in temperature, so they must be caused by heating or cooling.",
+        "distractor3": "Both cooking an egg and a penny tarnishing are examples of changes in state, such as melting or freezing, where the type of matter remains the same."
+    },
+    {
+        "question": "How long is a bike path?",
+        "correct_answer": "2 miles",
+        "distractor1": "The bike path is 2 feet long.",
+        "distractor2": "The bike path is 100 yards long.",
+        "distractor3": "The bike path is 2 kilometers long."
+    },
+    {
+        "question": "What do these two changes have in common?\nerosion caused by wind\nbeating an egg",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both erosion caused by wind and beating an egg are chemical changes because they involve the transformation of matter into different substances.",
+        "distractor2": "Both erosion caused by wind and beating an egg involve the use of energy, which is the primary factor in determining whether a change is physical or chemical.",
+        "distractor3": "Both erosion caused by wind and beating an egg result in the formation of new molecules because they involve mixing different substances together."
+    },
+    {
+        "question": "What do these two changes have in common?\ndry ice sublimating and becoming a gas\nwater freezing into ice",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both dry ice sublimating and water freezing are examples of chemical changes because they involve changes in the state of matter, which might be mistaken for a chemical reaction.",
+        "distractor2": "Both dry ice sublimating and water freezing result in a decrease in mass because the substances are losing some of their material during the process.",
+        "distractor3": "Both dry ice sublimating and water freezing involve complex molecular rearrangements that result in the formation of entirely new substances."
+    },
+    {
+        "question": "What do these two changes have in common?\nbreaking a ceramic plate\nknitting yarn into a scarf",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both breaking a ceramic plate and knitting yarn into a scarf are chemical changes because they involve altering the appearance of the materials.",
+        "distractor2": "Both breaking a ceramic plate and knitting yarn into a scarf involve heating or cooling to change the state of the materials.",
+        "distractor3": "Both breaking a ceramic plate and knitting yarn into a scarf are changes where the type of matter changes, resulting in new substances."
+    },
+    {
+        "question": "Select the invertebrate.",
+        "correct_answer": "earthworm",
+        "distractor1": "A snail is an invertebrate because it has a shell, which is often mistaken for a backbone.",
+        "distractor2": "A fish is an invertebrate because it lives in water, which is an environment where many invertebrates also live.",
+        "distractor3": "A jellyfish is an invertebrate because it has a soft body, but it also has bones inside its body, making it a vertebrate."
+    },
+    {
+        "question": "What do these two changes have in common?\na banana getting ripe on the counter\nsaliva breaking down a piece of bread",
+        "correct_answer": "Both are chemical changes.",
+        "distractor1": "Both are physical changes because the substances involved undergo changes in state but not in molecular composition.",
+        "distractor2": "Both are examples of changes that conserve mass but do not involve any chemical reactions.",
+        "distractor3": "Both are examples of biological changes where living organisms are involved, rather than chemical changes."
+    },
+    {
+        "question": "Select the fish below.",
+        "correct_answer": "piranha",
+        "distractor1": "shark",
+        "distractor2": "eagle",
+        "distractor3": "crocodile"
+    },
+    {
+        "question": "What do these two changes have in common?\ngetting a haircut\nsawing a log in half",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both getting a haircut and sawing a log in half are chemical changes because they involve cutting and breaking down materials into smaller pieces.",
+        "distractor2": "Both getting a haircut and sawing a log in half involve using tools like scissors or saws, which are important for making the changes.",
+        "distractor3": "Both getting a haircut and sawing a log in half are biological changes because they involve altering the structure of living or once-living materials."
+    },
+    {
+        "question": "Select the vertebrate.",
+        "correct_answer": "whiptail lizard",
+        "distractor1": "The whiptail lizard is an invertebrate because it has an exoskeleton, which is a common feature among invertebrates.",
+        "distractor2": "The whiptail lizard is a vertebrate because it can live in both aquatic and terrestrial environments.",
+        "distractor3": "The whiptail lizard is an invertebrate because it has a soft body, similar to other invertebrates like jellyfish."
+    },
+    {
+        "question": "Select the solid.",
+        "correct_answer": "eraser",
+        "distractor1": "Juice",
+        "distractor2": "Air",
+        "distractor3": "Honey"
+    },
+    {
+        "question": "Select the bird below.",
+        "correct_answer": "barn owl",
+        "distractor1": "barn swallow",
+        "distractor2": "mammal",
+        "distractor3": "penguin"
+    },
+    {
+        "question": "Select the mammal below.",
+        "correct_answer": "koala",
+        "distractor1": "Koalas are birds because they live in trees and have feathers.",
+        "distractor2": "Koalas are reptiles because they can survive in hot climates.",
+        "distractor3": "Koalas are amphibians because they spend time both in trees and on the ground."
+    },
+    {
+        "question": "Select the vertebrate.",
+        "correct_answer": "harvest mouse",
+        "distractor1": "A harvest mouse is a vertebrate because it has an exoskeleton, which provides structural support similar to a backbone.",
+        "distractor2": "A harvest mouse is a vertebrate because it lives in grassy fields and can climb tall plants, which is an interesting fact about its habitat but irrelevant to its classification as a vertebrate.",
+        "distractor3": "A harvest mouse is a vertebrate because it has a segmented body, which is a characteristic of some invertebrates like earthworms but not of vertebrates."
+    },
+    {
+        "question": "Select the chemical formula for this molecule.",
+        "correct_answer": "PCl5",
+        "distractor1": "PCl5",
+        "distractor2": "NH4Cl",
+        "distractor3": "BCl3"
+    },
+    {
+        "question": "Select the amphibian below.",
+        "correct_answer": "red-spotted newt",
+        "distractor1": "The red-spotted newt is a reptile.",
+        "distractor2": "The red-spotted newt is a mammal.",
+        "distractor3": "The red-spotted newt is a fish."
+    },
+    {
+        "question": "How long is a tennis racket?",
+        "correct_answer": "26 inches",
+        "distractor1": "26 feet",
+        "distractor2": "100 yards",
+        "distractor3": "26 miles"
+    },
+    {
+        "question": "What do these two changes have in common?\nbreaking a ceramic plate\nmixing chocolate syrup into milk",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both breaking a ceramic plate and mixing chocolate syrup into milk are chemical changes because they involve the transformation of substances into new materials.",
+        "distractor2": "Both breaking a ceramic plate and mixing chocolate syrup into milk involve heating or cooling processes.",
+        "distractor3": "Both breaking a ceramic plate and mixing chocolate syrup into milk result in a change in the state of matter."
+    },
+    {
+        "question": "Select the invertebrate.",
+        "correct_answer": "atlas moth",
+        "distractor1": "The atlas moth is a vertebrate because it has wings, which are similar to the bones found in vertebrates.",
+        "distractor2": "The atlas moth is a mammal because it has fur-like scales on its wings.",
+        "distractor3": "The atlas moth is a vertebrate because it has an exoskeleton, which supports its body in the same way that a backbone does in vertebrates."
+    },
+    {
+        "question": "Select the fish below.",
+        "correct_answer": "mandarinfish",
+        "distractor1": "goldfish",
+        "distractor2": "mammal",
+        "distractor3": "dolphin"
+    },
+    {
+        "question": "Select the living thing.",
+        "correct_answer": "kelp",
+        "distractor1": "Kelp is a type of coral because both are found in marine environments, and coral is a living thing. Therefore, kelp is a living thing.",
+        "distractor2": "Kelp is often found in the ocean, which is a vast body of water. Since water is essential for life, kelp must be a living thing.",
+        "distractor3": "Kelp is a type of rock because it is often found attached to rocks in the ocean. Since rocks are not living things, kelp is not a living thing."
+    },
+    {
+        "question": "How long is a basketball court?",
+        "correct_answer": "29 yards",
+        "distractor1": "29 feet",
+        "distractor2": "100 yards",
+        "distractor3": "29 meters"
+    },
+    {
+        "question": "Which organ stores solid waste before it is released from the body?",
+        "correct_answer": "large intestine",
+        "distractor1": "The small intestine stores solid waste before it is released from the body.",
+        "distractor2": "The kidneys store solid waste before it is released from the body.",
+        "distractor3": "The stomach stores solid waste before it is released from the body."
+    },
+    {
+        "question": "Select the fish.",
+        "correct_answer": "manta ray",
+        "distractor1": "A dolphin",
+        "distractor2": "A penguin",
+        "distractor3": "A whale"
+    },
+    {
+        "question": "Select the amphibian below.",
+        "correct_answer": "horned frog",
+        "distractor1": "The horned frog is a reptile.",
+        "distractor2": "The horned frog is a bird.",
+        "distractor3": "The horned frog is a mammal."
+    },
+    {
+        "question": "What do these two changes have in common?\nsediment settling to the bottom of a muddy puddle\nshaking up salad dressing",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both changes involve the formation of new molecules due to chemical reactions.",
+        "distractor2": "Both changes result in the creation of new substances that were not present initially.",
+        "distractor3": "Both changes involve heating or cooling, which causes a change in state."
+    },
+    {
+        "question": "How long is the Golden Gate Bridge?",
+        "correct_answer": "2,750 meters",
+        "distractor1": "2,750 centimeters",
+        "distractor2": "2,750 kilometers",
+        "distractor3": "2,750 millimeters"
+    },
+    {
+        "question": "Which of the following organisms is the primary consumer in this food web?",
+        "correct_answer": "plainfin midshipman",
+        "distractor1": "The plainfin midshipman is a producer because it is at the beginning of the food web.",
+        "distractor2": "The plainfin midshipman is the top predator in the food web.",
+        "distractor3": "The plainfin midshipman is a decomposer because it breaks down dead organisms."
+    },
+    {
+        "question": "Select the mammal below.",
+        "correct_answer": "Tasmanian devil",
+        "distractor1": "The Tasmanian devil is a bird.",
+        "distractor2": "The Tasmanian devil is a fish.",
+        "distractor3": "The Tasmanian devil is a reptile."
+    },
+    {
+        "question": "What do these two changes have in common?\nrust forming on a metal gate\nburning food on a stove",
+        "correct_answer": "Both are chemical changes.",
+        "distractor1": "Both rust forming on a metal gate and burning food on a stove are examples of physical changes because they involve changes in appearance but not in the type of matter.",
+        "distractor2": "Both rust forming on a metal gate and burning food on a stove are examples of changes that can be reversed by cooling or heating.",
+        "distractor3": "Both rust forming on a metal gate and burning food on a stove are examples of changes of state, such as melting or freezing, where the type of matter remains the same."
+    },
+    {
+        "question": "What do these two changes have in common?\nmixing sand and water\nsediment settling to the bottom of a muddy puddle",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both mixing sand and water and sediment settling are examples of chemical changes because they involve substances interacting with each other.",
+        "distractor2": "Both processes involve water, so they must both be examples of chemical reactions involving water molecules.",
+        "distractor3": "Both processes involve changes in state, such as liquid turning into a solid, which is a type of physical change."
+    },
+    {
+        "question": "What do these two changes have in common?\nmelting wax\nknitting yarn into a scarf",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both melting wax and knitting yarn into a scarf are chemical changes because they involve changes in the form of the materials.",
+        "distractor2": "Both melting wax and knitting yarn into a scarf involve heating.",
+        "distractor3": "Both melting wax and knitting yarn into a scarf are irreversible changes."
+    },
+    {
+        "question": "What do these two changes have in common?\nbreaking a ceramic plate\nwater vapor condensing on a bathroom mirror",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both breaking a ceramic plate and water vapor condensing on a bathroom mirror are chemical changes because they involve changes in the appearance of the materials.",
+        "distractor2": "Both breaking a ceramic plate and water vapor condensing on a bathroom mirror result in a change in temperature.",
+        "distractor3": "Both breaking a ceramic plate and water vapor condensing on a bathroom mirror involve the breaking of chemical bonds."
+    },
+    {
+        "question": "Select the invertebrate.",
+        "correct_answer": "cricket",
+        "distractor1": "A cricket is a vertebrate because it has a backbone.",
+        "distractor2": "A cricket is a vertebrate because its exoskeleton helps connect different parts of its body, similar to how a backbone functions in vertebrates.",
+        "distractor3": "A cricket is a vertebrate because it has a complex body structure with multiple segments and appendages."
+    },
+    {
+        "question": "How long is the Amazon River?",
+        "correct_answer": "4,000 miles",
+        "distractor1": "The Amazon River is 4,000 feet long.",
+        "distractor2": "The Amazon River is 4,000 kilometers long.",
+        "distractor3": "The Amazon River is 400 miles long."
+    },
+    {
+        "question": "Select the vertebrate.",
+        "correct_answer": "greater flamingo",
+        "distractor1": "The greater flamingo is a vertebrate because it has an exoskeleton, which is a hard outer covering.",
+        "distractor2": "The greater flamingo is a vertebrate because it can fly long distances.",
+        "distractor3": "The greater flamingo is a vertebrate because it has a soft body without any bones."
+    },
+    {
+        "question": "Select the vertebrate.",
+        "correct_answer": "bald eagle",
+        "distractor1": "A bald eagle is a vertebrate because it has feathers, which are similar to the bones found in the backbone of other animals.",
+        "distractor2": "A bald eagle is a vertebrate because it can fly, which is an ability shared by many vertebrates, but this does not address the presence of a backbone.",
+        "distractor3": "A bald eagle is a vertebrate because it has an exoskeleton, which is a protective outer covering found in some animals."
+    },
+    {
+        "question": "How long is a sunflower seed?",
+        "correct_answer": "15 millimeters",
+        "distractor1": "15 centimeters",
+        "distractor2": "1 meter",
+        "distractor3": "1 centimeter"
+    },
+    {
+        "question": "What do these two changes have in common?\na penny tarnishing\na dinosaur bone turning into rock over millions of years",
+        "correct_answer": "Both are chemical changes.",
+        "distractor1": "Both a penny tarnishing and a dinosaur bone turning into rock are examples of physical changes because the appearance of the objects changes, but the underlying material stays the same.",
+        "distractor2": "Both a penny tarnishing and a dinosaur bone turning into rock involve changes that occur due to exposure to sunlight over time.",
+        "distractor3": "Both a penny tarnishing and a dinosaur bone turning into rock are examples of changes that happen very quickly, within a few hours or days."
+    },
+    {
+        "question": "Select the amphibian.",
+        "correct_answer": "California toad",
+        "distractor1": "The California toad is a reptile because it has moist skin and lays eggs in water, similar to some reptiles like certain snakes.",
+        "distractor2": "The California toad is a mammal because it has moist skin and can live in both aquatic and terrestrial environments.",
+        "distractor3": "The California toad begins its life on land and later moves to water, which reverses the correct sequence of amphibian life stages."
+    },
+    {
+        "question": "How long is a leather belt?",
+        "correct_answer": "31 inches",
+        "distractor1": "The leather belt is 31 feet long.",
+        "distractor2": "The leather belt is as long as a football field.",
+        "distractor3": "The leather belt is 31 centimeters long."
+    },
+    {
+        "question": "Select the bird.",
+        "correct_answer": "flamingo",
+        "distractor1": "Penguin",
+        "distractor2": "Fish",
+        "distractor3": "Pink bird"
+    },
+    {
+        "question": "How long is a car?",
+        "correct_answer": "4 yards",
+        "distractor1": "4 feet long",
+        "distractor2": "100 yards long",
+        "distractor3": "4 meters long"
+    },
+    {
+        "question": "How long is a kitchen table?",
+        "correct_answer": "7 feet",
+        "distractor1": "The kitchen table is 7 yards long.",
+        "distractor2": "The kitchen table is 7 feet wide.",
+        "distractor3": "The kitchen table is 7 meters long."
+    },
+    {
+        "question": "What do these two changes have in common?\na piece of apple turning brown\ncompost rotting",
+        "correct_answer": "Both are chemical changes.",
+        "distractor1": "Both a piece of apple turning brown and compost rotting are examples of physical changes because the appearance changes but the type of matter remains the same.",
+        "distractor2": "Both a piece of apple turning brown and compost rotting involve heating, which is the primary reason for the changes observed.",
+        "distractor3": "Both a piece of apple turning brown and compost rotting are examples of changes in state, like melting or freezing."
+    },
+    {
+        "question": "Select the invertebrate.",
+        "correct_answer": "bess beetle",
+        "distractor1": "The bess beetle is a vertebrate because it has a hard outer cover, which is similar to a backbone.",
+        "distractor2": "The bess beetle is a mammal because it lives on land and has a segmented body.",
+        "distractor3": "The bess beetle is a vertebrate because it has a hard body, which is similar to bones."
+    },
+    {
+        "question": "What do these two changes have in common?\nusing polish to remove tarnish from a silver spoon\na dinosaur bone turning into rock over millions of years",
+        "correct_answer": "Both are chemical changes.",
+        "distractor1": "Both changes are examples of physical changes because they involve the transformation of materials without altering their molecular structure.",
+        "distractor2": "Both changes involve the use of heat to alter the materials, making them examples of thermal changes.",
+        "distractor3": "Both changes are examples of phase transitions, where the materials change from one state of matter to another, like liquid to solid."
+    },
+    {
+        "question": "Which organ pulls on bones to move the body?",
+        "correct_answer": "muscles",
+        "distractor1": "Tendons pull on bones to move the body.",
+        "distractor2": "The heart moves the body by pumping blood.",
+        "distractor3": "Ligaments pull on bones to move the body."
+    },
+    {
+        "question": "What do these two changes have in common?\nmelting wax\nrain forming in a cloud",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both are chemical changes.",
+        "distractor2": "Both result in a change in mass.",
+        "distractor3": "Both involve the breaking of chemical bonds."
+    },
+    {
+        "question": "How long is a car key?",
+        "correct_answer": "3 inches",
+        "distractor1": "3 feet",
+        "distractor2": "1 foot",
+        "distractor3": "3 meters"
+    },
+    {
+        "question": "Select the bird.",
+        "correct_answer": "loon",
+        "distractor1": "Penguin",
+        "distractor2": "Fish",
+        "distractor3": "Bat"
+    },
+    {
+        "question": "What do these two changes have in common?\nbending a paper clip\ncutting your fingernails",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both bending a paper clip and cutting your fingernails are chemical changes because they involve altering the shape or size of the material, which can sometimes be confused with chemical reactions.",
+        "distractor2": "Both bending a paper clip and cutting your fingernails involve tools, such as pliers or nail clippers, which are commonly used in these processes.",
+        "distractor3": "Both bending a paper clip and cutting your fingernails are changes that involve heating the material to make it easier to manipulate, similar to how ice melts when heated."
+    },
+    {
+        "question": "What do these two changes have in common?\ncrushing a mineral into powder\ndry ice sublimating and becoming a gas",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both crushing a mineral into powder and dry ice sublimating into a gas are examples of chemical changes because they involve changes in the appearance of the substances.",
+        "distractor2": "Both processes involve changes in temperature, which is the primary reason they are classified as physical changes.",
+        "distractor3": "Both changes involve breaking chemical bonds, but the molecules remain the same, so they are considered physical changes."
+    },
+    {
+        "question": "Select the reptile.",
+        "correct_answer": "Mojave rattlesnake",
+        "distractor1": "The emperor penguin",
+        "distractor2": "The Komodo dragon",
+        "distractor3": "The boa constrictor"
+    },
+    {
+        "question": "Select the chemical formula for this molecule.",
+        "correct_answer": "H2S",
+        "distractor1": "BCl3",
+        "distractor2": "CO2",
+        "distractor3": "H2O"
+    },
+    {
+        "question": "Select the gas.",
+        "correct_answer": "air from a hair dryer",
+        "distractor1": "Steam from a boiling kettle is a gas because it looks like a cloud and clouds are made of gas.",
+        "distractor2": "A piece of paper is a gas because it can be easily folded and bent, which changes its shape.",
+        "distractor3": "Water vapor from a humidifier is a solid because it feels like mist on your skin, and mist can sometimes feel solid."
+    },
+    {
+        "question": "How long is a diving board?",
+        "correct_answer": "10 feet",
+        "distractor1": "10 yards",
+        "distractor2": "100 yards",
+        "distractor3": "1 foot"
+    },
+    {
+        "question": "Select the liquid.",
+        "correct_answer": "apple juice",
+        "distractor1": "Apple juice is a solid because it can be frozen into ice cubes, which have a definite shape and volume.",
+        "distractor2": "Apple juice is a gas because it evaporates when left uncovered, filling the room with its scent.",
+        "distractor3": "Apple juice is a solid because its volume remains the same when poured from one container to another, which is a characteristic of solids."
+    },
+    {
+        "question": "Select the mammal below.",
+        "correct_answer": "yak",
+        "distractor1": "penguin",
+        "distractor2": "salmon",
+        "distractor3": "crocodile"
+    },
+    {
+        "question": "Select the animal.",
+        "correct_answer": "Sheep eat plants.",
+        "distractor1": "Sheep eat other animals.",
+        "distractor2": "Sheep can fly.",
+        "distractor3": "Sheep eat rocks."
+    },
+    {
+        "question": "What do these two changes have in common?\ncutting an apple\na sidewalk heating up in the sun",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both cutting an apple and a sidewalk heating up in the sun are examples of chemical changes because they involve temperature changes.",
+        "distractor2": "Both cutting an apple and a sidewalk heating up in the sun are examples of changes that require the presence of oxygen to occur.",
+        "distractor3": "Both cutting an apple and a sidewalk heating up in the sun are examples of changes where the mass of the matter is not conserved."
+    },
+    {
+        "question": "How long is a hammer?",
+        "correct_answer": "17 centimeters",
+        "distractor1": "The hammer is 17 millimeters long.",
+        "distractor2": "The hammer is 1 meter long.",
+        "distractor3": "The hammer is about 17 inches long."
+    },
+    {
+        "question": "What do these two changes have in common?\na piece of avocado turning brown\nboiling sugar to make caramel",
+        "correct_answer": "Both are chemical changes.",
+        "distractor1": "Both a piece of avocado turning brown and boiling sugar to make caramel are physical changes because they involve changes in state, such as melting or solidifying.",
+        "distractor2": "Both a piece of avocado turning brown and boiling sugar to make caramel involve heating, which is the primary reason for the changes.",
+        "distractor3": "Both a piece of avocado turning brown and boiling sugar to make caramel involve complex biochemical reactions that result in the formation of new molecules, but the exact nature of these molecules is not important for understanding the changes."
+    },
+    {
+        "question": "Select the living thing.",
+        "correct_answer": "yeast",
+        "distractor1": "Yeast is not a living thing because it is a type of bacteria, and bacteria are non-living entities.",
+        "distractor2": "Yeast is not a living thing because it cannot move like animals do.",
+        "distractor3": "Yeast is not a living thing because it doesn\u2019t have organs like a heart or lungs."
+    },
+    {
+        "question": "Select the fish below.",
+        "correct_answer": "seahorse",
+        "distractor1": "The seahorse is a type of mammal because it lives in the ocean and has a unique appearance similar to some marine mammals like dolphins.",
+        "distractor2": "The seahorse is a type of bird because it can sometimes be found near the surface of the water where birds also hunt for food.",
+        "distractor3": "The seahorse is a type of reptile because it has a long, snake-like tail, which is a characteristic often associated with reptiles."
+    },
+    {
+        "question": "What do these two changes have in common?\nshaking up salad dressing\nbreaking a piece of glass",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both involve chemical reactions because they result in visible changes.",
+        "distractor2": "Both involve heating or cooling to change the state of matter.",
+        "distractor3": "Both result in a new type of matter because the physical properties are altered."
+    },
+    {
+        "question": "Select the solid.",
+        "correct_answer": "hair clip",
+        "distractor1": "A hair clip is a liquid because it can be bent and reshaped, similar to how a liquid takes the shape of its container.",
+        "distractor2": "A hair clip is a gas because it can be compressed into a small space, which is a property of gases.",
+        "distractor3": "A hair clip is a gas because it can be bent into different shapes, and gases can expand to fill any container, regardless of its shape."
+    },
+    {
+        "question": "Select the liquid.",
+        "correct_answer": "chocolate syrup",
+        "distractor1": "Chocolate syrup is a solid because it can be thick and viscous, similar to how some solids can be folded or bent.",
+        "distractor2": "Chocolate syrup is a gas because it expands to fill the shape of its container, which is a characteristic of gases.",
+        "distractor3": "Chocolate syrup is a solid because it has a definite volume, which is a characteristic of solids."
+    },
+    {
+        "question": "Select the solid.",
+        "correct_answer": "slide",
+        "distractor1": "A slide is a solid because it is a fixed structure that doesn\u2019t change shape easily, similar to how solids maintain their form.",
+        "distractor2": "A slide is a solid because it is commonly found in playgrounds and is used for recreational purposes.",
+        "distractor3": "A slide is a solid because it is something you can touch and feel, and anything you can touch is a solid."
+    },
+    {
+        "question": "What do these two changes have in common?\nwater freezing into ice\nbending a paper clip",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both water freezing into ice and bending a paper clip are chemical changes because they involve changes in the physical state of matter.",
+        "distractor2": "Both water freezing into ice and bending a paper clip involve heating or cooling processes.",
+        "distractor3": "Both water freezing into ice and bending a paper clip result in changes in the chemical composition of the matter."
+    },
+    {
+        "question": "Select the liquid.",
+        "correct_answer": "grape juice",
+        "distractor1": "Grape juice is a solid because it can be frozen into ice cubes, which have a definite shape and volume.",
+        "distractor2": "Grape juice is a gas because it evaporates when left out in the open, filling the room with its aroma.",
+        "distractor3": "Grape juice is a solid because it is made from grapes, which are solid fruits."
+    },
+    {
+        "question": "Select the fish.",
+        "correct_answer": "ocean sunfish",
+        "distractor1": "A dolphin",
+        "distractor2": "A seahorse",
+        "distractor3": "A jellyfish"
+    },
+    {
+        "question": "How long is a leather belt?",
+        "correct_answer": "30 inches",
+        "distractor1": "30 feet",
+        "distractor2": "100 yards",
+        "distractor3": "30 miles"
+    },
+    {
+        "question": "Which of these organisms contains matter that was once part of the bilberry?",
+        "correct_answer": "earthworm",
+        "distractor1": "The bilberry contains matter that was once part of the earthworm.",
+        "distractor2": "The bilberry contains matter that was once part of a tree.",
+        "distractor3": "The earthworm contains matter that was once part of the bilberry, which was consumed by a deer, which was then eaten by a wolf, which was finally consumed by the earthworm."
+    },
+    {
+        "question": "How long is a drinking straw?",
+        "correct_answer": "25 centimeters",
+        "distractor1": "The drinking straw is 25 millimeters long.",
+        "distractor2": "The drinking straw is 1 meter long.",
+        "distractor3": "The drinking straw is about 16 centimeters long."
+    },
+    {
+        "question": "What do these two changes have in common?\nbreaking a plate\ncutting your fingernails",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both breaking a plate and cutting your fingernails are examples of chemical changes because they involve breaking bonds between molecules.",
+        "distractor2": "Both breaking a plate and cutting your fingernails result in changes that can be undone by gluing the pieces back together or letting the fingernails grow back.",
+        "distractor3": "Both breaking a plate and cutting your fingernails are examples of changes where the type of matter changes, but the shape remains the same."
+    },
+    {
+        "question": "Select the living thing.",
+        "correct_answer": "butterfly",
+        "distractor1": "A cloud",
+        "distractor2": "A car",
+        "distractor3": "A robot"
+    },
+    {
+        "question": "Select the mammal below.",
+        "correct_answer": "red howler",
+        "distractor1": "The red howler is a type of fish.",
+        "distractor2": "The red howler is a type of bird.",
+        "distractor3": "The red howler is a reptile."
+    },
+    {
+        "question": "What do these two changes have in common?\nsawing a log in half\nstretching a rubber band",
+        "correct_answer": "Both are only physical changes.",
+        "distractor1": "Both sawing a log in half and stretching a rubber band are chemical changes because they involve altering the properties of the materials involved.",
+        "distractor2": "Both sawing a log in half and stretching a rubber band involve heating the materials, which causes them to change.",
+        "distractor3": "Both sawing a log in half and stretching a rubber band are examples of changes of state, like melting ice or boiling water."
+    },
+    {
+        "question": "Select the part whose main job is to give strength and stiffness to a plant cell.",
+        "correct_answer": "cell wall",
+        "distractor1": "The cell membrane gives strength and stiffness to the plant cell.",
+        "distractor2": "The chloroplasts give strength and stiffness to the plant cell.",
+        "distractor3": "The vacuole gives strength and stiffness to the plant cell."
+    },
+    {
+        "question": "How long is a paintbrush?",
+        "correct_answer": "12 inches",
+        "distractor1": "12 feet",
+        "distractor2": "The length of a football field",
+        "distractor3": "12 yards"
+    },
+    {
+        "question": "What do these two changes have in common?\nphotosynthesis\na penny tarnishing",
+        "correct_answer": "Both are chemical changes.",
+        "distractor1": "Both photosynthesis and the tarnishing of a penny are physical changes because they involve changes in the state of matter, such as from solid to liquid or gas.",
+        "distractor2": "Both photosynthesis and the tarnishing of a penny are related to the process of evaporation because they involve water molecules changing from liquid to gas.",
+        "distractor3": "Both photosynthesis and the tarnishing of a penny are biological processes because they involve living organisms."
+    },
+    {
+        "question": "Select the vertebrate.",
+        "correct_answer": "common ostrich",
+        "distractor1": "The common ostrich is an invertebrate because it has feathers.",
+        "distractor2": "The common ostrich is an invertebrate because it has a soft body.",
+        "distractor3": "The common ostrich is an invertebrate because it has an exoskeleton."
+    },
+    {
+        "question": "Select the invertebrate.",
+        "correct_answer": "fly",
+        "distractor1": "A fly is a vertebrate because it has a hard outer cover, which is similar to a backbone.",
+        "distractor2": "A fly is a vertebrate because it is an animal, and all animals have backbones.",
+        "distractor3": "A fly is a vertebrate because it has an exoskeleton, which is a type of backbone."
+    },
+    {
+        "question": "Select the vertebrate.",
+        "correct_answer": "robin",
+        "distractor1": "A robin is an invertebrate because it has feathers, which are similar to the exoskeletons of some invertebrates like insects.",
+        "distractor2": "A robin is a vertebrate because it can fly, and all flying animals are vertebrates.",
+        "distractor3": "A robin is a vertebrate because it has bones, but all animals with bones are vertebrates, including insects."
+    },
+    {
+        "question": "What do these two changes have in common?\nbaking cookies\nrust forming on a metal gate",
+        "correct_answer": "Both are chemical changes.",
+        "distractor1": "Both baking cookies and rust forming on a metal gate are examples of physical changes.",
+        "distractor2": "Both baking cookies and rust forming on a metal gate involve changes that can be caused by heating or cooling.",
+        "distractor3": "Both baking cookies and rust forming on a metal gate involve changes in state, such as melting or freezing."
     }
 ]

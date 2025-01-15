@@ -6,7 +6,7 @@ import pandas as pd
 import csv
 from pandas import read_parquet
 import test
-from utils import str_to_dict_eedi_df, format_distractor_output, format_question_output, read_test_data
+from pro.utils.utils import str_to_dict_eedi_df, format_distractor_output, format_question_output, read_test_data
 
 text = """
 Question: What process in plants is primarily responsible for the uptake of carbon dioxide and release of oxygen, converting light energy into chemical energy?

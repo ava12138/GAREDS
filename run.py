@@ -8,7 +8,7 @@ import time
 from tqdm import tqdm
 from openai import OpenAI
 from PromptFramwork import PromptFramework as pf
-from utils import format_question_output, format_rationale_output, format_distractor_output
+from pro.utils.utils import format_question_output, format_rationale_output, format_distractor_output
 
 
 def get_response(client, api_model, prompt, temperature, top_p, presence_penalty):
@@ -59,7 +59,7 @@ def main():
     
     # 设置日志
     logging.basicConfig(
-        filename='generation.log',
+        filename='./log/generation.log',
         level=logging.INFO,
         format='%(asctime)s - %(levelname)s - %(message)s'
     )
@@ -113,7 +113,7 @@ def main():
                 # print("观察dg的prompt:\n", dg_prompt)
                 d = get_response(client, api_model, dg_prompt, temperature, top_p, presence_penalty)
                 api_calls += 1
-                
+
                 extracted_distractors = format_distractor_output(d)
                 print("提取的干扰项:", extracted_distractors)
                 # 将结果打包为一个JSON对象

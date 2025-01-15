@@ -5,12 +5,16 @@ files:
   lan:
     test_file: './data_divided/sciqa-test-lan.json'
     output_file: './output/output_dg-sciqa-lan.json'
-    results_file: './evaluation/sciq-lan.json'
+    results_file: './evaluation/sciqa-lan.json'
   nat:
     test_file: './data_divided/sciqa-test-nat.json'
     output_file: './output/output_dg-sciqa-nat.json'
-    results_file: './evaluation/sciq-nat.json'
+    results_file: './evaluation/sciqa-nat.json'
   soc:
     test_file: './data_divided/sciqa-test-soc.json'
     output_file: './output/output_dg-sciqa-soc.json'
-    results_file: './evaluation/sciq-soc.json'
+    results_file: './evaluation/sciqa-soc.json'
+  sciq:
+    test_file: '/data/lzx/sciq/test.json'
+    output_file: './output/output_dg-Sciq.json'
+    results_file: './evaluation/Sciq.json'
