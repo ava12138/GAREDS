@@ -14,7 +14,7 @@ class RetrieverFactory:
         sum_mask = torch.clamp(input_mask_expanded.sum(1), min=1e-9)
         return sum_embeddings / sum_mask
 
-    # q: question only
+    # q: question only 
     # q_a: question and answer
     # q_a_f: question, answer and feedback
     def fetch_examples(self, query):
@@ -42,7 +42,7 @@ class RetrieverFactory:
         return parsed_examples, parsed_query
 
 # 示例用法
-retrieverCfg = ...  # 您的配置对象
+retrieverCfg = ...  # 您的配置对象 
 json_file_path = '/path/to/your/json/file.json'
 retriever = RetrieverFactory(retrieverCfg, json_file_path)
 query = {"question": "What is the capital of France?", "correct_option": {"option": "Paris"}}

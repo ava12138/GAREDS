@@ -2,14 +2,22 @@ class PromptFramework():
     STOP_TOKEN = "[stop]"
 
     @classmethod
-    def producePrompt(cls, promptType, questionData=None, examples=None):
+    def producePrompt(cls, promptType, questionData=None, principles=None, examples=None):
         # Add to this ladder and create an internal method
         if promptType == "qg":
             return cls.qg_prompt(examples)
-        elif promptType == "rg":
-            return cls.rule_based_rg_prompt(questionData, examples)
+        elif promptType == "rule_rg":
+            return cls.rule_based_rg_prompt(questionData, principles)
+        elif promptType == "rule_dg":
+            return cls.rule_based_dg_prompt(questionData, principles)
+        elif promptType == "cot_rg":
+            return cls.cot_rg_prompt(questionData)
+        elif promptType == "cot_rg_shot":
+            return cls.cot_rg_prompt_shot(questionData)
+        elif promptType == "cot_dg":
+            return cls.cot_dg_prompt(questionData, principles)
         elif promptType == "dg":
-            return cls.rule_based_dg_prompt(questionData, examples)
+            return cls.dg_prompt(questionData, principles)
         else:
             raise ValueError(promptType + " is not an available prompt type")
     
@@ -28,14 +36,14 @@ class PromptFramework():
         Answer: XXX\n "
         examples_text = ""
         for idx, example in enumerate(examples):
-            examples_text += f"Example{idx+1}:\nQuestion: {example['question']}\nAnswer: {example['correct_answer']}\n"
+            principles_text += f"Example{idx+1}:\nQuestion: {example['question']}\nAnswer: {example['correct_answer']}\n"
         prompt = f"{instructions}\n{examples_text}"
         prompt = prompt[:-1]
         return prompt
 
 
     @classmethod
-    def rule_based_rg_prompt(cls, questionData, examples):
+    def rule_based_rg_prompt(cls, questionData, principles):
             """
             === EXAMPLE ===
             <Instructions>
@@ -59,20 +67,20 @@ class PromptFramework():
             Incorrect Infernece4: XXX \n\
             Incorrect Infernece5: XXX \n\
             Incorrect Infernece6: XXX \n"
-            examples_text = ""
-            for idx, example in enumerate(examples):
-                examples_text += f"Principle{idx+1}: {example}\n"
+            principles_text = ""
+            for idx, principle in enumerate(principles):
+                principles_text += f"Principle{idx+1}:s{principle}\n"
             prompt = (
                 f"{instructions}\n"
                 f"Question: {questionData['question'].strip()}\n"
                 f"Answer: {questionData['correct_answer'].strip()}\n"
                 f"Support: {questionData['support'].strip()}\n"
-                f"{examples_text}"
+                f"{principles_text}"
             )
             return prompt.strip()
     
     @classmethod
-    def rule_based_dg_prompt(cls, questionData, examples):
+    def rule_based_dg_prompt(cls, questionData, principles):
             """
             === EXAMPLE ===
             <Instructions>
@@ -95,16 +103,128 @@ class PromptFramework():
             Feedback2: XXX \n\
             Distractor3: **XXX**\n\
             Feedback3: XXX\n"
-            examples_text = f"Explanation: {examples['explanation'].strip()}\n"
-            incorrect_inferences = examples['incorrect_inferences'].split('\n\n')
+            principles_text = f"Explanation: {principles['explanation'].strip()}\n"
+            incorrect_inferences = principles['incorrect_inferences'].split('\n\n')
             for idx, inference in enumerate(incorrect_inferences, 1):
-                examples_text += f"{inference.strip()}\n"
+                principles_text += f"{inference.strip()}\n"
             prompt = (
                 f"{instructions}\n"
                 f"Question: {questionData['question'].strip()}\n"
                 f"Answer: {questionData['correct_answer'].strip()}\n"
-                f"{examples_text}"
+                f"{principles_text}"
             )
             return prompt.strip()
     
+    @classmethod
+    def cot_rg_prompt_shot(cls, questionData):
+            """
+            === EXAMPLE ===
+            <Instructions>
+            === PROMPT ===
+            Question: XXX\n
+            Answer: XXX\n
+            Support: XXX\n
+            """
+            instructions="You are given the following example, which includes:\n- A question.\n- The correct answer to the question.\n- Supporting information that explains the answer.\n Carefully analyze the question and the supporting information.Break down the reasoning process into logical, step-by-step inferences that connect the supporting information to the correct answer.\n Ensure each step is clear, concise, and directly related to the question.\nThe intermediate reasoning should not include distractors, but should provide a strong foundation for generating distractors later.\
+            [Template]\n \
+            Inference: XXX\n"
+            prompt = (
+                f"{instructions}\n"
+                f"Question: {questionData['question'].strip()}\n"
+                f"Answer: {questionData['correct_answer'].strip()}\n"
+                f"Support: {questionData['support'].strip()}\n"
+            )
+            return prompt.strip()
+    
+    @classmethod
+    def cot_rg_prompt(cls, questionData):
+            """
+            === EXAMPLE ===
+            <Instructions>
+            === PROMPT ===
+            Question: XXX\n
+            Answer: XXX\n
+            """
+            instructions="You are given the following question along with the correct answer. \n Carefully analyze the question and the answer.Break down the reasoning process into logical, step-by-step inferences that connect the supporting information to the correct answer.\n Ensure each step is clear, concise, and directly related to the question.\nThe intermediate reasoning should not include distractors, but should provide a strong foundation for generating distractors later.\
+            [Template]\n \
+            Inference: XXX\n"
+            prompt = (
+                f"{instructions}\n"
+                f"Question: {questionData['question'].strip()}\n"
+                f"Answer: {questionData['correct_answer'].strip()}\n"
+            )
+            return prompt.strip()
+    
+    @classmethod
+    def cot_dg_prompt(cls, questionData, principles):
+            """
+            === EXAMPLE ===
+            <Instructions>
+            === PROMPT ===
+            Question: XXX\n
+            Answer: XXX\n
+            Explanation: XXX\n
+            Incorrect Infernece1 \n\
+            Incorrect Infernece2 \n\
+            Incorrect Infernece3 \n\
+            Incorrect Infernece4 \n\
+            Incorrect Infernece5 \n\
+            Incorrect Infernece6 \n
+            """
+            instructions="You are given the following question along with the correct answer, explanation, and six faulty inferences. Please use the following template to give **Three** alternative incorrect answers to be used as multiple-choice options in a multiple-choice exam based on the given faulty inferences. \n Prior to the incorrect answer, provide feedback to be displayed to the student as an explanation of why that is not the correct answer.\n\
+            [Template]\n \
+            Distractor1: **XXX**\n\
+            Feedback1: XXX\n\
+            Distractor2: **XXX**\n\
+            Feedback2: XXX \n\
+            Distractor3: **XXX**\n\
+            Feedback3: XXX\n"
+            principles_text = f"Explanation: {principles['explanation'].strip()}\n"
+            incorrect_inferences = principles['incorrect_inferences'].split('\n\n')
+            for idx, inference in enumerate(incorrect_inferences, 1):
+                principles_text += f"{inference.strip()}\n"
+            prompt = (
+                f"{instructions}\n"
+                f"Question: {questionData['question'].strip()}\n"
+                f"Answer: {questionData['correct_answer'].strip()}\n"
+                f"{principles_text}"
+            )
+            return prompt.strip()
+    
+    @classmethod
+    def dg_prompt(cls, questionData, principles):
+            """
+            === EXAMPLE ===
+            <Instructions>
+            === PROMPT ===
+            Question: XXX\n
+            Answer: XXX\n
+            Explanation: XXX\n
+            Incorrect Infernece1 \n\
+            Incorrect Infernece2 \n\
+            Incorrect Infernece3 \n\
+            Incorrect Infernece4 \n\
+            Incorrect Infernece5 \n\
+            Incorrect Infernece6 \n
+            """
+            instructions="You are given the following question along with the correct answer, explanation, and six faulty inferences. Please use the following template to give **Three** alternative incorrect answers to be used as multiple-choice options in a multiple-choice exam based on the given faulty inferences. \n Prior to the incorrect answer, provide feedback to be displayed to the student as an explanation of why that is not the correct answer.\n\
+            [Template]\n \
+            Distractor1: **XXX**\n\
+            Feedback1: XXX\n\
+            Distractor2: **XXX**\n\
+            Feedback2: XXX \n\
+            Distractor3: **XXX**\n\
+            Feedback3: XXX\n"
+            principles_text = f"Explanation: {principles['explanation'].strip()}\n"
+            incorrect_inferences = principles['incorrect_inferences'].split('\n\n')
+            for idx, inference in enumerate(incorrect_inferences, 1):
+                principles_text += f"{inference.strip()}\n"
+            prompt = (
+                f"{instructions}\n"
+                f"Question: {questionData['question'].strip()}\n"
+                f"Answer: {questionData['correct_answer'].strip()}\n"
+                f"{principles_text}"
+            )
+            return prompt.strip()
+
 # Prior to the incorrect answer, provide feedback to be displayed to the student as an explanation of why that is not the correct answer.\n

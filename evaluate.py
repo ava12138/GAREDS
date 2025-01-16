@@ -4,7 +4,7 @@ import json
 import yaml
 import argparse
 from tqdm import tqdm
-from pro.utils.tokenizer import EnhancedTokenizer
+from utils.tokenizer import EnhancedTokenizer
 from rouge_score import rouge_scorer
 from nltk.translate.bleu_score import sentence_bleu, SmoothingFunction
 from sentence_transformers import SentenceTransformer, util
@@ -12,7 +12,9 @@ from sentence_transformers import SentenceTransformer, util
 type_mapping = {
     'lan': 'Language Science',
     'nat': 'Natural Science',
-    'soc': 'Social Science'
+    'soc': 'Social Science',
+    'sciqa-text':'SciQa-Text',
+    'sciq': 'SciQa'
 }
 
 def calculate_rouge_l(groundtruth, output , context):
@@ -85,8 +87,14 @@ def calculate_relevance(distractor, question, correct_answer, model):
     """计算干扰项与问题和答案的相关性"""
     question_sim = calculate_semantic_similarity(distractor, question, model)
     answer_sim = calculate_semantic_similarity(distractor, correct_answer, model)
-    # 我们希望与问题相关但与答案有所区别
-    return (question_sim * (1 - answer_sim)) ** 0.5
+    
+    # 保持原有计算方式
+    relevance = (question_sim * (1 - answer_sim)) ** 0.5
+    
+    # 处理复数结果
+    if isinstance(relevance, complex):
+        return abs(relevance)  # 返回复数的模
+    return float(relevance)
 
 
 
@@ -163,7 +171,7 @@ def evaluate_distractors(test_file, output_file, training_file=None):
                     calculate_relevance(d, test_item['question'], test_item['correct_answer'], model)
                     for d in generated_distractors
                 ])
-                metrics['relevance_scores'].append(relevance_score)
+                metrics['relevance_scores'].append(float(relevance_score))
                 
                 break
     
@@ -177,17 +185,21 @@ def evaluate_distractors(test_file, output_file, training_file=None):
 
 def main():
     parser = argparse.ArgumentParser(description="Evaluate distractors")
-    parser.add_argument('-t', '--type', choices=['lan', 'nat', 'soc'], required=True, help="Type of test file to evaluate")
+    parser.add_argument('-d', '--dataset', choices=['lan', 'nat', 'soc','sciqa-text','sciq'], required=True, help="Type of test file to evaluate")
+    parser.add_argument('-m', '--model', required=True, help="Model name used for generation")
+    parser.add_argument('-p', '--prompt', choices=['rule', 'cot'], required=True, help="Prompt type")
     args = parser.parse_args()
-    type_description = type_mapping.get(args.type, 'Unknown Type')  # 如果未找到类型，默认显示 'Unknown Type'
+    type_description = type_mapping.get(args.dataset, 'Unknown Type')  # 如果未找到类型，默认显示 'Unknown Type'
     
     with open('./config/config.yaml', 'r') as file:
         config = yaml.safe_load(file)
     
-    file_config = config['files'][args.type]
+    file_config = config['files'][args.dataset]
     test_file = file_config['test_file']
-    output_file = file_config['output_file']
-    results_file = file_config['results_file']
+    # 添加模型名称到输出文件路径
+    output_file = f"{file_config['output_file']}-{args.model}-{args.prompt}.json"
+    # 添加模型名称到结果文件路径
+    results_file = f"{file_config['results_file']}-{args.model}-{args.prompt}.json"
     
     results = evaluate_distractors(test_file, output_file)
     

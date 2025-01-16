@@ -1,5 +1,24 @@
 import json
 
+def filter_json_data(input_file):
+    """筛选有三个干扰项且没有distractor4的数据"""
+    # 读取JSON文件
+    with open(input_file, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    
+    # 过滤数据
+    filtered_data = []
+    for item in data:
+        if all(key in item for key in ['distractor1', 'distractor2', 'distractor3']) and 'distractor4' not in item:
+            filtered_data.append(item)
+    
+    # 保存过滤后的数据
+    output_file = './data_divided/sciqa-test-text.json'
+    with open(output_file, 'w', encoding='utf-8') as f:
+        json.dump(filtered_data, f, indent=2, ensure_ascii=False)
+    print(f"Filtered data: {len(filtered_data)} items")
+    return len(filtered_data)
+
 def process_sciqa_data(input_file):
     # 读取JSON文件
     with open(input_file, 'r', encoding='utf-8') as f:
@@ -36,5 +55,6 @@ def process_sciqa_data(input_file):
         print(f"{category}: {len(items)} items")
 
 if __name__ == "__main__":
-    input_file = './evaluation/sciqa-test.json'
-    process_sciqa_data(input_file)
+    input_file = './data_divided/sciqa-test.json'
+    # process_sciqa_data(input_file)
+    filter_json_data(input_file)

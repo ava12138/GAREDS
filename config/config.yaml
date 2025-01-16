@@ -1,20 +1,32 @@
 temperature: 0.5
 top_p: 1
 presence_penalty: 0.0
+prompt_types:
+  rule:
+    rg: "rule_rg"
+    dg: "rule_dg"
+  cot:
+    rg: "cot_rg"
+    dg: "cot_dg"
+    
 files:
   lan:
     test_file: './data_divided/sciqa-test-lan.json'
-    output_file: './output/output_dg-sciqa-lan.json'
-    results_file: './evaluation/sciqa-lan.json'
+    output_file: './output/output_dg-sciqa-lan'  
+    results_file: './evaluation/sciqa-lan'        
   nat:
     test_file: './data_divided/sciqa-test-nat.json'
-    output_file: './output/output_dg-sciqa-nat.json'
-    results_file: './evaluation/sciqa-nat.json'
+    output_file: './output/output_dg-sciqa-nat'   
+    results_file: './evaluation/sciqa-nat'        
   soc:
     test_file: './data_divided/sciqa-test-soc.json'
-    output_file: './output/output_dg-sciqa-soc.json'
-    results_file: './evaluation/sciqa-soc.json'
+    output_file: './output/output_dg-sciqa-soc'    
+    results_file: './evaluation/sciqa-soc' 
+  sciqa-text:
+    test_file: './data_divided/sciqa-test-text.json'
+    output_file: './output/output_dg-sciqa-text'    
+    results_file: './evaluation/sciqa-text'         
   sciq:
     test_file: '/data/lzx/sciq/test.json'
-    output_file: './output/output_dg-Sciq.json'
-    results_file: './evaluation/Sciq.json'
+    output_file: './output/output_dg-Sciq'         
+    results_file: './evaluation/Sciq'   
