@@ -6,6 +6,7 @@ __pycache__/
 data_divided
 evaluation
 output
+metrics
 api.yaml
 # C extensions
 *.so

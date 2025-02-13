@@ -16,8 +16,8 @@ class PromptFramework():
             return cls.cot_rg_prompt_shot(questionData)
         elif promptType == "cot_dg":
             return cls.cot_dg_prompt(questionData, principles)
-        elif promptType == "dg":
-            return cls.dg_prompt(questionData, principles)
+        elif promptType == "non_dg":
+            return cls.dg_prompt(questionData)
         else:
             raise ValueError(promptType + " is not an available prompt type")
     
@@ -36,7 +36,7 @@ class PromptFramework():
         Answer: XXX\n "
         examples_text = ""
         for idx, example in enumerate(examples):
-            principles_text += f"Example{idx+1}:\nQuestion: {example['question']}\nAnswer: {example['correct_answer']}\n"
+            examples_text+= f"Example{idx+1}:\nQuestion: {example['question']}\nAnswer: {example['correct_answer']}\n"
         prompt = f"{instructions}\n{examples_text}"
         prompt = prompt[:-1]
         return prompt
@@ -163,15 +163,9 @@ class PromptFramework():
             === PROMPT ===
             Question: XXX\n
             Answer: XXX\n
-            Explanation: XXX\n
-            Incorrect Infernece1 \n\
-            Incorrect Infernece2 \n\
-            Incorrect Infernece3 \n\
-            Incorrect Infernece4 \n\
-            Incorrect Infernece5 \n\
-            Incorrect Infernece6 \n
+            Reasoning: XXX\n
             """
-            instructions="You are given the following question along with the correct answer, explanation, and six faulty inferences. Please use the following template to give **Three** alternative incorrect answers to be used as multiple-choice options in a multiple-choice exam based on the given faulty inferences. \n Prior to the incorrect answer, provide feedback to be displayed to the student as an explanation of why that is not the correct answer.\n\
+            instructions="You are provided with a question, the correct answer, and a step-by-step inference leading to that answer. Please use the following template to generate **Three** alternative incorrect answers to be used as multiple-choice options in a multiple-choice exam. \n \
             [Template]\n \
             Distractor1: **XXX**\n\
             Feedback1: XXX\n\
@@ -179,51 +173,35 @@ class PromptFramework():
             Feedback2: XXX \n\
             Distractor3: **XXX**\n\
             Feedback3: XXX\n"
-            principles_text = f"Explanation: {principles['explanation'].strip()}\n"
-            incorrect_inferences = principles['incorrect_inferences'].split('\n\n')
-            for idx, inference in enumerate(incorrect_inferences, 1):
-                principles_text += f"{inference.strip()}\n"
+            reasoning_text = f"Inference: {principles.strip()}\n"
             prompt = (
                 f"{instructions}\n"
                 f"Question: {questionData['question'].strip()}\n"
                 f"Answer: {questionData['correct_answer'].strip()}\n"
-                f"{principles_text}"
+                f"{reasoning_text}"
             )
             return prompt.strip()
     
     @classmethod
-    def dg_prompt(cls, questionData, principles):
+    def dg_prompt(cls, questionData):
             """
             === EXAMPLE ===
             <Instructions>
             === PROMPT ===
             Question: XXX\n
             Answer: XXX\n
-            Explanation: XXX\n
-            Incorrect Infernece1 \n\
-            Incorrect Infernece2 \n\
-            Incorrect Infernece3 \n\
-            Incorrect Infernece4 \n\
-            Incorrect Infernece5 \n\
-            Incorrect Infernece6 \n
+            Support: XXX\n
             """
-            instructions="You are given the following question along with the correct answer, explanation, and six faulty inferences. Please use the following template to give **Three** alternative incorrect answers to be used as multiple-choice options in a multiple-choice exam based on the given faulty inferences. \n Prior to the incorrect answer, provide feedback to be displayed to the student as an explanation of why that is not the correct answer.\n\
+            instructions="You are provided with a question, the correct answer, and a support about the question. Please use the following template to generate **Three** alternative incorrect answers to be used as multiple-choice options in a multiple-choice exam.\n\
             [Template]\n \
             Distractor1: **XXX**\n\
-            Feedback1: XXX\n\
             Distractor2: **XXX**\n\
-            Feedback2: XXX \n\
-            Distractor3: **XXX**\n\
-            Feedback3: XXX\n"
-            principles_text = f"Explanation: {principles['explanation'].strip()}\n"
-            incorrect_inferences = principles['incorrect_inferences'].split('\n\n')
-            for idx, inference in enumerate(incorrect_inferences, 1):
-                principles_text += f"{inference.strip()}\n"
+            Distractor3: **XXX**\n"
             prompt = (
                 f"{instructions}\n"
                 f"Question: {questionData['question'].strip()}\n"
                 f"Answer: {questionData['correct_answer'].strip()}\n"
-                f"{principles_text}"
+                f"Support: {questionData['support'].strip()}\n"
             )
             return prompt.strip()
 

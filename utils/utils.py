@@ -15,19 +15,31 @@ def format_question_output(response):
     answer = answer_match.group(1).strip() if answer_match else ''
     return {'question': question, 'correct_answer': answer}
 
-def format_rationale_output(response):
-    # 去除所有的 **
+def format_rationale_output(response, format_type="rule_format"):
+    """
+    格式化推理输出
+    Args:
+        response: 原始响应文本
+        format_type: 格式类型，可选值为 "rule_format" 或 "cot_format"
+    Returns:
+        dict 或 str: 根据format_type返回不同格式的结果
+    """
+    # 清理响应文本，去除所有的 **
     cleaned_response = response.replace('**', '')
     
-    # 匹配解释部分
-    explanation_match = re.search(r'Explanation:\s*(.*?)\n', cleaned_response, re.DOTALL)
-    explanation = explanation_match.group(1).strip() if explanation_match else ''
-    
-    # 匹配所有不正确推断
-    incorrect_inferences = re.findall(r'Incorrect Inference \d+ \((.*?)\):\s*(.*?)(?=\nIncorrect Inference \d+ \(|$|\n\n)', cleaned_response, re.DOTALL)
-    incorrect_inferences_combined = ' '.join([f'Incorrect Inference {i+1} ({principle.strip()}): {inference.strip()}' for i, (principle, inference) in enumerate(incorrect_inferences)])
-    
-    return {'explanation': explanation, 'incorrect_inferences': incorrect_inferences_combined}
+    if format_type == "cot_format":
+        # 只提取 Inference: 后的内容
+        inference_match = re.search(r'Inference:\s*(.*?)(?=\n|$)', cleaned_response, re.DOTALL)
+        return inference_match.group(1).strip() if inference_match else ''
+    else:
+        # 原有的rule_format处理逻辑
+        explanation_match = re.search(r'Explanation:\s*(.*?)\n', cleaned_response, re.DOTALL)
+        explanation = explanation_match.group(1).strip() if explanation_match else ''
+        
+        incorrect_inferences = re.findall(r'Incorrect Inference \d+ \((.*?)\):\s*(.*?)(?=\nIncorrect Inference \d+ \(|$|\n\n)', cleaned_response, re.DOTALL)
+        incorrect_inferences_combined = ' '.join([f'Incorrect Inference {i+1} ({principle.strip()}): {inference.strip()}' for i, (principle, inference) in enumerate(incorrect_inferences)])
+        
+        return {'explanation': explanation, 'incorrect_inferences': incorrect_inferences_combined}
 
 def format_distractor_output(text: str) -> dict:
     output = {}

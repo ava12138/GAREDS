@@ -17,19 +17,33 @@ type_mapping = {
     'sciq': 'SciQa'
 }
 
-def calculate_rouge_l(groundtruth, output , context):
-    """改进的ROUGE-L计算，考虑上下文并返回百分比分数"""
-    text_groundtruth = f"{context} {groundtruth}"
-    text_output = f"{context} {output}"
-    
+def calculate_rouge_l(groundtruth, output, context):
+    """改进的ROUGE-L计算，结合语义相似度和字面匹配
+    Args:
+        groundtruth: 真实干扰项
+        output: 生成的干扰项
+        context: 问题上下文（将被轻度使用）
+    Returns:
+        float: 综合评分（0-100）
+    """
     # 使用增强的分词器
     tokenizer = EnhancedTokenizer()
     scorer = rouge_scorer.RougeScorer(['rougeL'], use_stemmer=True, tokenizer=tokenizer)
-    score = scorer.score(text_output, text_groundtruth)
-
- 
-    # 转换为百分比形式
-    return score['rougeL'].fmeasure * 100
+    
+    # 1. 计算直接的ROUGE-L分数
+    direct_score = scorer.score(output, groundtruth)['rougeL'].fmeasure
+    
+    # 2. 计算带轻量上下文的ROUGE-L分数
+    context_score = scorer.score(
+        f"{context} {output}",
+        f"{context} {groundtruth}"
+    )['rougeL'].fmeasure
+    
+    # 3. 综合计算最终分数
+    # 直接匹配占70%权重，上下文匹配占30%权重
+    final_score = (direct_score * 0.7 + context_score * 0.3) * 100
+    
+    return final_score
 
 def calculate_context_bleu(groundtruth, output, context):
     """改进的BLEU计算，使用平滑函数和预处理"""
@@ -39,19 +53,14 @@ def calculate_context_bleu(groundtruth, output, context):
     # 预处理并分词
     groundtruth_tokens = tokenizer.tokenize(groundtruth)
     output_tokens = tokenizer.tokenize(output)
-    context_tokens = tokenizer.tokenize(context)
-    
-    # 组合上下文
-    groundtruth_with_context = context_tokens + groundtruth_tokens
-    output_with_context = context_tokens + output_tokens
     
     # 使用平滑函数
     weights = (0.4, 0.3, 0.2, 0.1)  # 调整n-gram权重
     smoothing = SmoothingFunction().method1
     
     return sentence_bleu(
-        [groundtruth_with_context], 
-        output_with_context, 
+        [groundtruth_tokens], 
+        output_tokens, 
         weights=weights,
         smoothing_function=smoothing
     ) * 100
@@ -187,7 +196,7 @@ def main():
     parser = argparse.ArgumentParser(description="Evaluate distractors")
     parser.add_argument('-d', '--dataset', choices=['lan', 'nat', 'soc','sciqa-text','sciq'], required=True, help="Type of test file to evaluate")
     parser.add_argument('-m', '--model', required=True, help="Model name used for generation")
-    parser.add_argument('-p', '--prompt', choices=['rule', 'cot'], required=True, help="Prompt type")
+    parser.add_argument('-p', '--prompt', choices=['rule', 'cot', 'non'], required=True, help="Prompt type")
     args = parser.parse_args()
     type_description = type_mapping.get(args.dataset, 'Unknown Type')  # 如果未找到类型，默认显示 'Unknown Type'
     

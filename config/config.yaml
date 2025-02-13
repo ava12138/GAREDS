@@ -5,9 +5,14 @@ prompt_types:
   rule:
     rg: "rule_rg"
     dg: "rule_dg"
+    format: "rule_format"
   cot:
     rg: "cot_rg"
     dg: "cot_dg"
+    format: "cot_format"
+  non:
+    dg: "non_dg"
+
     
 files:
   lan:

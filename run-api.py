@@ -2,10 +2,9 @@ import os
 import json
 import yaml
 import argparse
+import logging
 import time
-import torch
 from tqdm import tqdm
-from transformers import AutoModelForCausalLM, AutoTokenizer
 from openai import OpenAI
 from PromptFramwork import PromptFramework as pf
 from utils.utils import initialize_seeds
@@ -51,48 +50,52 @@ def load_config():
     return api_config, config, principles_config
 
 
-# 初始化本地模型
-def initialize_local_model(model_name_or_path, gpu_id):
-    # 通过指定 GPU 设备加载模型
-    device = torch.device(f"cuda:{gpu_id}" if torch.cuda.is_available() else "cpu")
-    model = AutoModelForCausalLM.from_pretrained(model_name_or_path).to(device)
-    tokenizer = AutoTokenizer.from_pretrained(model_name_or_path)
-    return model, tokenizer, device
+# 初始化API客户端
+def initialize_api_client(api_config, model_key):
+    api_key = api_config['api_key']
+    api_model = api_config['model'][model_key]
+    client = OpenAI(api_key=api_key, base_url="https://dashscope.aliyuncs.com/compatible-mode/v1")
+    return client, api_model
 
-# 直接调用本地模型进行推理
-def get_local_response(model, tokenizer, prompt, device, temperature=1.0, top_p=1.0, presence_penalty=0.0):
-    inputs = tokenizer(prompt, return_tensors="pt").to(device)
-    
-    # 设置生成的参数
-    output = model.generate(
-        **inputs,
-        max_length=512,
+def get_response(client, api_model, prompt, temperature, top_p, presence_penalty):
+    response = client.chat.completions.create(
+        model=api_model,
+        messages=[
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ],
         temperature=temperature,
         top_p=top_p,
         presence_penalty=presence_penalty,
-        num_return_sequences=1,
     )
-    
-    response = tokenizer.decode(output[0], skip_special_tokens=True)
-    return response
+    # 获取token使用情况
+    total_tokens = response.usage.total_tokens
+    return response.choices[0].message.content, total_tokens
 
-def process_test_data(model, tokenizer, test_file, output_file, prompt_config, distractor_principle, temperature, top_p, presence_penalty, device):
+def process_test_data(client, api_model, test_file, output_file, prompt_config, distractor_principle, temperature, top_p, presence_penalty):
     total_items = sum(1 for _ in read_test_data_iter(test_file))
+    api_calls = 0
     start_time = time.time()
     # 初始化token计数
+    total_tokens = 0
 
     with tqdm(total=total_items, desc="Generating distractors") as pbar:
         for question_data in read_test_data_iter(test_file):
             try:
-                rg_prompt = pf.producePrompt(prompt_config['rg'], question_data, distractor_principle)
-                r = get_local_response(model, tokenizer, rg_prompt, device, temperature, top_p, presence_penalty)
-                # print("错误推理:\n", r)
+                # rg_prompt = pf.producePrompt(prompt_config['rg'], question_data, distractor_principle)
+                # r, tokens_rg = get_response(client, api_model, rg_prompt, temperature, top_p, presence_penalty)
+                # api_calls += 1
+                # total_tokens += tokens_rg
+                # # print("错误推理:\n", r)
 
-                inference = format_rationale_output(r, prompt_config['format'])
+                # inference = format_rationale_output(r, prompt_config['format'])
                 dg_prompt = pf.producePrompt(prompt_config['dg'], question_data)
                 # print("观察dg的prompt:\n", dg_prompt)
-                d = get_local_response(model, tokenizer, dg_prompt, device, temperature, top_p, presence_penalty)
-
+                d, tokens_dg = get_response(client, api_model, dg_prompt, temperature, top_p, presence_penalty)
+                api_calls += 1
+                total_tokens += tokens_dg
 
                 extracted_distractors = format_distractor_output(d)
                 print("提取的干扰项:", extracted_distractors)
@@ -107,9 +110,22 @@ def process_test_data(model, tokenizer, test_file, output_file, prompt_config, d
             finally:
                 pbar.update(1)
                 elapsed = time.time() - start_time
+                rate = api_calls / elapsed
+                token_rate = total_tokens / elapsed
+                
+                pbar.set_postfix({
+                    'API calls': api_calls,
+                    'Calls/s': f'{rate:.2f}',
+                    'Tokens': total_tokens,
+                    'Tokens/s': f'{token_rate:.1f}'
+                })
 
     print(f"\nGeneration completed:")
     print(f"Total time: {time.time() - start_time:.2f}s")
+    print(f"Total API calls: {api_calls}")
+    print(f"Total tokens used: {total_tokens}")
+    print(f"Average tokens/call: {total_tokens/api_calls:.1f}")
+    print(f"Token rate: {total_tokens/(time.time() - start_time):.1f} tokens/s")
     print(f"Results saved to {output_file}")
 
 
@@ -121,7 +137,6 @@ def main():
     parser.add_argument('-m', '--model', choices=['plus', 'qwen7b'], required=True, help="Type of model to use")
     parser.add_argument('-p', '--prompt', choices=['rule', 'cot', 'non'], required=True, help="Prompt type")
     parser.add_argument('-s', '--seed', type=int, default=42, help="Random seed for reproducibility")
-    parser.add_argument('-g', '--gpu', type=int, default=0, help="GPU ID to use")  
     args = parser.parse_args()
 
     # 加载配置
@@ -131,10 +146,8 @@ def main():
     file_config = config['files'][args.dataset]
 
     initialize_seeds(args.seed)
-    # 初始化本地模型
-    model_name_or_path = "path_to_your_local_model"  # 本地模型的路径
-    model, tokenizer, device = initialize_local_model(model_name_or_path, args.gpu)
-
+    # 初始化API客户端
+    client, api_model = initialize_api_client(api_config, args.model)
 
     # 配置文件路径
     test_file = file_config['test_file']
@@ -146,7 +159,7 @@ def main():
     presence_penalty = config['presence_penalty']
 
     # 处理测试数据
-    process_test_data(model, tokenizer, test_file, output_file, prompt_config, distractor_principle, temperature, top_p, presence_penalty, device)
+    process_test_data(client, api_model, test_file, output_file, prompt_config, distractor_principle, temperature, top_p, presence_penalty)
 
 if __name__ == "__main__":
     main()
