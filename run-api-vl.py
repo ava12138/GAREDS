@@ -7,7 +7,7 @@ from tqdm import tqdm
 from openai import OpenAI
 from PromptFramwork import PromptFramework as pf
 from datasets import load_dataset
-from utils.utils import initialize_seeds
+from utils.utils import initialize_seeds, convert_image_to_base64
 from utils.utils import (
     format_question_output, format_rationale_output, format_distractor_output, count_distractors
 )
@@ -92,22 +92,37 @@ def initialize_api_client(api_config, model_key):
     client = OpenAI(api_key=api_key, base_url="https://dashscope.aliyuncs.com/compatible-mode/v1")
     return client, api_model
 
-def get_response(client, api_model, prompt, temperature, top_p, presence_penalty):
-    response = client.chat.completions.create(
-        model=api_model,
-        messages=[
-            {
-                "role": "user",
-                "content": prompt
-            }
-        ],
-        temperature=temperature,
-        top_p=top_p,
-        presence_penalty=presence_penalty,
-    )
-    # 获取token使用情况
-    total_tokens = response.usage.total_tokens
-    return response.choices[0].message.content, total_tokens
+def get_response(client, api_model, prompt, image=None, temperature=0.7, top_p=0.95, presence_penalty=0.0):
+    """获取API响应，支持多模态输入"""
+    try:
+        # 构建消息内容
+        content = [{"type": "text", "text": prompt}]
+        
+        # 如果有图片，添加图片内容
+        if image is not None:
+            image_base64 = convert_image_to_base64(image)
+            if image_base64:
+                content.append({
+                    "type": "image_url",
+                    "image_url": {"url": image_base64}
+                })
+        
+        messages = [{"role": "user", "content": content}]
+        
+        # 调用API
+        response = client.chat.completions.create(
+            model=api_model,
+            messages=messages,
+            temperature=temperature,
+            top_p=top_p,
+            presence_penalty=presence_penalty,
+        )
+        
+        return response.choices[0].message.content, response.usage.total_tokens
+            
+    except Exception as e:
+        print(f"API调用错误: {str(e)}")
+        raise
 
 def process_test_data(client, api_model, dataset, output_file, prompt_config, distractor_principle, temperature, top_p, presence_penalty):
     api_calls = 0
@@ -137,16 +152,55 @@ def process_test_data(client, api_model, dataset, output_file, prompt_config, di
     with tqdm(total=total_items, initial=processed_count, desc="Generating distractors") as pbar:
         for question_data in dataset_iter:
             try:
+                # 检查是否为多模态问题
+                is_multimodal = 'image' in question_data and question_data['image'] is not None
+                
+                # 生成错误推理
                 rg_prompt = pf.producePrompt(prompt_config['rg'], question_data, distractor_principle)
-                r, tokens_rg = get_response(client, api_model, rg_prompt, temperature, top_p, presence_penalty)
+                r, tokens_rg = get_response(
+                    client, api_model, rg_prompt,
+                    image=question_data['image'] if is_multimodal else None,
+                    temperature=temperature,
+                    top_p=top_p,
+                    presence_penalty=presence_penalty
+                )
+                
                 api_calls += 1
                 total_tokens += tokens_rg
-                # print("错误推理:\n", r)
 
+                # 生成干扰项
                 inference = format_rationale_output(r, prompt_config['format'])
                 dg_prompt = pf.producePrompt(prompt_config['dg'], question_data, inference)
-                # print("观察dg的prompt:\n", dg_prompt)
-                d, tokens_dg = get_response(client, api_model, dg_prompt, temperature, top_p, presence_penalty)
+                d, tokens_dg = get_response(
+                    client, api_model, dg_prompt,
+                    image=question_data['image'] if is_multimodal else None,
+                    temperature=temperature,
+                    top_p=top_p,
+                    presence_penalty=presence_penalty
+                )
+                
+                api_calls += 1
+                total_tokens += tokens_dg
+
+                # 生成干扰项
+                inference = format_rationale_output(r, prompt_config['format'])
+                dg_prompt = pf.producePrompt(prompt_config['dg'], question_data, inference)
+                
+                if is_multimodal :  # 多模态模型处理带图片的问题
+                    d, tokens_dg = get_response(
+                        client, api_model, dg_prompt,
+                        image=question_data['image'],
+                        temperature=temperature,
+                        top_p=top_p,
+                        presence_penalty=presence_penalty
+                    )
+                else:  # 文本模式处理
+                    d, tokens_dg = get_response(
+                        client, api_model, dg_prompt,
+                        temperature=temperature,
+                        top_p=top_p,
+                        presence_penalty=presence_penalty
+                    )
                 api_calls += 1
                 total_tokens += tokens_dg
 
@@ -203,7 +257,7 @@ def main():
     # 解析参数
     parser = argparse.ArgumentParser(description="Generate distractors")
     parser.add_argument('-d', '--dataset', type=str, required=True, help="Hugging Face Dataset name (e.g., science_qa, squad)")
-    parser.add_argument('-m', '--model', choices=['plus', 'qwen7b'], required=True, help="Type of model to use")
+    parser.add_argument('-m', '--model', choices=['plus', 'qwen7b','vl'], required=True, help="Type of model to use")
     parser.add_argument('-p', '--prompt', choices=['rule', 'cot', 'non'], required=True, help="Prompt type")
     parser.add_argument('-s', '--seed', type=int, default=42, help="Random seed for reproducibility")
     parser.add_argument('--split', type=str, default='test', help="Dataset split to use (train, validation, test)") # 添加 split 参数

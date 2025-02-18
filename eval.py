@@ -41,7 +41,7 @@ def calculate_rouge_l(groundtruth, output, context):
     
     # 3. 综合计算最终分数
     # 直接匹配占70%权重，上下文匹配占30%权重
-    final_score = (direct_score * 0.7 + context_score * 0.3) * 100
+    final_score = context_score * 100
     
     return final_score
 

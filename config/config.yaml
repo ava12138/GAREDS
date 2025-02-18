@@ -13,6 +13,9 @@ prompt_types:
   non:
     dg: "non_dg"
 
+# 添加数据集映射配置
+dataset_names:
+  scienceqa: "derek-thomas/ScienceQA"  # HF数据集映射
     
 files:
   lan:
@@ -35,3 +38,10 @@ files:
     test_file: '/data/lzx/sciq/test.json'
     output_file: './output/output_dg-Sciq'         
     results_file: './evaluation/Sciq'   
+  sciqa-all:
+    test_file: './data_divided/sciqa-test.json'
+    output_file: './output/output_dg-sciqa-all'    
+    results_file: './evaluation/sciqa-all'
+  scienceqa:  
+    output_file: './output/output_dg-scienceqa'
+    results_file: './evaluation/scienceqa'

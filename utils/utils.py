@@ -7,7 +7,34 @@ import json
 import numpy as np
 import torch
 import random
+import base64
+from io import BytesIO
+from PIL import Image,UnidentifiedImageError
 
+def convert_image_to_base64(image, format="PNG"):
+    """将PIL图像转换为base64字符串，并允许指定输出格式，提供更详细的错误信息"""
+    if not isinstance(image, Image.Image):
+        return None
+
+    try:
+        buffered = BytesIO()
+        image_format = format.upper()
+        image.save(buffered, format=image_format)
+        img_str = base64.b64encode(buffered.getvalue()).decode()
+        return f"data:image/{format.lower()};base64,{img_str}"
+    except FileNotFoundError as e: #  捕获 FileNotFoundError (如果 image_path 是从外部传入的)
+        error_message = f"文件未找到错误: {e.filename}. 请检查图片文件路径是否正确。"
+        print(f"图片转换错误: {error_message}")
+        return None
+    except UnidentifiedImageError as e: #  捕获 UnidentifiedImageError (PIL 无法识别图像格式)
+        error_message = f"无法识别的图像格式: {e}. 请确保图片文件是有效的图像文件。"
+        print(f"图片转换错误: {error_message}")
+        return None
+    except Exception as e: #  捕获其他通用异常
+        error_message = f"图像转换过程中发生未知错误: {type(e).__name__} - {e}." #  包含异常类型和消息
+        print(f"图片转换错误: {error_message}")
+        return None
+    
 def format_question_output(response):
     question_match = re.search(r'Question:\s*(.*)', response)
     answer_match = re.search(r'Answer:\s*(.*)', response)
@@ -41,7 +68,15 @@ def format_rationale_output(response, format_type="rule_format"):
         
         return {'explanation': explanation, 'incorrect_inferences': incorrect_inferences_combined}
 
-def format_distractor_output(text: str) -> dict:
+def format_distractor_output(text: str, expected_count: int = None) -> dict:
+    """
+    格式化干扰项输出
+    Args:
+        text: 原始响应文本
+        expected_count: 预期的干扰项数量，如果为None则提取所有找到的干扰项
+    Returns:
+        dict: 包含格式化后干扰项的字典
+    """
     output = {}
     # 去除所有的 **
     cleaned_text = text.replace('**', '')
@@ -50,10 +85,23 @@ def format_distractor_output(text: str) -> dict:
     distractor_pattern = re.compile(r'Distractor\d:\s*(.*?)\s*(?=\n|$)')
     matches = distractor_pattern.findall(cleaned_text)
     
-    for i, match in enumerate(matches, 1):
+    # 如果指定了预期数量，只取指定数量的干扰项
+    count = expected_count if expected_count is not None else len(matches)
+    
+    for i, match in enumerate(matches[:count], 1):
         output[f'distractor{i}'] = match.strip()
     
     return output
+
+def count_distractors(question_data: dict) -> int:
+    """
+    计算问题数据中的干扰项数量
+    Args:
+        question_data: 包含问题信息的字典
+    Returns:
+        int: 干扰项数量
+    """
+    return sum(1 for key in question_data.keys() if key.startswith('distractor'))
 
 def read_test_data(test_file):
     with open(test_file, 'r') as f:

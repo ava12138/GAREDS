@@ -33,43 +33,93 @@ def normalize(text):
 
 
 def evaluate_distractors(test_data, generated_data, metrics):
-    """评估生成的干扰项"""
+    """评估生成的干扰项
+    Args:
+        test_data: 有序的测试数据列表
+        generated_data: 有序的生成数据列表
+        metrics: 评估指标字典
+    """
     start_time = time.time()
     bleu4s, rouges = [], []
+    skipped_count = 0
+    processed_count = 0
     
-    with tqdm(total=len(test_data), desc="Evaluating") as pbar:
-        for test_item, gen_item in zip(test_data, generated_data):
-            # 获取参考干扰项和生成的干扰项
-            refs = [test_item[f'distractor{i}'] for i in range(1, 4)]
-            hyps = [gen_item[f'distractor{i}'] for i in range(1, 4)]
+    # 确定评估数量
+    generated_count = len(generated_data)
+    is_hf_dataset = hasattr(test_data, '__len__') and hasattr(test_data, 'features')
+    
+    print(f"\n数据集统计:")
+    print(f"数据集类型: {'HuggingFace Dataset' if is_hf_dataset else 'Local JSON'}")
+    print(f"测试集大小: {len(test_data)}")
+    print(f"生成集大小: {generated_count}")
+    print(f"将评估前 {generated_count} 个样本")
+    
+    with tqdm(total=generated_count, desc="Evaluating") as pbar:
+        # 对于HF数据集和本地JSON使用统一的迭代方式
+        test_items = test_data if not is_hf_dataset else test_data
+        for test_item, gen_item in zip(test_items, generated_data):
+            if processed_count >= generated_count:
+                break
+            try:
+                processed_count += 1
+                
+                # 对于HF数据集，需要特殊处理干扰项的提取
+                if is_hf_dataset:
+                    correct_answer_index = test_item['answer']
+                    all_choices = test_item['choices']
+                    refs = [choice for i, choice in enumerate(all_choices) if i != correct_answer_index]
+                else:
+                    # 原有的本地JSON处理逻辑
+                    distractor_count = len([k for k in test_item.keys() if k.startswith('distractor')])
+                    refs = [test_item[f'distractor{i}'] for i in range(1, distractor_count + 1)]
+                
+                if not refs:
+                    print(f"警告：问题 '{test_item['question'][:50]}...' 没有干扰项")
+                    skipped_count += 1
+                    pbar.update(1)
+                    continue
+                
+                # 获取生成的干扰项
+                hyps = [gen_item.get(f'distractor{i}', '') for i in range(1, len(refs) + 1)]
+                
+                # 规范化和评估逻辑保持不变
+                refs = [normalize(ref) for ref in refs]
+                hyps = [normalize(hyp) for hyp in hyps]
+                
+                ref_text = " [SEP] ".join(refs)
+                hyp_text = " [SEP] ".join(hyps)
+                
+                bleu = metrics['bleu'].compute(predictions=[hyp_text], references=[[ref_text]])['score']
+                rouge = metrics['rouge'].compute(predictions=[hyp_text], references=[[ref_text]])['rougeL']
+                
+                bleu4s.append(bleu)
+                rouges.append(rouge)
             
-            # 规范化文本
-            refs = [normalize(ref) for ref in refs]
-            hyps = [normalize(hyp) for hyp in hyps]
-            
-            # # 将三个干扰项合并为一个字符串进行整体评估
-            # ref_text = " [SEP] ".join(refs)
-            # hyp_text = " [SEP] ".join(hyps)
-            # 为每个文本添加序号并拼接成一个没有空格的字符串
-            ref_text = "".join([f"({i+1}){ref}" for i, ref in enumerate(refs)])
-            hyp_text = "".join([f"({i+1}){hyp}" for i, hyp in enumerate(hyps)])
-            # 计算整体指标
-            bleu = metrics['bleu'].compute(predictions=[hyp_text], references=[[ref_text]])['score']
-            rouge = metrics['rouge'].compute(predictions=[hyp_text], references=[[ref_text]])['rougeL']
-            
-            bleu4s.append(bleu)
-            rouges.append(rouge)
+            except Exception as e:
+                print(f"处理问题时出错: {str(e)}")
+                print(f"问题: {test_item['question'][:100]}...")
+                skipped_count += 1
             
             pbar.update(1)
 
-    # 计算平均分数
+    # 计算评估结果
     scores = {
-        'bleu_4': np.mean(bleu4s),
-        'rouge': np.mean(rouges) * 100  # 转换为百分比
+        'bleu_4': np.mean(bleu4s) if bleu4s else 0.0,
+        'rouge': np.mean(rouges) * 100 if rouges else 0.0,
+        'total_samples': len(test_data),
+        'generated_samples': generated_count,
+        'processed_samples': processed_count,
+        'evaluated_samples': len(bleu4s),
+        'skipped_samples': skipped_count,
+        'evaluation_time': time.time() - start_time
     }
     
-    evaluation_time = time.time() - start_time
-    scores['evaluation_time'] = evaluation_time
+    print(f"\n评估统计信息:")
+    print(f"总样本数: {scores['total_samples']}")
+    print(f"生成样本数: {scores['generated_samples']}")
+    print(f"处理样本数: {scores['processed_samples']}")
+    print(f"成功评估数: {scores['evaluated_samples']}")
+    print(f"跳过样本数: {scores['skipped_samples']}")
     
     return scores
 
@@ -96,26 +146,35 @@ def load_metrics():
 
 def main():
     parser = argparse.ArgumentParser(description="Evaluate distractors")
-    parser.add_argument('-d', '--dataset', choices=['lan', 'nat', 'soc','sciqa-text','sciq'], 
-                       required=True, help="Dataset type")
+    parser.add_argument('-d', '--dataset', required=True, help="Dataset name or path")
     parser.add_argument('-m', '--model', required=True, help="Model name")
     parser.add_argument('-p', '--prompt', choices=['rule', 'cot', 'non'], 
                        required=True, help="Prompt type")
+    parser.add_argument('--split', type=str, default='test', help="Dataset split for HF datasets")
     args = parser.parse_args()
     
     # 加载配置
     with open('./config/config.yaml', 'r') as file:
         config = yaml.safe_load(file)
     
-    # 获取文件路径
-    file_config = config['files'][args.dataset]
-    test_file = file_config['test_file']
-    output_file = f"{file_config['output_file']}-{args.model}-{args.prompt}.json"
-    results_file = f"{file_config['results_file']}-{args.model}-{args.prompt}-new.json"
+     # 获取数据集配置
+    file_config = config['files'].get(args.dataset, {})
+    dataset_name = config['dataset_names'].get(args.dataset, args.dataset)
     
-    # 加载数据
-    with open(test_file, 'r') as f:
-        test_data = json.load(f)
+    # 确定输出文件路径
+    output_file = f"{file_config.get('output_file', f'./output/output_dg-{args.dataset}')}-{args.model}-{args.prompt}.json"
+    results_file = f"{file_config.get('results_file', f'./evaluation/{args.dataset}')}-{args.model}-{args.prompt}-new.json"
+    
+    # 加载测试数据
+    if 'test_file' in file_config:
+        # 本地JSON文件
+        with open(file_config['test_file'], 'r') as f:
+            test_data = json.load(f)
+    else:
+        # HuggingFace数据集
+        from datasets import load_dataset
+        test_data = load_dataset(dataset_name, split=args.split)
+
     with open(output_file, 'r') as f:
         generated_data = json.load(f)
     
