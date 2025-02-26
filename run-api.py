@@ -9,7 +9,7 @@ from PromptFramwork import PromptFramework as pf
 from datasets import load_dataset
 from utils.utils import initialize_seeds
 from utils.utils import (
-    format_question_output, format_rationale_output, format_distractor_output, count_distractors
+    format_question_output, format_rationale_output, format_distractor_output
 )
 
 

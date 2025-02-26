@@ -1,6 +1,4 @@
 import re
-import csv
-import re
 import pandas as pd
 import ast
 import json
@@ -11,7 +9,7 @@ import base64
 from io import BytesIO
 from PIL import Image,UnidentifiedImageError
 
-def convert_image_to_base64(image, format="PNG"):
+def convert_image_to_base64(image, format="JPEG"):
     """将PIL图像转换为base64字符串，并允许指定输出格式，提供更详细的错误信息"""
     if not isinstance(image, Image.Image):
         return None
@@ -19,19 +17,23 @@ def convert_image_to_base64(image, format="PNG"):
     try:
         buffered = BytesIO()
         image_format = format.upper()
+        # 如果是 JPEG 格式，确保图片以 RGB 模式保存
+        if image_format == "JPEG" and image.mode in ('RGBA', 'P'):
+            image = image.convert('RGB')
+        
         image.save(buffered, format=image_format)
         img_str = base64.b64encode(buffered.getvalue()).decode()
         return f"data:image/{format.lower()};base64,{img_str}"
-    except FileNotFoundError as e: #  捕获 FileNotFoundError (如果 image_path 是从外部传入的)
+    except FileNotFoundError as e:
         error_message = f"文件未找到错误: {e.filename}. 请检查图片文件路径是否正确。"
         print(f"图片转换错误: {error_message}")
         return None
-    except UnidentifiedImageError as e: #  捕获 UnidentifiedImageError (PIL 无法识别图像格式)
+    except UnidentifiedImageError as e:
         error_message = f"无法识别的图像格式: {e}. 请确保图片文件是有效的图像文件。"
         print(f"图片转换错误: {error_message}")
         return None
-    except Exception as e: #  捕获其他通用异常
-        error_message = f"图像转换过程中发生未知错误: {type(e).__name__} - {e}." #  包含异常类型和消息
+    except Exception as e:
+        error_message = f"图像转换过程中发生未知错误: {type(e).__name__} - {e}."
         print(f"图片转换错误: {error_message}")
         return None
     
@@ -93,15 +95,6 @@ def format_distractor_output(text: str, expected_count: int = None) -> dict:
     
     return output
 
-def count_distractors(question_data: dict) -> int:
-    """
-    计算问题数据中的干扰项数量
-    Args:
-        question_data: 包含问题信息的字典
-    Returns:
-        int: 干扰项数量
-    """
-    return sum(1 for key in question_data.keys() if key.startswith('distractor'))
 
 def read_test_data(test_file):
     with open(test_file, 'r') as f:

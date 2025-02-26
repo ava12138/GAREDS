@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+log
 data_divided
 evaluation
 output
@@ -10,7 +11,13 @@ metrics
 api.yaml
 # C extensions
 *.so
-
+# Huggingface models
+models/
+downloaded_models/
+*.bin
+*.pt
+*.pth
+*.ckpt
 # Distribution / packaging
 .Python
 build/

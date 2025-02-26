@@ -1,5 +1,4 @@
-temperature: 0.5
-top_p: 1
+temperature: 0.0
 presence_penalty: 0.0
 prompt_types:
   rule:
@@ -16,6 +15,15 @@ prompt_types:
 # 添加数据集映射配置
 dataset_names:
   scienceqa: "derek-thomas/ScienceQA"  # HF数据集映射
+
+# 添加模型映射配置
+model_path:
+  qwen7b: "/data/lzx/model/qwen2.5-7b-instruct"
+  qwenvl: "/data/lzx/model/qwen2.5-vl-7b-instruct"
+
+max_tokens:
+  rg: 2048 # cot prompt 类型的 reasoning generation max_tokens
+  dg: 512  # cot prompt 类型的 distractor generation max_tokens
     
 files:
   lan:

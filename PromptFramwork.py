@@ -74,15 +74,19 @@ class PromptFramework():
         Principle5: XXX\n
         Principle6: XXX\n
         """
-        instructions="You are given the following question along with the correct answer, and six principles for Faulty Reasoning. Please use the following template to give one correct explanation and six incorrect inferences based on the given six principles. These six faulty inferences are used to help generate distractors for multiple-choice questions. \n\
-        [Template]\n \
-        Explanation: XXX\n \
-        Incorrect Infernece1: XXX \n\
-        Incorrect Infernece2: XXX \n\
-        Incorrect Infernece3: XXX \n\
-        Incorrect Infernece4: XXX \n\
-        Incorrect Infernece5: XXX \n\
-        Incorrect Infernece6: XXX \n"
+        instructions = ("You are given the following question along with the correct answer, and six principles for Faulty Reasoning. "
+                   "The question may include an image. The image contains information that helps you understand the question and can help you generate subsequent reasonings."
+                   "Please use the following template to give one correct explanation and "
+                   "six incorrect inferences based on the given six principles. These six faulty inferences are used to help "
+                   "generate distractors for multiple-choice questions.\n"
+                   "[Template]\n"
+                   "Explanation: XXX\n"
+                   "Incorrect Infernece1: XXX\n"
+                   "Incorrect Infernece2: XXX\n"
+                   "Incorrect Infernece3: XXX\n"
+                   "Incorrect Infernece4: XXX\n"
+                   "Incorrect Infernece5: XXX\n"
+                   "Incorrect Infernece6: XXX\n")
         principles_text = ""
         for idx, principle in enumerate(principles):
             principles_text += f"Principle{idx+1}:s{principle}\n"
@@ -123,10 +127,11 @@ class PromptFramework():
             ])
         template = "\n".join(template_parts)
 
-        instructions=(
+        instructions = (
             "You are given the following question along with the correct answer, explanation, and six faulty inferences. "
-            "Please use the following template to generate"
-            f" **{distractor_count}** alternative incorrect answers to be used as multiple-choice options in a multiple-choice exam based on the given faulty inferences. \n "
+            "The question may include an image. The image contains information that helps you understand the question and can help you generate subsequent distractors."
+            "Please use the following template to generate "
+            f"**{distractor_count}** alternative incorrect answers to be used as multiple-choice options in a multiple-choice exam. "
             "Prior to the incorrect answer, provide feedback to be displayed to the student as an explanation of why that is not the correct answer.\n"
             "[Template]\n"
             f"{template}\n"

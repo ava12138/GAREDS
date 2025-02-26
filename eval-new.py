@@ -9,11 +9,6 @@ from tqdm import tqdm
 import os
 import evaluate
 
-# 设置 HuggingFace 缓存目录
-os.environ['HF_HOME'] = '/home/lzx/.cache/huggingface'
-os.environ['HF_DATASETS_CACHE'] = '/home/lzx/.cache/huggingface/datasets'
-os.environ['TRANSFORMERS_CACHE'] = '/home/lzx/.cache/huggingface'
-
 def normalize(text):
     """标准化文本:小写、去除标点符号、冠词和多余空格"""
     def remove_articles(text):
@@ -125,12 +120,6 @@ def evaluate_distractors(test_data, generated_data, metrics):
 
 
 def load_metrics():
-    """加载评估指标并强制使用本地缓存"""
-    import os
-    # 设置环境变量强制使用本地缓存
-    os.environ['HF_DATASETS_OFFLINE'] = '1'
-    os.environ['TRANSFORMERS_OFFLINE'] = '1'
-    os.environ['HF_EVALUATE_OFFLINE'] = '1'
     
     try:
         print("正在从本地加载评估指标...")
