@@ -9,7 +9,8 @@ from PromptFramwork import PromptFramework as pf
 from datasets import load_dataset
 from utils.utils import initialize_seeds, convert_image_to_base64
 from utils.utils import (
-    format_question_output, format_rationale_output, format_distractor_output
+    format_question_output, format_rationale_output, format_distractor_output,
+    get_processed_count, log_error, create_error_result, update_progress_stats, print_final_stats
     )
 
 
@@ -101,7 +102,7 @@ def get_response(client, api_model, prompt, image=None, temperature=0.7,presence
         # 如果有图片，添加图片内容并进行验证
         if image is not None:
             image_base64 = convert_image_to_base64(image)  
-            if image_base64:  # 已经包含了 "data:image/png;base64," 前缀
+            if image_base64:  
                 content.append({
                     "type": "image_url",
                     "image_url": {"url": image_base64} 
@@ -127,161 +128,154 @@ def get_response(client, api_model, prompt, image=None, temperature=0.7,presence
         return response.choices[0].message.content, response.usage.total_tokens
             
     except Exception as e:
-        print(f"API调用错误: {str(e)}")
-        print(f"请求内容: {messages}")  # 打印完整请求内容以便调试
+        print(f"\n\033[91mAPI调用错误: {str(e)}\033[0m")
+        print(f"\033[93m请求内容: {messages}\033[0m")
         raise
 
-def process_test_data(client, api_model, dataset, output_file, prompt_config, distractor_principle, temperature,  presence_penalty):
+def generate_rationale(client, api_model, question_data, prompt_config, distractor_principle, temperature, presence_penalty):
+    """生成错误推理，支持多模态输入"""
+    # 检查是否为多模态问题
+    is_multimodal = 'image' in question_data and question_data['image'] is not None
+    
+    # 生成推理提示
+    rg_prompt = pf.producePrompt(prompt_config['rg'], question_data, distractor_principle)
+    
+    # 调用API获取响应
+    response, tokens = get_response(
+        client, api_model, rg_prompt,
+        image=question_data['image'] if is_multimodal else None,
+        temperature=temperature,
+        presence_penalty=presence_penalty
+    )
+    
+    # 格式化并验证推理结果
+    inference = format_rationale_output(response, prompt_config['format'])
+    
+    # 验证推理结果是否为空
+    is_empty = False
+    if isinstance(inference, dict) and 'incorrect_inferences' in inference:
+        is_empty = not inference['incorrect_inferences'].strip()
+    elif isinstance(inference, str):
+        is_empty = not inference.strip()
+        
+    if is_empty:
+        print("\n\033[91m警告: 错误推理为空！\033[0m")
+        print("\033[93m原始推理内容:\033[0m")
+        print(response)
+        raise ValueError("错误推理格式化结果为空")
+        
+    return inference, tokens, response
+
+def generate_distractors(client, api_model, question_data, inference, prompt_config, temperature, presence_penalty):
+    """生成干扰项，支持多模态输入"""
+    # 检查是否为多模态问题
+    is_multimodal = 'image' in question_data and question_data['image'] is not None
+    
+    # 生成干扰项提示
+    dg_prompt = pf.producePrompt(prompt_config['dg'], question_data, inference)
+    
+    # 调用API获取响应
+    response, tokens = get_response(
+        client, api_model, dg_prompt,
+        image=question_data['image'] if is_multimodal else None,
+        temperature=temperature,
+        presence_penalty=presence_penalty
+    )
+    
+    # 获取当前问题需要的干扰项数量并提取
+    distractor_count = pf.count_distractors(question_data)
+    extracted_distractors = format_distractor_output(response, distractor_count)
+    
+    return extracted_distractors, tokens, distractor_count
+
+def process_test_data(client, api_model, dataset, output_file, prompt_config, distractor_principle, temperature, presence_penalty):
+    """处理测试数据的主函数"""
+    # 初始化统计变量
     api_calls = 0
-    start_time = time.time()
-    # 初始化token计数
     total_tokens = 0
-
-    # 加载已处理的数据项数量，用于断点续传
-    processed_count = 0
-    if os.path.exists(output_file):
-        with open(output_file, 'r', encoding='utf-8') as f:
-            try:
-                existing_results = json.load(f)
-                if isinstance(existing_results, list):
-                    processed_count = len(existing_results)
-                else:
-                    processed_count = 1 if existing_results else 0 #  兼容非列表格式
-            except json.JSONDecodeError:
-                processed_count = 0
-
-        # 获取数据集长度和迭代器
-    total_items, dataset_iter = read_test_data_iter(dataset, start_index=processed_count)
-    # 添加错误数据记录文件
-    error_log_file = output_file.replace('.json', '_errors.json')
-    problematic_indices = set() # 已知的问题数据索引
-    current_index = processed_count  # 添加当前索引计数器
-    def log_error_data(index, question_data, error_msg):
-        error_record = {
-            "index": index,
-            "question": question_data['question'],
-            "correct_answer": question_data['correct_answer'],
-            "error": str(error_msg)
-        }
-        with open(error_log_file, 'a', encoding='utf-8') as f:
-            json.dump(error_record, f, ensure_ascii=False)
-            f.write('\n')
-        problematic_indices.add(index)
-
-    batch_size = 10 # 批量写入大小
+    start_time = time.time()
     results_buffer = []
+    batch_size = 10
+    error_log_file = "./log/api_error_log.json"
+
+    # 加载断点续传信息
+    processed_count = get_processed_count(output_file)
+    total_items, dataset_iter = read_test_data_iter(dataset, start_index=processed_count)
+    current_index = processed_count
+
+    # 确保错误日志目录存在
+    os.makedirs(os.path.dirname(error_log_file), exist_ok=True)
 
     with tqdm(total=total_items, initial=processed_count, desc="Generating distractors") as pbar:
         for question_data in dataset_iter:
             try:
-
-                # 检查是否为多模态问题
-                is_multimodal = 'image' in question_data and question_data['image'] is not None
-                
+                # 1. 生成错误推理
                 try:
-                    # 生成错误推理
-                    rg_prompt = pf.producePrompt(prompt_config['rg'], question_data, distractor_principle)
-                    r, tokens_rg = get_response(
-                        client, api_model, rg_prompt,
-                        image=question_data['image'] if is_multimodal else None,
-                        temperature=temperature,
-                        presence_penalty=presence_penalty
+                    inference, tokens_rg, raw_inference = generate_rationale(
+                        client, api_model, question_data, prompt_config,
+                        distractor_principle, temperature, presence_penalty
                     )
-                    
                     api_calls += 1
                     total_tokens += tokens_rg
-
-                    # 生成干扰项
-                    inference = format_rationale_output(r, prompt_config['format'])
-                    dg_prompt = pf.producePrompt(prompt_config['dg'], question_data, inference)
-                    d, tokens_dg = get_response(
-                        client, api_model, dg_prompt,
-                        image=question_data['image'] if is_multimodal else None,
-                        temperature=temperature,
-                        presence_penalty=presence_penalty
-                    )
-                    
-                    api_calls += 1
-                    total_tokens += tokens_dg
-
                 except Exception as e:
-                    # 记录错误信息
-                    print(f"API错误 (索引 {current_index}): {str(e)}")
-                    log_error_data(current_index, question_data, e)
-                    
-                    # 添加错误结果
-                    result = {
-                        "question": question_data['question'],
-                        "correct_answer": question_data['correct_answer'],
-                        "distractor1": "API_ERROR",
-                        "distractor2": "API_ERROR",
-                        "distractor3": "API_ERROR"
-                    }
-                    results_buffer.append(result)
-                    
-                    # 更新进度
+                    print(f"\n\033[93m推理生成错误 (索引 {current_index}): {str(e)}\033[0m")
+                    if raw_inference:
+                        print(f"原始推理输出: {raw_inference[:200]}...")
+                    log_error(error_log_file, current_index, question_data, f"推理错误: {e}")
+                    distractor_count = pf.count_distractors(question_data)
+                    results_buffer.append(create_error_result(question_data, distractor_count, "INFERENCE_ERROR"))
                     current_index += 1
                     pbar.update(1)
                     continue
 
-                # 获取当前问题需要的干扰项数量
-                distractor_count = pf.count_distractors(question_data)
-
-                # 使用预期数量提取干扰项
-                extracted_distractors = format_distractor_output(d, distractor_count)
-                print("提取的干扰项:", extracted_distractors)
+                # 2. 生成干扰项
+                try:
+                    extracted_distractors, tokens_dg, distractor_count = generate_distractors(
+                        client, api_model, question_data, inference, prompt_config,
+                        temperature, presence_penalty
+                    )
+                    api_calls += 1
+                    total_tokens += tokens_dg
+                    
+                    # 构建成功结果
+                    result = {
+                        "question": question_data['question'],
+                        "correct_answer": question_data['correct_answer']
+                    }
+                    for i in range(1, distractor_count + 1):
+                        result[f'distractor{i}'] = extracted_distractors.get(f'distractor{i}', '')
+                    
+                    results_buffer.append(result)
+                except Exception as e:
+                    print(f"\n\033[93m干扰项生成错误 (索引 {current_index}): {str(e)}\033[0m")
+                    log_error(error_log_file, current_index, question_data, f"干扰项错误: {e}")
+                    distractor_count = pf.count_distractors(question_data)
+                    results_buffer.append(create_error_result(question_data, distractor_count, "DISTRACTOR_ERROR"))
                 
-                # 构建动态结果字典
-                result = {
-                    "question": question_data['question'],
-                    "correct_answer": question_data['correct_answer']
-                }
-                # 动态添加干扰项
-                for i in range(1, distractor_count + 1):
-                    result[f'distractor{i}'] = extracted_distractors.get(f'distractor{i}', '')
-                current_index += 1
-
-                results_buffer.append(result)
-
-            
             except Exception as e:
-                print(f"处理错误 (索引 {current_index}): {str(e)}")
-                log_error_data(current_index, question_data, e)
-                current_index += 1
-                pbar.update(1)
-                continue
-
+                # 捕获其他意外错误
+                print(f"\n\033[91m未预期错误 (索引 {current_index}): {str(e)}\033[0m")
+                log_error(error_log_file, current_index, question_data, f"未预期错误: {e}")
+                distractor_count = pf.count_distractors(question_data)
+                results_buffer.append(create_error_result(question_data, distractor_count, "UNEXPECTED_ERROR"))
+            
             finally:
-
-                if len(results_buffer) >= batch_size: #  当 buffer 大小达到 batch_size 时，批量写入
+                # 批量写入检查
+                if len(results_buffer) >= batch_size:
                     batch_append_to_output_file(output_file, results_buffer)
                     results_buffer = []
-                    
-                pbar.update(1)
-                elapsed = time.time() - start_time
-                rate = api_calls / elapsed
-                token_rate = total_tokens / elapsed
                 
-                pbar.set_postfix({
-                    'API calls': api_calls,
-                    'Calls/s': f'{rate:.2f}',
-                    'Tokens': total_tokens,
-                    'Tokens/s': f'{token_rate:.1f}'
-                })
+                # 更新进度
+                current_index += 1
+                pbar.update(1)
+                update_progress_stats(pbar, api_calls, total_tokens, start_time)
 
-     #  处理最后一批不足 batch_size 的结果
+    # 处理剩余结果
     if results_buffer:
         batch_append_to_output_file(output_file, results_buffer)
-        results_buffer = []
-
-    print(f"\nGeneration completed:")
-    print(f"Total time: {time.time() - start_time:.2f}s")
-    print(f"Total API calls: {api_calls}")
-    print(f"Total tokens used: {total_tokens}")
-    print(f"Average tokens/call: {total_tokens/api_calls:.1f}")
-    print(f"Token rate: {total_tokens/(time.time() - start_time):.1f} tokens/s")
-    print(f"Results saved to {output_file}")
-
+    
+    # 打印最终统计信息
+    print_final_stats(start_time, api_calls, total_tokens, output_file)
 
 def main():
 
@@ -406,3 +400,17 @@ if __name__ == "__main__":
 # dg_prompt = pf.producePrompt("dg", questiondata, example)
 # d = get_response(dg_prompt)
 # print("干扰项:\n", d)
+
+
+    # retriever = RetrieverFramework()
+    
+    # for idx, question_data in enumerate(dataset_iter):
+    #     # 获取相似样例作为few-shot examples 
+    #     similar_examples = retriever.get_similar_examples(idx)
+        
+    #     # 将相似样例加入到prompt中
+    #     prompt_with_examples = pf.producePrompt(
+    #         prompt_config['rg'],
+    #         question_data,
+    #         few_shot_examples=similar_examples
+    #     )

@@ -14,24 +14,20 @@ class ModelInference:
 
     def _initialize_engine(self):
         
-        # 设置模型配置
-        model_kwargs = {
-            'torch_dtype': torch.bfloat16,  # 显式设置数据类型
-            'device_map': {'': f'cuda:{self.device_id}'}  # 明确指定设备
-        }
-
         if self.inference_type == "pt":
             self.engine = PtEngine(
                 self.model_path,
-                **model_kwargs
+                device_map={'': f'cuda:{self.device_id}'}
             )
         elif self.inference_type == "vllm":
             from swift.llm import VllmEngine
+            os.environ['MAX_PIXELS'] = '1003520'
+            os.environ['VIDEO_MAX_PIXELS'] = '50176'
+            os.environ['FPS_MAX_FRAMES'] = '12'
             self.engine = VllmEngine(
                 self.model_path, 
                 max_model_len=32768,            
-                limit_mm_per_prompt={'image': 5, 'video': 2},
-                **model_kwargs
+                limit_mm_per_prompt={'image': 5, 'video': 2}
             )
         else:
             raise ValueError(f"不支持的推理类型: {self.inference_type}")

@@ -1,4 +1,4 @@
-temperature: 0.0
+temperature: 0.6
 presence_penalty: 0.0
 prompt_types:
   rule:

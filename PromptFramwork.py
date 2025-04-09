@@ -1,6 +1,3 @@
-from calendar import c
-import dis
-
 
 class PromptFramework():
     STOP_TOKEN = "[stop]"
@@ -59,7 +56,7 @@ class PromptFramework():
 
 
     @classmethod
-    def rule_based_rg_prompt(cls, questionData, principles):
+    def rule_based_rg_prompt(cls, questionData, principles, examples=None):
         """
         === EXAMPLE ===
         <Instructions>
@@ -76,22 +73,33 @@ class PromptFramework():
         """
         instructions = ("You are given the following question along with the correct answer, and six principles for Faulty Reasoning. "
                    "The question may include an image. The image contains information that helps you understand the question and can help you generate subsequent reasonings."
-                   "Please use the following template to give one correct explanation and "
+                   "Please refer to the examples below and use the template to give one correct explanation and "
                    "six incorrect inferences based on the given six principles. These six faulty inferences are used to help "
-                   "generate distractors for multiple-choice questions.\n"
-                   "[Template]\n"
-                   "Explanation: XXX\n"
-                   "Incorrect Infernece1: XXX\n"
-                   "Incorrect Infernece2: XXX\n"
-                   "Incorrect Infernece3: XXX\n"
-                   "Incorrect Infernece4: XXX\n"
-                   "Incorrect Infernece5: XXX\n"
-                   "Incorrect Infernece6: XXX\n")
+                   "generate distractors for multiple-choice questions.\n")
+        
+        # 添加示例部分
+        examples_text = ""
+        if examples:
+            examples_text = "=== Examples ===\n"
+            examples_text += "\n\n".join(examples) + "\n\n"
+            examples_text += "=== Template ===\n"
+        
+        template = ("Explanation: XXX\n"
+                "Incorrect Inference1: XXX\n"
+                "Incorrect Inference2: XXX\n"
+                "Incorrect Inference3: XXX\n"
+                "Incorrect Inference4: XXX\n"
+                "Incorrect Inference5: XXX\n"
+                "Incorrect Inference6: XXX\n")
+        
         principles_text = ""
         for idx, principle in enumerate(principles):
-            principles_text += f"Principle{idx+1}:s{principle}\n"
+            principles_text += f"Principle{idx+1}: {principle}\n"
+            
         prompt = (
             f"{instructions}\n"
+            f"{examples_text}"
+            f"{template}\n"
             f"Question: {questionData['question'].strip()}\n"
             f"Answer: {questionData['correct_answer'].strip()}\n"
             f"Support: {questionData['support'].strip()}\n"
@@ -100,7 +108,7 @@ class PromptFramework():
         return prompt.strip()
     
     @classmethod
-    def rule_based_dg_prompt(cls, questionData, principles):
+    def rule_based_dg_prompt(cls, questionData, principles, examples=None):
         """
         === EXAMPLE ===
         <Instructions>
@@ -108,41 +116,50 @@ class PromptFramework():
         Question: XXX\n
         Answer: XXX\n
         Explanation: XXX\n
-        Incorrect Infernece1 \n\
-        Incorrect Infernece2 \n\
-        Incorrect Infernece3 \n\
-        Incorrect Infernece4 \n\
-        Incorrect Infernece5 \n\
-        Incorrect Infernece6 \n
+        Incorrect Inference1 \n\
+        Incorrect Inference2 \n\
+        Incorrect Inference3 \n\
+        Incorrect Inference4 \n\
+        Incorrect Inference5 \n\
+        Incorrect Inference6 \n
         """
             # 计算需要生成的干扰项数量
         distractor_count = cls.count_distractors(questionData)
         
-        # 动态生成模板字符串
-        template_parts = []
-        for i in range(1, distractor_count + 1):
-            template_parts.extend([
-                f"Distractor{i}: **XXX**",
-                f"Feedback{i}: XXX"
-            ])
-        template = "\n".join(template_parts)
+
 
         instructions = (
             "You are given the following question along with the correct answer, explanation, and six faulty inferences. "
             "The question may include an image. The image contains information that helps you understand the question and can help you generate subsequent distractors."
-            "Please use the following template to generate "
-            f"**{distractor_count}** alternative incorrect answers to be used as multiple-choice options in a multiple-choice exam. "
-            "Prior to the incorrect answer, provide feedback to be displayed to the student as an explanation of why that is not the correct answer.\n"
+            "Please refer to the examples below and use the template to generate "
+            f"**{distractor_count}** alternative incorrect but plausible answers to be used as multiple-choice options in a multiple-choice exam.\n "
             "[Template]\n"
             f"{template}\n"
         )
-        
+        # 添加示例部分
+        examples_text = ""
+        if examples:
+            examples_text = "=== Examples ===\n"
+            examples_text += "\n\n".join(examples) + "\n\n"
+            examples_text += "=== Template ===\n"
+
+        # 动态生成模板字符串
+        template_parts = []
+        for i in range(1, distractor_count + 1):
+            template_parts.extend([
+                f"Distractor{i}: **XXX**"
+            ])
+        template = "\n".join(template_parts)
+
         principles_text = f"Explanation: {principles['explanation'].strip()}\n"
         incorrect_inferences = principles['incorrect_inferences'].split('\n\n')
         for idx, inference in enumerate(incorrect_inferences, 1):
             principles_text += f"{inference.strip()}\n"
+
         prompt = (
             f"{instructions}\n"
+            f"{examples_text}"
+            f"{template}\n"
             f"Question: {questionData['question'].strip()}\n"
             f"Answer: {questionData['correct_answer'].strip()}\n"
             f"{principles_text}"

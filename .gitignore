@@ -9,6 +9,7 @@ evaluation
 output
 metrics
 api.yaml
+vector_cache
 # C extensions
 *.so
 # Huggingface models

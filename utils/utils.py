@@ -2,6 +2,8 @@ import re
 import pandas as pd
 import ast
 import json
+import time
+import os 
 import numpy as np
 import torch
 import random
@@ -46,7 +48,7 @@ def format_question_output(response):
 
 def format_rationale_output(response, format_type="rule_format"):
     """
-    格式化推理输出
+    格式化推理输出 - 增强版
     Args:
         response: 原始响应文本
         format_type: 格式类型，可选值为 "rule_format" 或 "cot_format"
@@ -57,18 +59,59 @@ def format_rationale_output(response, format_type="rule_format"):
     cleaned_response = response.replace('**', '')
     
     if format_type == "cot_format":
-        # 只提取 Inference: 后的内容
-        inference_match = re.search(r'Inference:\s*(.*?)(?=\n|$)', cleaned_response, re.DOTALL)
-        return inference_match.group(1).strip() if inference_match else ''
+        # 只提取 Explanation 后的内容
+        explanation_match = re.search(r'Explanation:?\s*(.*?)(?=\n|$)', cleaned_response, re.DOTALL)
+        return explanation_match.group(1).strip() if explanation_match else ''
     else:
-        # 原有的rule_format处理逻辑
-        explanation_match = re.search(r'Explanation:\s*(.*?)\n', cleaned_response, re.DOTALL)
+        # 提取 Explanation
+        explanation_match = re.search(r'Explanation:?\s*(.*?)(?=\nIncorrect Inference|$)', cleaned_response, re.DOTALL)
         explanation = explanation_match.group(1).strip() if explanation_match else ''
         
-        incorrect_inferences = re.findall(r'Incorrect Inference \d+ \((.*?)\):\s*(.*?)(?=\nIncorrect Inference \d+ \(|$|\n\n)', cleaned_response, re.DOTALL)
-        incorrect_inferences_combined = ' '.join([f'Incorrect Inference {i+1} ({principle.strip()}): {inference.strip()}' for i, (principle, inference) in enumerate(incorrect_inferences)])
+        # 尝试多种格式的正则表达式模式
+        inference_patterns = [
+            # 模式1: Incorrect Inference 1: Principle 1 (Confusing...)
+            r'Incorrect Inference (\d+):\s*Principle \d+ \((.*?)\):\s*(.*?)(?=\nIncorrect Inference|$)',
+            
+            # 模式2: Incorrect Inference1: The bilberry...
+            r'Incorrect Inference(\d+):\s*(.*?)(?=\nIncorrect Inference\d+:|$)',
+            
+            # 模式3: Incorrect Inference 1 (Principle...): Text
+            r'Incorrect Inference (\d+) \((.*?)\):\s*(.*?)(?=\nIncorrect Inference|$)',
+            
+            # 模式4: 如有其他变体格式可继续添加
+        ]
         
-        return {'explanation': explanation, 'incorrect_inferences': incorrect_inferences_combined}
+        incorrect_inferences = []
+        
+        # 尝试每一种模式
+        for pattern in inference_patterns:
+            matches = re.findall(pattern, cleaned_response, re.DOTALL)
+            if matches:
+                # 根据正则表达式的捕获组数量决定如何处理
+                if len(matches[0]) == 3:  # 三元组: 编号, 原则, 内容
+                    for num, principle, inference in matches:
+                        formatted_inference = f"Incorrect Inference {num} ({principle.strip()}): {inference.strip()}"
+                        incorrect_inferences.append(formatted_inference)
+                elif len(matches[0]) == 2:  # 二元组: 编号, 内容
+                    for num, inference in matches:
+                        formatted_inference = f"Incorrect Inference {num}: {inference.strip()}"
+                        incorrect_inferences.append(formatted_inference)
+                
+                # 如果找到匹配，则跳出循环
+                break
+        
+        # 如果没有找到匹配，尝试更宽松的模式
+        if not incorrect_inferences:
+            fallback_matches = re.findall(r'Incorrect.*?(\d+).*?:(.*?)(?=\nIncorrect|$)', cleaned_response, re.DOTALL)
+            if fallback_matches:
+                for num, inference in fallback_matches:
+                    formatted_inference = f"Incorrect Inference {num}: {inference.strip()}"
+                    incorrect_inferences.append(formatted_inference)
+        
+        return {
+            'explanation': explanation,
+            'incorrect_inferences': '\n'.join(incorrect_inferences) if incorrect_inferences else ''
+        }
 
 def format_distractor_output(text: str, expected_count: int = None) -> dict:
     """
@@ -132,50 +175,66 @@ def initialize_seeds(seed_num: int):
         torch.cuda.manual_seed(seed_num)
         torch.cuda.manual_seed_all(seed_num)
 
-def clean_string(string):
-    string = string.lower()
+def get_processed_count(output_file):
+    """获取已处理的数据项数量，用于断点续传"""
+    if not os.path.exists(output_file):
+        return 0
+    
+    try:
+        with open(output_file, 'r', encoding='utf-8') as f:
+            existing_results = json.load(f)
+            if isinstance(existing_results, list):
+                return len(existing_results)
+            else:
+                return 1 if existing_results else 0
+    except json.JSONDecodeError:
+        return 0
 
-    # Standardize symbols
-    string = string.replace("\\%", "%")
-    string = string.replace("...", "\\ldots")
-    string = string.replace('÷', '\\div')
-    string = string.replace('≥', '\\geq')
-    string = string.replace('≤', '\\leq')
-    string = string.replace('≠', '\\neq')
-    string = string.replace('≈', '\\approx')
-    string = string.replace('δ', '\\delta')
-    string = string.replace('|', '\\vert')
+def log_error(error_log_file, index, question_data, error_msg):
+    """记录错误到日志文件"""
+    error_record = {
+        "index": index,
+        "question": question_data['question'],
+        "correct_answer": question_data['correct_answer'],
+        "error": str(error_msg)
+    }
+    os.makedirs(os.path.dirname(error_log_file), exist_ok=True)
+    with open(error_log_file, 'a', encoding='utf-8') as f:
+        json.dump(error_record, f, ensure_ascii=False)
+        f.write('\n')
+    return error_record
 
-    # Remove math environment indicators
-    string = string.replace("$", "")
-    string = string.replace("\\[", "")
-    string = string.replace("\\]", "")
-    string = string.replace("\\(", "")
-    string = string.replace("\\)", "")
+def create_error_result(question_data, distractor_count, error_type="API_ERROR"):
+    """为出错的问题创建结果字典"""
+    result = {
+        "question": question_data['question'],
+        "correct_answer": question_data['correct_answer']
+    }
+    for i in range(1, distractor_count + 1):
+        result[f'distractor{i}'] = error_type
+    return result
 
-    # convert / and \div fractions to \frac
-    string = re.sub(r"([\d\.]+)\s*(/|\\div)\s*([\d\.]+)", r"\\frac{\g<1>}{\g<3>}", string) 
-    # convert x to \times
-    string = re.sub(r'\s*×\s*', r' \\times ', string)
-    # convert √ to \\sqrt{}
-    string = re.sub(r'√', r'\\sqrt', string) 
-    # convert 2 cm to 2 \mathrm{~cm}
-    string = re.sub(r'(\d+(?:\.\d+)?)\s*cm',  r'\1 \\mathrm{~cm}', string)
-    # convert 2 m to 2 \mathrm{~m}
-    string = re.sub(r'(\d+(?:\.\d+)?)\s*m',  r'\1 \\mathrm{~m}', string)
-    # convert 2 km to 2 mathrm{~km}
-    string = re.sub(r'(\d+(?:\.\d+)?)\s*km',  r'\1 \\mathrm{~km}', string)
+def update_progress_stats(pbar, api_calls, total_tokens, start_time):
+    """更新进度条统计信息"""
+    elapsed = time.time() - start_time
+    rate = api_calls / elapsed if elapsed > 0 else 0
+    token_rate = total_tokens / elapsed if elapsed > 0 else 0
+    
+    pbar.set_postfix({
+        'API calls': api_calls,
+        'Calls/s': f'{rate:.2f}',
+        'Tokens': total_tokens,
+        'Tokens/s': f'{token_rate:.1f}'
+    })
 
-    # convert p^2 to p^{2}
-    string = re.sub(r'([a-zA-Z])\^(\d+)', r'\1^{\2}', string)
-
-    # remove hyphen between words
-    string = re.sub(r'([a-zA-Z]+)-([a-zA-Z]+)', r'\1\2', string)
-
-    string = string.replace('\\mathrm{~m}athrm{~cm}', '\\mathrm{~cm}')
-    string = string.replace('\\mathrm{~m}ore', 'more')
-    string = string.replace(' ', '')
-    string = string.strip()
-
-    return string
+def print_final_stats(start_time, api_calls, total_tokens, output_file):
+    """打印最终统计数据"""
+    elapsed = time.time() - start_time
+    print(f"\nGeneration completed:")
+    print(f"Total time: {elapsed:.2f}s")
+    print(f"Total API calls: {api_calls}")
+    print(f"Total tokens used: {total_tokens}")
+    print(f"Average tokens/call: {total_tokens/api_calls if api_calls else 0:.1f}")
+    print(f"Token rate: {total_tokens/elapsed if elapsed else 0:.1f} tokens/s")
+    print(f"Results saved to {output_file}")
 
