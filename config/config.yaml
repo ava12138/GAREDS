@@ -18,7 +18,6 @@ dataset_names:
 
 # 添加模型映射配置
 model_path:
-  qwen7b: "/data/lzx/model/qwen2.5-7b-instruct"
   qwenvl: "/data/lzx/model/qwen2.5-vl-7b-instruct"
 
 max_tokens:

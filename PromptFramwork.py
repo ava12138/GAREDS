@@ -20,15 +20,13 @@ class PromptFramework():
         if promptType == "qg":
             return cls.qg_prompt(examples)
         elif promptType == "rule_rg":
-            return cls.rule_based_rg_prompt(questionData, principles)
+            return cls.rule_based_rg_prompt(questionData, principles, examples)
         elif promptType == "rule_dg":
-            return cls.rule_based_dg_prompt(questionData, principles)
+            return cls.rule_based_dg_prompt(questionData, principles, examples)
         elif promptType == "cot_rg":
-            return cls.cot_rg_prompt(questionData)
-        elif promptType == "cot_rg_shot":
-            return cls.cot_rg_prompt_shot(questionData)
+            return cls.cot_rg_prompt(questionData, examples=examples)
         elif promptType == "cot_dg":
-            return cls.cot_dg_prompt(questionData, principles)
+            return cls.cot_dg_prompt(questionData, principles, examples=examples)
         elif promptType == "non_dg":
             return cls.dg_prompt(questionData)
         else:
@@ -71,9 +69,9 @@ class PromptFramework():
         Principle5: XXX\n
         Principle6: XXX\n
         """
-        instructions = ("You are given the following question along with the correct answer, and six principles for Faulty Reasoning. "
+        instructions = ("You are given the following question along with the correct answer, and six principles for Faulty Reasoning as context for helping you generate reasonings."
                    "The question may include an image. The image contains information that helps you understand the question and can help you generate subsequent reasonings."
-                   "Please refer to the examples below and use the template to give one correct explanation and "
+                   "Please refer to the examples of question and distractors below and use the template to give one correct explanation and "
                    "six incorrect inferences based on the given six principles. These six faulty inferences are used to help "
                    "generate distractors for multiple-choice questions.\n")
         
@@ -96,14 +94,16 @@ class PromptFramework():
         for idx, principle in enumerate(principles):
             principles_text += f"Principle{idx+1}: {principle}\n"
             
+        
         prompt = (
             f"{instructions}\n"
-            f"{examples_text}"
-            f"{template}\n"
+            f"=== Context ===\n"
             f"Question: {questionData['question'].strip()}\n"
             f"Answer: {questionData['correct_answer'].strip()}\n"
-            f"Support: {questionData['support'].strip()}\n"
-            f"{principles_text}"
+            f"=== Principles ===\n"
+            f"{principles_text}\n"
+            f"{examples_text}"
+            f"{template}"
         )
         return prompt.strip()
     
@@ -126,15 +126,12 @@ class PromptFramework():
             # 计算需要生成的干扰项数量
         distractor_count = cls.count_distractors(questionData)
         
-
-
         instructions = (
-            "You are given the following question along with the correct answer, explanation, and six faulty inferences. "
+            "You are given the following question along with the correct answer, explanation, and six faulty inferences as context for helping you generate distractors. "
             "The question may include an image. The image contains information that helps you understand the question and can help you generate subsequent distractors."
             "Please refer to the examples below and use the template to generate "
             f"**{distractor_count}** alternative incorrect but plausible answers to be used as multiple-choice options in a multiple-choice exam.\n "
-            "[Template]\n"
-            f"{template}\n"
+            "You don't need to provide the explanation of distractors, just provide the distractors.\n"
         )
         # 添加示例部分
         examples_text = ""
@@ -156,59 +153,66 @@ class PromptFramework():
         for idx, inference in enumerate(incorrect_inferences, 1):
             principles_text += f"{inference.strip()}\n"
 
+        prompt = f"{instructions}\n"
+        
         prompt = (
             f"{instructions}\n"
-            f"{examples_text}"
-            f"{template}\n"
+            f"=== Context ===\n"
             f"Question: {questionData['question'].strip()}\n"
             f"Answer: {questionData['correct_answer'].strip()}\n"
-            f"{principles_text}"
+            f"=== Faulty Inferences ===\n"
+            f"{principles_text}\n"
+            f"{examples_text}"
+            f"{template}\n"
         )
-        return prompt.strip()
-    
+        return prompt.strip(), distractor_count
+      
     @classmethod
-    def cot_rg_prompt_shot(cls, questionData):
+    def cot_rg_prompt(cls, questionData, examples=None):
         """
         === EXAMPLE ===
         <Instructions>
         === PROMPT ===
-        Question: XXX\n
-        Answer: XXX\n
-        Support: XXX\n
+        Question: XXX
+        Answer: XXX
+        Support: XXX
         """
+        instructions = (
+            "You are given the following question along with the correct answer and supporting information as context for helping you generate reasonings. "
+            "The question may include an image. The image contains information that helps you understand the question "
+            "and can help you generate subsequent reasonings. "
+            "Please refer to the examples of question and distractors below and use the template to generate reasonings. "
+            "Please break down the reasoning process into logical steps that connect the supporting information "
+            "to the correct answer. Ensure each step is clear and directly related to the question.\n"
+        )
         
-        instructions="You are given the following example, which includes:\n- A question.\n- The correct answer to the question.\n- Supporting information that explains the answer.\n Carefully analyze the question and the supporting information.Break down the reasoning process into logical, step-by-step inferences that connect the supporting information to the correct answer.\n Ensure each step is clear, concise, and directly related to the question.\nThe intermediate reasoning should not include distractors, but should provide a strong foundation for generating distractors later.\
-        [Template]\n \
-        Inference: XXX\n"
+        # 添加示例部分
+        examples_text = ""
+        if examples:
+            examples_text = "=== Examples ===\n"
+            examples_text += "\n\n".join(examples) + "\n\n"
+            examples_text += "=== Template ===\n"
+        
+        template = (
+            "Step 1: XXX\n"
+            "Step 2: XXX\n"
+            "Step 3: XXX\n"
+            "Final Explanation: XXX\n"
+        )
+        
         prompt = (
             f"{instructions}\n"
+            f"=== Context ===\n"
             f"Question: {questionData['question'].strip()}\n"
             f"Answer: {questionData['correct_answer'].strip()}\n"
             f"Support: {questionData['support'].strip()}\n"
+            f"{examples_text}"
+            f"{template}"
         )
         return prompt.strip()
     
     @classmethod
-    def cot_rg_prompt(cls, questionData):
-        """
-        === EXAMPLE ===
-        <Instructions>
-        === PROMPT ===
-        Question: XXX\n
-        Answer: XXX\n
-        """
-        instructions="You are given the following question along with the correct answer. \n Carefully analyze the question and the answer.Break down the reasoning process into logical, step-by-step inferences that connect the supporting information to the correct answer.\n Ensure each step is clear, concise, and directly related to the question.\nThe intermediate reasoning should not include distractors, but should provide a strong foundation for generating distractors later.\
-        [Template]\n \
-        Inference: XXX\n"
-        prompt = (
-            f"{instructions}\n"
-            f"Question: {questionData['question'].strip()}\n"
-            f"Answer: {questionData['correct_answer'].strip()}\n"
-        )
-        return prompt.strip()
-    
-    @classmethod
-    def cot_dg_prompt(cls, questionData, principles):
+    def cot_dg_prompt(cls, questionData, principles, examples=None):
         """
         === EXAMPLE ===
         <Instructions>
@@ -230,21 +234,31 @@ class PromptFramework():
         template = "\n".join(template_parts)
 
         instructions = (
-            "You are provided with a question, the correct answer, and a step-by-step inference "
-            "leading to that answer. Please use the following template to generate "
-            f"**{distractor_count}** alternative incorrect answers to be used as multiple-choice "
-            "options in a multiple-choice exam. \n"
-            "[Template]\n"
-            f"{template}\n"
+            "You are given the following question along with the correct answer, a step-by-step reasoning as context for helping you generate distractors. "
+            "The question may include an image. The image contains information that helps you understand the question and can help you generate subsequent distractors."
+            "Please refer to the examples below and use the template to generate "
+            f"**{distractor_count}** alternative incorrect but plausible answers to be used as multiple-choice options in a multiple-choice exam.\n "
+            "You don't need to provide the explanation of distractors, just provide the distractors.\n"
         )
+        examples_text = ""
+        if examples:
+            examples_text = "=== Examples ===\n"
+            examples_text += "\n\n".join(examples) + "\n\n"
+            examples_text += "=== Template ===\n"
+
         reasoning_text = f"Inference: {principles.strip()}\n"
         prompt = (
             f"{instructions}\n"
+            f"=== Context ===\n"
             f"Question: {questionData['question'].strip()}\n"
             f"Answer: {questionData['correct_answer'].strip()}\n"
-            f"{reasoning_text}"
+            f"Support: {questionData['support'].strip()}\n"
+            f"=== Reasoning ===\n"
+            f"{reasoning_text}\n"
+            f"{examples_text}"
+            f"{template}"
         )
-        return prompt.strip()
+        return prompt.strip(), distractor_count
     
     @classmethod
     def dg_prompt(cls, questionData):

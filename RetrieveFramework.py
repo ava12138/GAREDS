@@ -3,27 +3,26 @@ from socket import PF_CAN
 import pandas as pd
 import torch
 from datasets import load_dataset
-from sentence_transformers import SentenceTransformer, util
+# from sentence_transformers import SentenceTransformer, util
 from tqdm import tqdm
 import os
 from PromptFramwork import PromptFramework as pf
 
 class RetrieverFramework:
     cache_dir = "./vector_cache"
-    train_vector_cache = os.path.join(cache_dir, 'train_vectors.pt')
-    index_cache = os.path.join(cache_dir, 'similar_indices.json')
     dataset_cache = os.path.join(cache_dir, 'dataset.json')
+    train_vector_cache = os.path.join(cache_dir, 'train_vectors.pt')
+    # 类变量字典，用于存储不同split的缓存
+    _similarity_indices = None 
+    _dataset = None
 
-    _similarity_indices = None  # 相似度索引缓存
-    _dataset = None  # 数据集缓存
     
     def __init__(self, cache_dir="./vector_cache"):
-        self.device = "cpu"
+        self.device = "cuda"
         self.model = SentenceTransformer('all-mpnet-base-v2', device=self.device)
         # 更新类属性
         RetrieverFramework.cache_dir = cache_dir
         RetrieverFramework.train_vector_cache = os.path.join(cache_dir, 'train_vectors.pt')
-        RetrieverFramework.index_cache = os.path.join(cache_dir, 'similar_indices.json')
         RetrieverFramework.dataset_cache = os.path.join(cache_dir, 'dataset.json')
         os.makedirs(cache_dir, exist_ok=True)
 
@@ -34,12 +33,13 @@ class RetrieverFramework:
         # 1. 加载训练集向量
         print("Loading training vectors...")
         train_vectors = torch.load(self.train_vector_cache)
+        train_vectors = train_vectors.to(self.device)
         print(f"Training vectors loaded, shape: {train_vectors.shape}")
         
         # 2. 加载测试集并生成向量
         print(f"Loading {split} dataset...")
         test_dataset = load_dataset(dataset_path, split=split)
-        print(f"Test dataset loaded, total {len(test_dataset)} examples")
+        print(f"{split} dataset loaded, total {len(test_dataset)} examples")
         
         # 生成测试集文本表示
         print("Generating text representations...")
@@ -60,12 +60,12 @@ class RetrieverFramework:
             texts.append(text)
         
         # 3. 分批生成测试集向量表示
-        print("Generating test vectors...")
+        print(f"Generating {split} vectors...")
         test_vectors = []
         for i in tqdm(range(0, len(texts), batch_size), desc="Generating vectors"):
             batch_texts = texts[i:i+batch_size]
             try:
-                batch_vectors = self.model.encode(batch_texts, convert_to_tensor=True)
+                batch_vectors = self.model.encode(batch_texts, convert_to_tensor=True, device=self.device)
                 test_vectors.append(batch_vectors)
             except RuntimeError as e:
                 print(f"\nError processing batch {i}-{i+batch_size}: {e}")
@@ -92,34 +92,39 @@ class RetrieverFramework:
                 test_idx = i + j
                 similarity_indices[str(test_idx)] = top_k
         
+        index_cache_path = os.path.join(self.cache_dir, f'similar_indices_{split}.json')
         # 5. 保存相似度索引
-        with open(self.index_cache, 'w') as f:
+        with open(index_cache_path, 'w') as f:
             json.dump(similarity_indices, f)
-        print(f"Similarity indices saved to {self.index_cache}")
+        print(f"Similarity indices saved to {index_cache_path}")
 
     @classmethod
-    def load_caches(cls):
+    def load_caches(cls, split="test"):
         """加载缓存文件到内存"""
-        if cls._similarity_indices is None:
-            with open(cls.index_cache, 'r') as f:
+        if  not  cls._similarity_indices:
+            index_cache_path = os.path.join(cls.cache_dir, f'similar_indices_{split}.json')
+            with open(index_cache_path, 'r') as f:
                 cls._similarity_indices = json.load(f)
+                if cls._similarity_indices is not None:
+                    print("\n\033[96m检索索引缓存加载成功\033[0m")
         
-        if cls._dataset is None:
+        if not cls._dataset:  
             with open(cls.dataset_cache, 'r') as f:
-                cls._dataset = json.load(f)
+                cls._dataset = json.load(f)  
+                if cls._dataset is not None:
+                    print("\n\033[96m训练集数据加载成功\033[0m")
 
     @classmethod
-    def get_similar_examples(cls, query_idx, k=3):
+    def get_similar_examples(cls, query_idx, split="test", k=3):
         """
         获取k个相似示例并格式化输出
         Args:
             query_idx: 查询样例的索引
+            split: 数据集划分
             k: 需要返回的示例数量，默认为3
         Returns:
             str: 格式化后的示例字符串
         """
-        # 加载缓存的相似度索引
-        cls.load_caches()
             
         # 使用内存中的缓存
         similar_indices = cls._similarity_indices[str(query_idx)][:k]
@@ -145,31 +150,15 @@ class RetrieverFramework:
     
     
 if __name__ == "__main__":
-    # retriever = RetrieverFramework()
+    retriever = RetrieverFramework()
 
-    # # 为测试集构建向量缓存和相似度索引
-    # retriever.build_vector_cache(
-    #     dataset_path="derek-thomas/ScienceQA",
-    #     split="test",
-    #     encoding_pattern="q+c",
-    #     batch_size=32
-    # )
+    # 为测试集构建向量缓存和相似度索引
+    retriever.build_vector_cache(
+        dataset_path="derek-thomas/ScienceQA",
+        split="validation",
+        encoding_pattern="q+c",
+        batch_size=32
+    )
 
-    # 获取相似样例
-    query_idx = 0
-    similar_examples = RetrieverFramework.get_similar_examples(query_idx=0, k=3)  # 通过类调用
-    
-    for example in similar_examples:
-        print()
-        print(example)
-
-    # questionData = {
-    #     "question": "What is the capital of France?",
-    #     "correct_answer": "Paris",
-    #     "support": "Paris is the capital of France.",
-    # }
-    # principles = ["Principle 1: ...", "Principle 2: ..."]  # 示例原则
-    # similar_examples = RetrieverFramework.get_similar_examples(query_idx=0, k=3)
-    # prompt = pf.rule_based_rg_prompt(questionData, principles, examples=similar_examples)
-    # print(prompt)
+ 
     # 初始化检索器

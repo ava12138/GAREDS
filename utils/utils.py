@@ -190,13 +190,15 @@ def get_processed_count(output_file):
     except json.JSONDecodeError:
         return 0
 
-def log_error(error_log_file, index, question_data, error_msg):
+def log_error(error_log_file, index, question_data, error_msg, response=None):
     """记录错误到日志文件"""
     error_record = {
         "index": index,
         "question": question_data['question'],
         "correct_answer": question_data['correct_answer'],
-        "error": str(error_msg)
+        "error": str(error_msg),
+        "original_response": response if response else None,
+        "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
     }
     os.makedirs(os.path.dirname(error_log_file), exist_ok=True)
     with open(error_log_file, 'a', encoding='utf-8') as f:

@@ -5,7 +5,7 @@ import re
 import pandas as pd
 import csv
 from pandas import read_parquet
-import test
+import pro.test as test
 from pro.utils.utils import str_to_dict_eedi_df, format_distractor_output, format_question_output, read_test_data
 
 text = """
