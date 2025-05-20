@@ -19,6 +19,7 @@ dataset_names:
 # 添加模型映射配置
 model_path:
   qwenvl: "/data/lzx/model/qwen2.5-vl-7b-instruct"
+  finetune: "/data/lzx/model/dg-sft/v11-20250515-114018/checkpoint-1500"  # 添加微调后的模型
 
 max_tokens:
   rg: 2048 # cot prompt 类型的 reasoning generation max_tokens

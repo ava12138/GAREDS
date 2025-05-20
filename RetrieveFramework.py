@@ -3,7 +3,7 @@ from socket import PF_CAN
 import pandas as pd
 import torch
 from datasets import load_dataset
-# from sentence_transformers import SentenceTransformer, util
+from sentence_transformers import SentenceTransformer, util
 from tqdm import tqdm
 import os
 from PromptFramwork import PromptFramework as pf

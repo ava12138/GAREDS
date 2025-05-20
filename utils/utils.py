@@ -4,6 +4,7 @@ import ast
 import json
 import time
 import os 
+import string
 import numpy as np
 import torch
 import random
@@ -164,6 +165,95 @@ def str_to_dict_eedi_df(df: pd.DataFrame):
             except Exception:
                 df.at[i, col] = None
     return df
+
+def normalize(text):
+    """标准化文本:小写、去除标点符号、冠词和多余空格"""
+    def remove_articles(text):
+        return re.sub(r"\b(a|an|the)\b", " ", text)
+
+    def white_space_fix(text):
+        return " ".join(text.split())
+
+    def remove_punc(text):
+        exclude = set(string.punctuation)
+        return "".join(ch for ch in text if ch not in exclude)
+
+    def lower(text):
+        return text.lower()
+
+    return white_space_fix(remove_articles(remove_punc(lower(text))))
+
+def clean_output_text(output_text):
+    """清理输出文本以提取干扰项内容"""
+    if not output_text:
+        return ""
+    # 1. 优先查找 "Distractors:" 模式 (忽略大小写)
+    distractor_match = re.search(r'Distractors:\s*(.*)', output_text, re.IGNORECASE | re.DOTALL)
+    if distractor_match:
+        # 如果找到，直接返回其后的内容，并去除首尾空格
+        return distractor_match.group(1).strip()
+
+    # 2. 如果没有 "Distractors:", 再尝试移除开头的 "Example X:" 行 (如果存在)
+    #    注意：这里只移除严格在开头且后跟换行的 Example 行，避免过度删除
+    cleaned_text = re.sub(r'^Example \d+:.*?\n', '', output_text, flags=re.MULTILINE).strip()
+    # 如果移除后文本为空，则直接返回
+    if not cleaned_text:
+        return ""
+
+    # 3. 尝试提取 (数字) 编号的干扰项
+    items_paren = re.findall(r'\((\d+)\)\s*(.+?)(?=\(\d+\)|$)', cleaned_text, re.DOTALL)
+    if items_paren:
+        # 提取所有匹配项的第二部分 (干扰项文本) 并拼接
+        return ' '.join(item[1].strip() for item in items_paren)
+
+    # 4. 尝试提取 数字. 编号的干扰项
+    items_dot = re.findall(r'^\d+\.\s*(.+?)$', cleaned_text, re.MULTILINE)
+    if items_dot:
+        # 提取所有匹配项并拼接
+        return ' '.join(item.strip() for item in items_dot)
+        
+    # 5. 如果以上都没匹配到，返回原始清理后的文本
+    return cleaned_text
+
+def preprocess_generation_data(generated_data):
+    """预处理生成数据，将output字段解析为distractor字段"""
+    processed_data = []
+    
+    for item in generated_data:
+        new_item = {
+            "question": item.get("question", ""),
+            "correct_answer": item.get("correct_answer", "")
+        }
+        
+        has_distractors = False
+        for key in item:
+            if key.startswith('distractor') and item[key]:
+                new_item[key] = item[key]
+                has_distractors = True
+        
+        # 如果没有distractor字段，则尝试从output解析
+        if not has_distractors and 'output' in item:
+            output = item.get("output", "")
+            cleaned_output = clean_output_text(output)
+            
+            if cleaned_output:
+                # 尝试拆分为不同的干扰项
+                import re
+                # 先尝试寻找带编号的格式
+                items_paren = re.findall(r'\((\d+)\)\s*(.+?)(?=\(\d+\)|$)', cleaned_output, re.DOTALL)
+                if items_paren:
+                    for i, (_, text) in enumerate(sorted(items_paren, key=lambda x: int(x[0])), 1):
+                        new_item[f"distractor{i}"] = text.strip()
+                else:
+                    # 尝试按分隔符拆分
+                    distractors = re.split(r'\s*[;|]\s*|\n', cleaned_output)
+                    distractors = [d.strip() for d in distractors if d.strip()]
+                    for i, d in enumerate(distractors, 1):
+                        new_item[f"distractor{i}"] = d
+        
+        processed_data.append(new_item)
+            
+    return processed_data
 
 def initialize_seeds(seed_num: int):
     random.seed(seed_num)

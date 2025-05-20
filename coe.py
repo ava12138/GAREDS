@@ -320,11 +320,11 @@ def main():
     # 获取数据集名称和配置
     dataset_name = config['dataset_names'].get(args.dataset, args.dataset)
     file_config = config['files'].get(args.dataset)
-    
+    modal_suffix = '-text' if args.vl == 'text' else ''
     if file_config and 'test_file' in file_config:
         dataset_name = file_config['test_file']
     
-    output_file = f"{file_config['output_file']}-coe-{args.vl}-{args.prompt}-{args.split}.json"
+    output_file = f"{file_config['output_file']}-coe{modal_suffix}-{args.prompt}-{args.split}.json"
 
     # 处理测试数据
     process_test_data(model, dataset_name, args.split, output_file, args.vl)

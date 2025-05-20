@@ -268,7 +268,7 @@ def main():
     parser = argparse.ArgumentParser(description="Generate distractors")
     parser.add_argument('-d', '--dataset', type=str, required=True, 
                        help="Hugging Face Dataset name (e.g., science_qa, squad)")
-    parser.add_argument('-m', '--model', choices=['qwenvl','dp'],
+    parser.add_argument('-m', '--model', choices=['qwenvl','dp','finetune'],
                        required=True, help="模型名称")
     parser.add_argument('-i', '--inference', choices=['pt', 'vllm', 'hf'],
                     default='pt', help="推理后端类型")
@@ -283,6 +283,10 @@ def main():
     parser.add_argument('-v', '--multimodal', type=int, choices=[0, 1], default=1,
                        help="是否使用多模态信息 (0: 否, 1: 是)")
     args = parser.parse_args()
+
+    # 使用环境变量设置可见GPU
+    os.environ['CUDA_VISIBLE_DEVICES'] = str(args.gpu_id)
+    print(f"设置CUDA_VISIBLE_DEVICES={args.gpu_id}")
 
     # 将整数参数转换为布尔值
     use_multimodal_flag = bool(args.multimodal)
